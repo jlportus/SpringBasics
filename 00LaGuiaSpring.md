@@ -33,3 +33,16 @@ Opcionales
 enlace resumen de lo generado en el inicializer:
 
 https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail
+
+## 1.  Iniciar Proyecto en Eclipse
+
+* abrir eclipse
+* En el workspace -> importar proyecto GRADLE
+* Seleccionar la carpeta del proyecto
+* next...finish
+* ! debe tardar porque descarga todas las librerias
+* Saldra una estructura de proyecto JAVA-Gradle
+
+Para ejecutar -> **gradle Tasks -> aplication -> boot run**
+- hay que acordarse de parar la ejecucion antes de volver a ejecutar
+   
