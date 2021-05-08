@@ -78,5 +78,27 @@ ejecutar:
   - **refresh gradle proyect**
   - **boot run**
 
+## 3. Creando la estructura de carpetas de mi proyecto
 
+Tendre la siguiente estructura:
+- mde.es.PaqueteBaseAplicacion
+  - incluira el **MAIN**
+  - mi clase.java de configuracion por java -> contendra los **@bean**
+- **paquete.entidades** -> con las entidades propias para persistir con anotaciones **@Entity**
+- **paquete.repositorios** -> contendra todo lo relativo a lo que quiera persisitir en mi BD
+   - entidadesInterfazDAO
+    - Con la anotacion **@RepositoryRestResource** extends **JpaRepository<class, ID>**
+  - interfaces DAOCustom + clases DAOCustom implementadas a persistir (para customizar)
+  - listeners
+
+- **paquete.rest** -> con los archivos para la implementacion rest (exposicion al front)
+  - Clases con anotacion **@RepositoryRestController + @RequestMapping(path = "/ruta/{id}/elemento/search")**
+    - Tendran un elementoDAO con las **@GetMaping("/rutaURL/")** (rutas de los metodos a exponer) + **@ResponseBody**
+- paquete.main.**resources** (generado por Spring) -> Contendra los archivos **.properties**
+  +
+  - paquete **config** con:
+    - jpa-config.xml -> mi **entity-manager**
+    - properties de jackson o de REST
+  - paquete **jpa**
+    - con todos los archivos.**orm.xml** para cada clase a persistir
    
