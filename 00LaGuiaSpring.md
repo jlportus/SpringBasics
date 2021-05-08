@@ -45,4 +45,37 @@ https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.
 
 Para ejecutar -> **gradle Tasks -> aplication -> boot run**
 - hay que acordarse de parar la ejecucion antes de volver a ejecutar
+
+## 2. Añadir mas dependencias a Gradle
+
+añadir a build gradle
+
+```
+plugins {
+	id 'org.springframework.boot' version '2.4.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'java-library'     
+	id 'eclipse'     
+	id 'application'
+}
+```
+```
+repositories {
+	mavenCentral()
+	jcenter()
+	maven { url 'https://jitpack.io' }
+}
+```
+⇒ Comprobar el paquete main a iniciar
+```
+application {
+  mainClassName = ruta.paquete.mainMio
+}
+```
+ejecutar: 
+  - **refresh gradle proyect**
+  - **boot run**
+
+
    
