@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- bean definitions here -->
+	<!--debo poner la ruta a la clase del Bean-->
+	<!--Puedo poner un ID del Bean = Alias-->
+	<!--Puedo poner un metodo que se inicie al crearse el Bean con init-method. No puede tener parametros-->
+	<bean class="es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML" id="test" init-method="init">
+		<!--pongo los campos de mi Bean (deben estar declarados en la clase y tener setter) y les puedo asignar valor inicial por defecto-->
+		<property name="campoNombre" value="¡He sido inyectada por XML!"></property>
+	</bean>
+	<!--puedo poner mas beans-->
+
+</beans>

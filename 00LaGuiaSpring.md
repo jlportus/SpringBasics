@@ -152,3 +152,18 @@ Creo mis clases que voy a convertir en Bean
   - setters
   - getters
   - constructor() por defecto
+
+### 4.1 Beans por XML
+
+Es el modo mas desacoplado de todos.
+- Obligatorio cuando no tengo acceso al codigo (compilado)
+- Me permite sobreescribir codigo ajeno
+
+1. Creo el archivo de configuracion.xml en main/resources/config
+2. añado el archivo al contenedor (o lo importo en mi main si estoy usando SpringBoot)
+3. Defino los Bean en el XML con
+    ```
+   <bean class="ruta.clase" id="alias">
+        <property name="campoBean"></property>
+    </bean>
+   ```
