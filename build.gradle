@@ -2,6 +2,9 @@ plugins {
 	id 'org.springframework.boot' version '2.4.5'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'java-library'     
+	id 'eclipse'     
+	id 'application'
 }
 
 group = 'es.mde'
@@ -10,6 +13,8 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	jcenter()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -26,4 +31,9 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+application {     
+// Define la clase main de mi aplicacion.     
+mainClassName = 'es.mde.SpringBasics.SpringBasicsApplication' 
 }
