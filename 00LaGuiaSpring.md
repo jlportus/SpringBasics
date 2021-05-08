@@ -102,3 +102,53 @@ Tendre la siguiente estructura:
   - paquete **jpa**
     - con todos los archivos.**orm.xml** para cada clase a persistir
    
+## 4. Inyectando Beans 
+
+Los Beans son objetos singleton que quiero utilizar, seran las clases que luego quiera persistir o mostrar por REST.
+
+Voy a inyectar Beans a mano sin usar Spring,
+
+-> comento las lineas de mi main 
+- //@SpringBootAplication
+- //SpringApplication.run(SpringBasicsApplication.class, args);
+
+Añado el contenedor al main en el que voy a inyectar los Bean, pasandole el archivo de configuracion por xml
+
+```
+ApplicationContext context = //mi objeto contenedor
+     new ClassPathXmlApplicationContext(
+          new String[]{"configfile1.xml", //aqui pongo mis archivos de configuracion.xml
+                       "configfile2.xml"}
+          );
+```
+* tendre que importar las recomendaciones del eclipse que sean de Springframework
+* puedo poner varios archivos de configuracion por XML pasandoselos al array separados por comas.
+  * -> Deben estar en la carpeta main resources para que los encuentre. Seran de: 
+    * de configuracion donde le paso los beans que debe hacer xml + desacoplado
+    * de scaneo- para que busque las anotaciones @component... (necesito acceso al codigo)
+* Tambien puedo crear **¡¡¡un solo archivo de configuracion.xml!!!** con toda la informacion que necesite.
+
+Para recuperar un **BEAN**
+
+- creo un objeto del tipo que quiero emplear
+
+```
+ObjetoTipo variableDeMiObjeto = new ObjetoTipo();
+```
+- a mi variable le asigno el bean de mi contenedor mediante el metodo .getBean
+```
+variableDeMiObjeto = context.getBean(ObjetoTipo.class)
+```
+* importante el **.class**
+
+Recuperar un **BEAN** con **alias**
+
+- El bean tendra un alias en su etiqueta ``@Bean("alias")``
+```
+variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
+```
+Creo mis clases que voy a convertir en Bean
+- **¡¡¡OBLIGATORIO!!!** Tienen que tener:
+  - setters
+  - getters
+  - constructor() por defecto
