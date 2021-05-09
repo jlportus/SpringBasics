@@ -213,3 +213,29 @@ Para recuperar uso el getBean sobrecargado.
 ```
 variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
 ```
+
+## 5. Arrancando con SPRINGBoot
+
+Una vez hecho el proyecto spring con initializer, me crea una serie de anotaciones por defecto
+- En el main
+``@SpringBootApplication``
+    Equivale a: **@Configuration + @EnableAutoConfiguration + @ComponentScan**
+  - Automaticamente escanea buscando ``@anotaciones`` en todos los archivos del paquete en el que se encuentra, **y en los que cuelguen de él** . 
+  - Lo que esta fuera ¡NO lo escanea! salvo que se lo diga expresamente.
+
+  ``SpringApplication.run(SpringBasicsApplication.class, args)``
+
+  - Sentencia que genera automaticamente el contenedor y en el que se almacenan los Beans que encuentre.
+    - Puedo asignarlo a una variable para poder acceder con ``.getBean()``
+    ```
+    ApplicationContext context = //mi variable tipo Contenedor
+        SpringApplication.run(SpringBasicsApplication.class, args) //metodo que genera autom el contenedor con SpringBoot
+    ```
+    - Ya no necesitare mi antiguo contenedor al que le pasaba xml como parametros
+    ```
+    // new ClassPathXmlApplicationContext(
+			    new String[]{
+			    	//aqui pongo mis archivos de configuracion.xml
+			        }
+		);
+    ```
