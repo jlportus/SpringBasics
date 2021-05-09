@@ -143,7 +143,7 @@ variableDeMiObjeto = context.getBean(ObjetoTipo.class)
 
 Recuperar un **BEAN** con **alias**
 
-- El bean tendra un alias en su etiqueta ``@Bean("alias")``
+- El bean tendra un alias en su etiqueta ``@Bean(name="alias")``
 ```
 variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
 ```
@@ -167,3 +167,14 @@ Es el modo mas desacoplado de todos.
         <property name="campoBean"></property>
     </bean>
    ```
+
+   ### 4.2 Beans por clase de configuracion Java 
+
+Es el modo intermedio.
+
+1. Creo una clase Java que la llamare claseConfiguracionPorJava (puede ser Otro nombre cualquiera) en la raiz del proyecto **al lado del Main**
+1. Le añado la anotacion ``@Configuration``
+1. Creo dentro los metodos() que me van a devolver normalmente un objeto y les pongo la anotacion ``@Bean``
+    -  Puedo usarlos para tunear mis beans o los objetos
+1. Necesito que la clase sea escaneada al crear el contenedor configurandolo con un xml
+    - Tengo que añadir el XML al contenedor
