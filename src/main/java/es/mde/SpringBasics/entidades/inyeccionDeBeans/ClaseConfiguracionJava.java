@@ -6,12 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import net.bytebuddy.asm.Advice.This;
 
 @Configuration
-public class BeanPorClaseConfiguracionJava {
+public class ClaseConfiguracionJava {
 
 	// voy a aprovechar el Bean de configuracion XML para sobreescribirlo
 	@Bean(name = "BeanConfigJava")
-	public BeanPorClaseConfiguracionJava beanPorClaseConfiguracionJava() {
-		BeanPorClaseConfiguracionJava beanConfigJava = new BeanPorClaseConfiguracionJava() {
+	public ClaseConfiguracionJava beanPorClaseConfiguracionJava() {
+		ClaseConfiguracionJava beanConfigJava = new ClaseConfiguracionJava() {
 
 			@Override
 			public String toString() {

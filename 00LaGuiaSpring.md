@@ -222,6 +222,7 @@ Una vez hecho el proyecto spring con initializer, me crea una serie de anotacion
     Equivale a: **@Configuration + @EnableAutoConfiguration + @ComponentScan**
   - Automaticamente escanea buscando ``@anotaciones`` en todos los archivos del paquete en el que se encuentra, **y en los que cuelguen de él** . 
   - Lo que esta fuera ¡NO lo escanea! salvo que se lo diga expresamente.
+  - Tambien escaneara el ``application.properties`` por defecto de Spring
 
   ``SpringApplication.run(SpringBasicsApplication.class, args)``
 
@@ -239,3 +240,14 @@ Una vez hecho el proyecto spring con initializer, me crea una serie de anotacion
 			        }
 		);
     ```
+  ### 5.1 Añadiendo recursos externos a Spring Boot
+
+Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir donde puede buscar mas recursos que quiera inyectar.
+
+- Insertando por **config.xml**
+  1. en el ``main``  le digo que debe escanear el recurso (resource) de mi archivo XML. Agrego la anotacion 
+  ``@ImportResource({"classpath:jpa-config.xml"})``
+      - Puedo  poner mas archivos separados por comas ``,``
+  1. Ahi tendré las configuraciones al estilo Bean (se ve mas adelante)
+- **Importando clases** de configuracion por java externas
+    - Añado al ``main`` la anotacion ``@Import({ruta.ClaseConfiguracionJava.class})`` con la ruta a la clase 

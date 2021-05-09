@@ -4,13 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
-import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorClaseConfiguracionJava;
+import es.mde.SpringBasics.entidades.inyeccionDeBeans.ClaseConfiguracionJava;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 
 @SpringBootApplication
+@ImportResource({"classpath:config/jpa-config.xml"})
+@Import({ClaseConfiguracionJava.class})
 public class SpringBasicsApplication {
 
 	public static void main(String[] args) {
