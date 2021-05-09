@@ -293,7 +293,7 @@ Sustituire las salidas que normalmente lanzaba por consola para comprobar a otro
 Podre hacer un log por cada singleton
 En la clase que quiera emplear el **log**
 1. Creo un objeto Logger estatico final
-``private final Logger log = LoggerFactory.getLogger(ClaseA HacerLog.class);``
+``private final Logger log = LoggerFactory.getLogger(ClaseAHacerLog.class);``
     - Al importar tengo que importar el logger de **slf4j**
     - Me dara acceso a los metodos de log
 1. Donde quiera que me elabore un mensaje de log (donde pondria un System.out.prntln), llamo a mi objeto **Log** y uso sus metodos:
@@ -314,23 +314,29 @@ Fuente: https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-
 
  ##### Nivel de salida de mensajes 
  ```
- logging.level.root=WARN //Me mostrara todo 
-                         //desde la raiz que sea mensaje warning o mas
-
- logging.level.es.mde.SprinBasics=DEBUG //Me mostrara todo 
-                   //desde el paquete indicado que sea mensaje debug o mas
+  ##Me mostrara todo desde la raiz que sea mensaje warning o mas
+ logging.level.root=WARN 
+  
+  ##Me mostrara todo desde el paquete indicado que sea mensaje debug o mayor gravedad
+ logging.level.es.mde.SprinBasics=DEBUG 
  ```
  ##### Patron de salida de mensajes 
  ```
- logging.pattern.dateformat=yyyy-MM-dd HH:mm //Me mostrara las fechas con ese formato
+ ##Me mostrara las fechas con ese formato
+ logging.pattern.dateformat=yyyy-MM-dd HH:mm 
+ 
+ ## creo una variable para el formato
+mde.formatofecha=%date{ddMMM HH:mm:ss, UTC}Z
 
-mde.formatofecha=%date{ddMMM HH:mm:ss, UTC}Z // creo una variable para el formato
-logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %logger{15} => %msg %n //aplico el formato con un placeHolder y mas propiedades
+ ## aplico el formato con un placeHolder y mas propiedades
+logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %logger{15} => %msg %n 
+
  ```
 
  ##### Formato de Color de salida de mensajes 
  ```
- logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %highlight(%-5level) %cyan(%logger{15}) => %msg %n //aplico el formato con un placeHolder y mas propiedades
+  ## aplico el formato con un placeHolder y mas propiedades
+ logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %highlight(%-5level) %cyan(%logger{15}) => %msg %n 
  ```
  Fuente http://logback.qos.ch/manual/layouts.html
 
