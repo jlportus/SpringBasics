@@ -251,3 +251,33 @@ Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir don
   1. Ahi tendré las configuraciones al estilo Bean (se ve mas adelante)
 - **Importando clases** de configuracion por java externas
     - Añado al ``main`` la anotacion ``@Import({ruta.ClaseConfiguracionJava.class})`` con la ruta a la clase 
+
+  ### 5.2 Insertando valores externos en campos de Beans
+Voy a insertar con la anotacion ``@Value`` un String proveniente de un fichero ``.properties`` externo al codigo.
+
+  1. Inserto el archivo properties nuevo al main
+    ``@PropertySource({"valoresConstantes.properties"}) ``
+  1. Creo el archivo ``valoresConstantes.properties`` en la carpeta ``resources``
+  1. Introduzco los pares clave valor que quiero insertar despues en mi codigo
+  ``campoExterno=valor de campo Externo``
+  1. En el Bean que quiero usar el campo externo pongo la anotacion **con el placeHolder** ``@Value("${campoExterno}")`` antes del campo o del parametro del metodo Bean que voy a usar
+      -  Me sustiuira el valor de la variable por el almacenado en el archivo properties
+      - En el bean tiene que ir como un parametro
+      ```
+      public String probandoVariablesExternas( 
+        @Value("${campoExterno2}") String valor ) {
+          return valor;
+    	}
+      ```
+
+      ```
+      Nota: 
+      1. El application.properties se escanea por defecto. 
+         ¡El resto no! y hay que decirle a spring que los escanee.
+      2. es recomendable separar los properties en funcion 
+         de la finalidad de lo que almacenen
+      3. ¡NO poner contraseñas y subirlos a GitHUB!
+          -> .gitignore
+      4. las propiedades de logging se establcen por el 
+          applicationContext
+      ```

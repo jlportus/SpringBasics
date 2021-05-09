@@ -1,12 +1,16 @@
 package es.mde.SpringBasics.entidades.inyeccionDeBeans;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BeanPorAnotaciones {
-	String campoNombre = "Esto es un Bean por anotaciones";
 
-	public void setCampoNombre(String campoNombre) {
+	@Value("${campoExterno}")
+	String campoNombre;// = "Esto es un Bean por anotaciones";
+
+	public void setCampoNombre(@Value("${campoExterno2}") String campoNombre) {
 		this.campoNombre = campoNombre;
 	}
 
@@ -19,6 +23,12 @@ public class BeanPorAnotaciones {
 
 	public void init() {
 		System.out.println(campoNombre);
+	}
+	
+	@Bean
+	public String probandoVariablesExternas( @Value("${campoExterno2}") String valor ) {
+		System.err.println(valor);
+		return valor;
 	}
 
 	@Override

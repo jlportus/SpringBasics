@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
@@ -15,6 +16,7 @@ import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 @SpringBootApplication
 @ImportResource({"classpath:config/jpa-config.xml"})
 @Import({ClaseConfiguracionJava.class})
+@PropertySource({"valoresConstantes.properties"})
 public class SpringBasicsApplication {
 
 	public static void main(String[] args) {
@@ -40,6 +42,8 @@ public class SpringBasicsApplication {
 		
 		BeanPorAnotaciones objetoBeanPorAnotaciones = context.getBean(BeanPorAnotaciones.class);
 		System.out.println(objetoBeanPorAnotaciones.toString());
+		objetoBeanPorAnotaciones.init();
+		objetoBeanPorAnotaciones.probandoVariablesExternas(null);
 	}
 
 }
