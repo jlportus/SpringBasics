@@ -153,7 +153,7 @@ Creo mis clases que voy a convertir en Bean
   - getters
   - constructor() por defecto
 
-### 4.1 Beans por XML
+  ### 4.1 Beans por XML
 
 Es el modo mas desacoplado de todos.
 - Obligatorio cuando no tengo acceso al codigo (compilado)
@@ -193,3 +193,23 @@ Es el modo mas acoplado.
   - Por XML
     - Creo un ``config-scan.xml`` donde declaro donde escanear
     - Añado el xml al contenedor
+
+    ### 4.4 Prelacion de Beans
+
+Si tengo dos Beans iguales cargados de diferentes modos, uno me sobreescribira a otro o No sabre a que Bean me estoy refiriendo.
+- Prelacion
+  - 1º Beans por XML
+  - 2º Beans por clase de configuracion Java
+  - 3º Beans por anotaciones
+
+  ### 4.5 Desambiguando Beans
+
+Necsesitare usar alias para referirme a un alias concreto
+
+- alias en su anotacion ``@Bean(name="alias")``
+- Alias en Etiqueta.xml con atriduto **id** ``<bean class="ruta.clase" id="alias">``
+
+Para recuperar uso el getBean sobrecargado.
+```
+variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
+```
