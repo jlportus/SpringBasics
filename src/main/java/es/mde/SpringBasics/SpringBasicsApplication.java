@@ -3,8 +3,10 @@ package es.mde.SpringBasics;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorClaseConfiguracionJava;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 
@@ -18,16 +20,20 @@ public class SpringBasicsApplication {
 			     new ClassPathXmlApplicationContext(
 			          new String[]{
 			        		  //aqui pongo mis archivos de configuracion.xml
-			        		  "config/config-BeanPorXML.xml", 
-			        		  "config/configScan-ConfigXJava.xml"
+//			        		  "config/config-BeanPorXML.xml", 
+//			        		  "config/configScan-ConfigXJava.xml",
+			        		  "config/configScan-Anotaciones.xml"
 			        		  }
 			          );
-		BeanPorXML objetoBeanPorXML = context.getBean(BeanPorXML.class);
-		System.out.println(objetoBeanPorXML.toString());
+//		BeanPorXML objetoBeanPorXML = context.getBean(BeanPorXML.class);
+//		System.out.println(objetoBeanPorXML.toString());
 		
 		//tengo que desmbiguar porque me dice que existen dos Ban por ConfigJava->uso el metodo Sobrecargado con el Alias
-		BeanPorClaseConfiguracionJava objetoBeanPorConfigJava = context.getBean("BeanConfigJava", BeanPorClaseConfiguracionJava.class);
-		System.out.println(objetoBeanPorConfigJava.toString());
+//		BeanPorClaseConfiguracionJava objetoBeanPorConfigJava = context.getBean("BeanConfigJava", BeanPorClaseConfiguracionJava.class);
+//		System.out.println(objetoBeanPorConfigJava.toString());
+		
+		BeanPorAnotaciones objetoBeanPorAnotaciones = context.getBean(BeanPorAnotaciones.class);
+		System.out.println(objetoBeanPorAnotaciones.toString());
 	}
 
 }

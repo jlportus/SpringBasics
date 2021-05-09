@@ -178,3 +178,18 @@ Es el modo intermedio.
     -  Puedo usarlos para tunear mis beans o los objetos
 1. Necesito que la clase sea escaneada al crear el contenedor configurandolo con un xml
     - Tengo que añadir el XML al contenedor
+
+    ### 4.3 Beans por @Anotaciones 
+
+Es el modo mas acoplado.
+    -> **¡Necesito acceso al código!**
+
+1. Pongo la anotacion ``@Component`` en la cabecera de la **clase** que sea un Bean
+    - Se hace de la misma manera para las anotaciones que heredan de @component
+      - ``@Controller`` -> para la presentacion
+      - ``@Service`` -> Para crear servicios
+      - ``@Repository`` -> Para Persistir
+1. Hago que spring escanee los elementos que tengan la anotacion **@Component** o herederas
+  - Por XML
+    - Creo un ``config-scan.xml`` donde declaro donde escanear
+    - Añado el xml al contenedor
