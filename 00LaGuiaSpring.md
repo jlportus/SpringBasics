@@ -281,3 +281,61 @@ Voy a insertar con la anotacion ``@Value`` un String proveniente de un fichero `
       4. las propiedades de logging se establcen por el 
           applicationContext
       ```
+## 6. Logging
+
+Pretendo llevar un registro de sucesos que ocurren con la aplicacion.
+Sustituire las salidas que normalmente lanzaba por consola para comprobar a otro lugar, ademas de mensajes de error, etc.
+
+-> fichero.log
+
+- Tambien puedo lanzar una notificacion o mandar un correo ante un evento. 
+
+Podre hacer un log por cada singleton
+En la clase que quiera emplear el **log**
+1. Creo un objeto Logger estatico final
+``private final Logger log = LoggerFactory.getLogger(ClaseA HacerLog.class);``
+    - Al importar tengo que importar el logger de **slf4j**
+    - Me dara acceso a los metodos de log
+1. Donde quiera que me elabore un mensaje de log (donde pondria un System.out.prntln), llamo a mi objeto **Log** y uso sus metodos:
+``log.info("Mi mensaje: {}", testString) ``
+    - Personalizo el mensaje de salida. Uso String con placeHolders llamados por ``{}``, insertados en orden de los `elementos.toString` separados por las comas
+    - Tendre varios niveles de prioridad:
+      - 1 ERROR - Errores
+      - 2 WARN - Alertas
+      - 3 INFO - Nivel Por defecto. Mostrara de info hacia arriba
+      - 4 DEBUG - Informacion importante para depuracion
+      - 5 TRACE - Capta todo
+
+   ### 6.1 Configurando el Logging
+
+Puedo configurar el logging a traves de un properties
+
+Fuente: https://docs.spring.io/spring-boot/docs/current/reference/html/appendix-application-properties.html#common-application-properties
+
+ ##### Nivel de salida de mensajes 
+ ```
+ logging.level.root=WARN //Me mostrara todo 
+                         //desde la raiz que sea mensaje warning o mas
+
+ logging.level.es.mde.SprinBasics=DEBUG //Me mostrara todo 
+                   //desde el paquete indicado que sea mensaje debug o mas
+ ```
+ ##### Patron de salida de mensajes 
+ ```
+ logging.pattern.dateformat=yyyy-MM-dd HH:mm //Me mostrara las fechas con ese formato
+
+mde.formatofecha=%date{ddMMM HH:mm:ss, UTC}Z // creo una variable para el formato
+logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %logger{15} => %msg %n //aplico el formato con un placeHolder y mas propiedades
+ ```
+
+ ##### Formato de Color de salida de mensajes 
+ ```
+ logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %highlight(%-5level) %cyan(%logger{15}) => %msg %n //aplico el formato con un placeHolder y mas propiedades
+ ```
+ Fuente http://logback.qos.ch/manual/layouts.html
+
+ ##### Salida de mensajes a fichero
+ ```
+ logging.file.name=archivo.log
+ ```
+

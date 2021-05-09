@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.ClaseConfiguracionJava;
+import es.mde.SpringBasics.entidades.log.LoggingTester;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 
 @SpringBootApplication
@@ -44,6 +45,9 @@ public class SpringBasicsApplication {
 		System.out.println(objetoBeanPorAnotaciones.toString());
 		objetoBeanPorAnotaciones.init();
 		objetoBeanPorAnotaciones.probandoVariablesExternas(null);
+		
+		LoggingTester testeadorDeLoggingTester = context.getBean(LoggingTester.class);
+		testeadorDeLoggingTester.metodoTester();
 	}
 
 }
