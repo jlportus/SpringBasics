@@ -176,6 +176,10 @@ Es el modo intermedio.
 1. Le añado la anotacion ``@Configuration``
 1. Creo dentro los metodos() que me van a devolver normalmente un objeto y les pongo la anotacion ``@Bean``
     -  Puedo usarlos para tunear mis beans o los objetos
+    - Puede tener un alias `@Bean("alias")`
+      - Da igual poner el `name=` si solo hay un elemento en el parentesis
+    - Puedo ponerle un metodo inicial
+    `@Bean(name="alias", initMethod="init")`
 1. Necesito que la clase sea escaneada al crear el contenedor configurandolo con un xml
     - Tengo que añadir el XML al contenedor
 
@@ -189,6 +193,7 @@ Es el modo mas acoplado.
       - ``@Controller`` -> para la presentacion
       - ``@Service`` -> Para crear servicios
       - ``@Repository`` -> Para Persistir
+    - Pueden tener un alias `@Component("alias")`
 1. Hago que spring escanee los elementos que tengan la anotacion **@Component** o herederas
   - Por XML
     - Creo un ``config-scan.xml`` donde declaro donde escanear
@@ -345,3 +350,50 @@ logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %
  logging.file.name=archivo.log
  ```
 
+## 7. Autowired
+
+Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired`
+Normalmente si solo hay un Bean que sea del tipo necesitado en mi contenedor, no sera necesario.
+
+Puedo Utilizar Autowired en tres sitios:
+- En el Constructor -> Cuando el parametro del constructor sea un **campo obligatorio**
+- En un setter -> Cuando el campo sea opcional
+- En el campo directamente -> Desaconsejado.
+```
+@Autowired
+public TestAutowired(Test testPorConstructor) {
+    testInyectado = testPorConstructor;
+}
+```
+    ->Buscara un bean de tipo Test y lo inyectara para su empleo.
+
+  ### 7.1 Conflictos entre bean inyectables(varios candidatos)
+
+Se puede dar el caso que tenga varios Bean del mismo tipo y Spring no sepa cual usar.
+
+#### Conflictos entre constructores del Bean Creado:
+
+Si tengo varios constructores de mi bean con sobrecarga, Spring no va a saver cual usar.
+
+- `@Autowired` == `@Autowired(required=true)` cogera ese constructor por defecto
+    - Solo puede haber un required true en mi Bean.
+- `@Autowired(required=false)` de entre todos los constructores que tengan esta anotacion cogera el que tenga mayor coincidencia en el numero de parametros pasados.
+
+#### Conflictos entre Bean candidatos a inyectar:
+
+* Si quiero inyectar un Bean en concreto de los candidatos usaré la anotación **Qualifier** en el lugar donde se vaya a inyectar del Bean.
+```
+@Autowired
+public void  setTestAutowired(@Qualifier("aliasDelBean") Test test) {//...}
+```
+  -> Inyectara el Bean con el alias indicado
+
+  **ó**
+
+Si quiero que en todo el codigo se escoja un Bean por defecto cuando se tenga que inyectar, puedo usar **Primary** En la declaracion del Bean.
+```
+@Bean
+@Primary
+public Test miTest() {...}
+```
+  ->Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
