@@ -9,6 +9,8 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.mde.SpringBasics.entidades.autowired.AutowiredInterfz;
+import es.mde.SpringBasics.entidades.autowired.UsaAutowired;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.ClaseConfiguracionJava;
 import es.mde.SpringBasics.entidades.log.LoggingTester;
@@ -48,6 +50,11 @@ public class SpringBasicsApplication {
 		
 		LoggingTester testeadorDeLoggingTester = context.getBean(LoggingTester.class);
 		testeadorDeLoggingTester.metodoTester();
+		
+		
+		System.out.println("Probando Autowired:");
+		UsaAutowired autoenlazadoAutowired = context.getBean(UsaAutowired.class);
+		autoenlazadoAutowired.init();
 	}
 
 }

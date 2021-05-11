@@ -352,14 +352,18 @@ logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %
 
 ## 7. Autowired
 
-Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired`
+Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired` en el Bean que vaya a ser inyectado
+-> La anotacion solo se debe utilizar en metodos que reciban parametros
 Normalmente si solo hay un Bean que sea del tipo necesitado en mi contenedor, no sera necesario.
 
-Puedo Utilizar Autowired en tres sitios:
-- En el Constructor -> Cuando el parametro del constructor sea un **campo obligatorio**
+En un `@Component` puedo Utilizar Autowired en tres sitios:
+- En el Constructor -> Cuando el parametro del constructor sea un **campo obligatorio**-> automaticamente pasara al constructor al cargar el Bean inyectado (si no puede crear un null)
 - En un setter -> Cuando el campo sea opcional
 - En el campo directamente -> Desaconsejado.
 ```
+@Component
+class...{
+  //...
 @Autowired
 public TestAutowired(Test testPorConstructor) {
     testInyectado = testPorConstructor;
@@ -383,7 +387,6 @@ Si tengo varios constructores de mi bean con sobrecarga, Spring no va a saver cu
 
 * Si quiero inyectar un Bean en concreto de los candidatos usaré la anotación **Qualifier** en el lugar donde se vaya a inyectar del Bean.
 ```
-@Autowired
 public void  setTestAutowired(@Qualifier("aliasDelBean") Test test) {//...}
 ```
   -> Inyectara el Bean con el alias indicado
