@@ -436,7 +436,11 @@ Pasos:
 
 No recomendado, mejor hacer por Xml, es mas desacoplado y obligatorio para cuando no tengo acceso al codigo. No obstante [ver documentacion de Spring Baeldung](https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa#boot)
 
-> **Arrancar la BD de H2**
+Para añadir los repositorios a escanear usar `@EnableJpaRepositories("ruta...")`
+Para añadir las entidades a escanear usar 
+`@EntityScan("ruta...")`
+
+> ### Arrancar la BD de H2**
 > Voy a la ruta de la libreria ⇒ H2.jar
 > ↳ creo acceso directo a la libreria de la BD en la raiz de mi proyecto (o en el escritorio)
 > ↳ doy permisos de ejecución ⇒ cmd → `chmod +x H2` 
@@ -448,3 +452,28 @@ No recomendado, mejor hacer por Xml, es mas desacoplado y obligatorio para cuand
 >           -  Si da pega cambiar a embebed y volver a Server
 >            - Puede dar pega el puerto
 >            ↳ añadir al properties `server.port = 8082` → No puede ser el mismo
+
+### 8.2 Los repositorios - interfazDAO
+
+El repositorio va ser el encargado de hacer el CRUD con la BD.
+Usare la interfaz [JpaRepository](https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html) que me proporciona todos los metodos de acceso a BD:
+  - `.save(S entity)`
+  - `.delete(T entity)`
+  - `.getById(ID id)`
+  - `.deleteById(ID id)`
+  - ...otros
+
+Recibe por un generico la clase java declarada como entidad (con `@Entity` o por `ORM.xml`), la interfaz será la que haga la traslacion entre las clases java y la BD en automatico.
+  
+Pasos:
+En la carpeta Repositorios:
+1. Creo una **interfaz** con el nombre**DAO**
+`NombreClaseAAlmacenarDAO`
+1. Le hago que extienda de la interfaz de Spring 
+`JpaRepository<T,ID>`, donde:
+    - T => es el tipo de claseEntidad a persistir (debe estar creada antes, puede ser de una libreria. Debe estar **escaneada por Spring**)
+    - ID => es el tipo de variable que va a tener el ID de la clase (Sera la PK-clave primaria) => Sera un **campo obligatorio**
+1. Le pongo la anotacion a la interfaz:
+    - `@Repository` si sólo se va a almacenar en BD.
+    - `@RepositoryRestResource` **<-Recomendado**, si además se va a exponer al front **REST**
+1. Debe estar escaneada por el entity-Manager <- jpa-config.xml
