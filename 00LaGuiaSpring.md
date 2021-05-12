@@ -108,7 +108,7 @@ Los Beans son objetos singleton que quiero utilizar, seran las clases que luego 
 
 Voy a inyectar Beans a mano sin usar Spring,
 
--> comento las lineas de mi main 
+> comento las lineas de mi main 
 - //@SpringBootAplication
 - //SpringApplication.run(SpringBasicsApplication.class, args);
 
@@ -186,7 +186,7 @@ Es el modo intermedio.
     ### 4.3 Beans por @Anotaciones 
 
 Es el modo mas acoplado.
-    -> **¡Necesito acceso al código!**
+  > **¡Necesito acceso al código!**
 
 1. Pongo la anotacion ``@Component`` en la cabecera de la **clase** que sea un Bean
     - Se hace de la misma manera para las anotaciones que heredan de @component
@@ -291,7 +291,7 @@ Voy a insertar con la anotacion ``@Value`` un String proveniente de un fichero `
 Pretendo llevar un registro de sucesos que ocurren con la aplicacion.
 Sustituire las salidas que normalmente lanzaba por consola para comprobar a otro lugar, ademas de mensajes de error, etc.
 
--> fichero.log
+> fichero.log
 
 - Tambien puedo lanzar una notificacion o mandar un correo ante un evento. 
 
@@ -353,7 +353,7 @@ logging.pattern.console=${mde.formatofecha} [%thread %clr(${PID:- })] %-5level %
 ## 7. Autowired
 
 Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired` en el Bean que vaya a ser inyectado
--> La anotacion solo se debe utilizar en metodos que reciban parametros
+> La anotacion solo se debe utilizar en metodos que reciban parametros
 Normalmente si solo hay un Bean que sea del tipo necesitado en mi contenedor, no sera necesario.
 
 En un `@Component` puedo Utilizar Autowired en tres sitios:
@@ -369,7 +369,7 @@ public TestAutowired(Test testPorConstructor) {
     testInyectado = testPorConstructor;
 }
 ```
-    ->Buscara un bean de tipo Test y lo inyectara para su empleo.
+  > Buscara un bean de tipo Test y lo inyectara para su empleo.
 
   ### 7.1 Conflictos entre bean inyectables(varios candidatos)
 
@@ -389,7 +389,7 @@ Si tengo varios constructores de mi bean con sobrecarga, Spring no va a saver cu
 ```
 public void  setTestAutowired(@Qualifier("aliasDelBean") Test test) {//...}
 ```
-  -> Inyectara el Bean con el alias indicado
+  > Inyectara el Bean con el alias indicado
 
   **ó**
 
@@ -399,4 +399,52 @@ Si quiero que en todo el codigo se escoja un Bean por defecto cuando se tenga qu
 @Primary
 public Test miTest() {...}
 ```
-  ->Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
+  > Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
+
+# 8. PERSISTENCIA DE DATOS
+
+Se va a usar Java Persitance API **JPA** Con la implemnetacion **Hibernate**.
+
+Voy a almacenar **clases.java** en un **SGBD Relacional** realizando un mapeo. **ORM**  (Object-Relacional Mapping).
+
+
+
+### 8.1 El Entity manager 
+
+Necesito un fichero de configuracion que me va a decir:
+- Donde estan mis **repositorios-interfacesDAO** que van proporcionar los metodos CRUD a BD
+- Donde estan las **clases-entidades** a persistir
+- Archivos de "mappeo" personalizado de las entidades
+- Datos de configuracion del SGBD que voy a emplear
+
+La configuracion se puede hacer por xml o por anotaciones.
+
+#### Por Xml
+
+Pasos:
+1. Copio el [archivo `jpa-config.xml`](https://gist.github.com/Awes0meM4n/5bef4d556f960a696823235d188d5387#file-jpa-config-xml) a mi carpeta resources de mi proyecto
+1. Marco en el archivo los datos de configuracion
+1. Añado al `aplication.properties` las variables de configuracion del Data-Source (H2.jar).
+    - Driver a emplear
+    - User
+    - Pass
+    - Url de la BD
+    nota: los datos de arrancar deben coincidir con los que muestra la BD al iniciarla
+1. Tengo que importar al Main el archivo de configuracion de jpa `@ImportResource({"classpath:config/jpa-config.xml"})`
+
+#### Por anotaciones
+
+No recomendado, mejor hacer por Xml, es mas desacoplado y obligatorio para cuando no tengo acceso al codigo. No obstante [ver documentacion de Spring Baeldung](https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa#boot)
+
+> **Arrancar la BD de H2**
+> Voy a la ruta de la libreria ⇒ H2.jar
+> ↳ creo acceso directo a la libreria de la BD en la raiz de mi proyecto (o en el escritorio)
+> ↳ doy permisos de ejecución ⇒ cmd → `chmod +x H2` 
+> ⇒ Necesito un archivo test en el home del usuario
+> ↳ ejecuto la BD → `java -jar nombreArchivoH2`  
+>    ↳ Me abre el navegador con el acceso a la BD
+>    ⇒ Seleccionar Generic H2 (Server)
+>       ⇒ connect
+>           -  Si da pega cambiar a embebed y volver a Server
+>            - Puede dar pega el puerto
+>            ↳ añadir al properties `server.port = 8082` → No puede ser el mismo
