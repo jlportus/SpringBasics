@@ -430,6 +430,8 @@ Pasos:
     - Pass
     - Url de la BD
     nota: los datos de arrancar deben coincidir con los que muestra la BD al iniciarla
+    **+**
+    - Dialecto de la Implementacion de Hibernate 
 1. Tengo que importar al Main el archivo de configuracion de jpa `@ImportResource({"classpath:config/jpa-config.xml"})`
 
 #### Por anotaciones
@@ -440,7 +442,7 @@ Para añadir los repositorios a escanear usar `@EnableJpaRepositories("ruta...")
 Para añadir las entidades a escanear usar 
 `@EntityScan("ruta...")`
 
-> ### Arrancar la BD de H2**
+> ### Arrancar la BD de H2
 > Voy a la ruta de la libreria ⇒ H2.jar
 > ↳ creo acceso directo a la libreria de la BD en la raiz de mi proyecto (o en el escritorio)
 > ↳ doy permisos de ejecución ⇒ cmd → `chmod +x H2` 
@@ -451,7 +453,7 @@ Para añadir las entidades a escanear usar
 >       ⇒ connect
 >           -  Si da pega cambiar a embebed y volver a Server
 >            - Puede dar pega el puerto
->            ↳ añadir al properties `server.port = 8082` → No puede ser el mismo
+>            ↳ añadir al properties `server.port = 8082` → Conflicto con Tomcat porque dice que esta ocupado
 
 ### 8.2 Los repositorios - interfazDAO
 
@@ -477,3 +479,36 @@ En la carpeta Repositorios:
     - `@Repository` si sólo se va a almacenar en BD.
     - `@RepositoryRestResource` **<-Recomendado**, si además se va a exponer al front **REST**
 1. Debe estar escaneada por el entity-Manager <- jpa-config.xml
+
+### 8.3 Las Entidades - Entity
+
+Sera la clase java que quiero persistir. Tiene que tener:
+- Constructor por defecto
+- ID -> PK clave primaria que debe cumplir con ser Unica y obligatoria en todas las entidades del tipo.
+
+Se pueden implementar por anotaciones o por xml
+
+##### 8.3.1 Por anotaciones @Entity
+
+- En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
+- Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
+- Tiene que ser escaneada por el entity-manager
+
+> Se puede determinar que el ID sea autogenerado con: 
+> ```
+> @Id
+> @GeneratedValue
+> int id;
+> ```
+
+##### 8.3.3 Emplear las entidades en el Main
+
+Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
+
+1. Crear variable del tipo interfazDao y asignarle el Bean del Contenedor de la InterfazDAO.
+`EntidadDAO variableEntidadDAO = context.getBean(EntidadDAO.class);`
+1. mediante la variable de tipo interfaz uso los metodos de Jparepository para hacer el CRUD.
+   - Por ejemplo salvar:
+   `variableEntidadDAO.save(new Entidad());`
+  - Por ejemplo eliminar por ID:
+   `variableEntidadDAO.deleteById(3);`

@@ -10,8 +10,9 @@
     <!-- Para persistencia -->
 	<!--Debo decirle donde buscar en el paquete Base donde se encuentran los REPOSITORIOS que voy a persistir
     Seran las interfacesDAO extend jpaRepository-->
+    <!-- Elegir un metodo u otro si no sobreescribe y puede generar conflicto  -->
 	<!-- Con un placeHolder al Properties -->
-    <jpa:repositories base-package="${es.mde.paquete-base}" />
+    <!-- <jpa:repositories base-package="${es.mde.paquete-base}" /> -->
     <!-- Con la ruta directa -->
     <jpa:repositories base-package="es.mde.SpringBasics" />
 
@@ -48,14 +49,14 @@
         </property>
         
         <!-- Propiedades de jpa para el enlace y configuracion propiamente dicha de la base de datos -->
-        <!-- <property name="jpaProperties">
+        <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
-        </property> -->
+        </property>
         
     </bean>
 

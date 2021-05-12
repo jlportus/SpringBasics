@@ -9,11 +9,13 @@ import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import es.mde.SpringBasics.entidades.POJO.UsuarioAnotaciones;
 import es.mde.SpringBasics.entidades.autowired.AutowiredInterfz;
 import es.mde.SpringBasics.entidades.autowired.UsaAutowired;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.ClaseConfiguracionJava;
 import es.mde.SpringBasics.entidades.log.LoggingTester;
+import es.mde.SpringBasics.repositorios.UsuarioDAO;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 
 @SpringBootApplication
@@ -55,6 +57,13 @@ public class SpringBasicsApplication {
 		System.out.println("Probando Autowired:");
 		UsaAutowired autoenlazadoAutowired = context.getBean(UsaAutowired.class);
 		autoenlazadoAutowired.init();
+		
+		System.out.println("Probando Persistencia POJO por anotaciones");
+		UsuarioDAO miUsuario = context.getBean(UsuarioDAO.class);
+		miUsuario.save(new UsuarioAnotaciones());
+		miUsuario.save(new UsuarioAnotaciones());
+		miUsuario.deleteById(3);
+		
 	}
 
 }
