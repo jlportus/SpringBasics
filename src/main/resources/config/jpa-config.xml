@@ -32,6 +32,8 @@
                 <value>jpa/UsuarioXML.orm.xml</value>
                 <value>jpa/HijoHerencia.orm.xml</value>
                 <value>jpa/PadreHerencia.orm.xml</value>
+                <value>jpa/Elemento.orm.xml</value>
+                <value>jpa/PadreConColeccion.orm.xml</value>
             </list>
         </property>
         
