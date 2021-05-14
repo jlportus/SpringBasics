@@ -13,9 +13,11 @@ import es.mde.SpringBasics.entidades.POJO.UsuarioAnotaciones;
 import es.mde.SpringBasics.entidades.POJO.UsuarioXML;
 import es.mde.SpringBasics.entidades.autowired.AutowiredInterfz;
 import es.mde.SpringBasics.entidades.autowired.UsaAutowired;
+import es.mde.SpringBasics.entidades.herencia.HijoHerencia;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorAnotaciones;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.ClaseConfiguracionJava;
 import es.mde.SpringBasics.entidades.log.LoggingTester;
+import es.mde.SpringBasics.repositorios.HijoHerenciaDAO;
 import es.mde.SpringBasics.repositorios.UsuarioDAO;
 import es.mde.SpringBasics.repositorios.UsuarioXMLDAO;
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
@@ -71,6 +73,10 @@ public class SpringBasicsApplication {
 		miUsuarioXML.save(new UsuarioXML());
 		miUsuarioXML.save(new UsuarioXML());
 //		miUsuario.deleteById(3);
+		
+		System.out.println("Probando Persistencia con herencias");
+		HijoHerenciaDAO hijoConHerencia = context.getBean(HijoHerenciaDAO.class);
+		hijoConHerencia.save(new HijoHerencia());
 		
 	}
 

@@ -644,7 +644,7 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 > Hay que ir buscando las clases padres hasta encontrar las que tienen campos qeu sean heredados por las hijas
 
-1. Crear el `ClasePadre.orm.xml`
+1. Crear el `ClasePadre.orm.xml` (El hijo debe estar tambien hecho como si fuera un POJO)
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
@@ -662,7 +662,8 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 </entity-mappings>
 ```
-2. Crear la **interfazDAO** de la clase Padre
+2. Crear la **interfazDAO** de la clase que vaya a persistir (el Hijo)
 3. Agregar el  `ClasePadre.orm.xml` al **`Entity-Manager`**
 
 >**El ORM de la clase hija ya no tendra su campo ID, sera heredado** 
+> El ORM de la clase padre no tendra nombre de tabla.
