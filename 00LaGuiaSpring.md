@@ -527,9 +527,9 @@ Se pueden implementar por anotaciones o por xml
 
 ##### 8.3.1 Por anotaciones @Entity
 
-- En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
-- Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
-- Tiene que ser escaneada por el entity-manager
+1. En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
+1. Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
+1.  Tiene que ser escaneada por el entity-manager
 
 > Se puede determinar que el ID sea autogenerado con:
 >
@@ -539,6 +539,22 @@ Se pueden implementar por anotaciones o por xml
 > int id;
 > ```
 
+Para omitir campos al almacenar en la BD se us **TRANSIENT**
+- Como anotacion antes del campo `@Transient`
+- como modificador de la declaracion de la variable 
+  `private transient String campo;`
+
+Para ponerle un nombre personalizado a la tabla usar
+`@Table("Mi_tabla")`
+Para ponerle un nombre personalizado a las colunas usar
+`@Column(name="Mi_Columna")`
+Para personalizar el dato de las colunas usar `@Column`
+```
+@Column(length=200, 
+          scale=10, precision=2,
+          unique=true, 
+          nullable=false)
+```
 ##### 8.3.2 Por ORM.XML
 
 **OBLIGATORIO** usar cuando no se tiene acceso al codigo (compilado o librerias externas)
@@ -584,11 +600,19 @@ Se pueden implementar por anotaciones o por xml
     - como atributo xml:
       - `optional="false"` ->campo obligatorio (no puede ser opcional)
     - como sub-nodo xml
-      - `<column length="16"/>` -> Longitud maxima
+      - `<column` + `/>`
+      - `length="16"` -> Longitud maxima
+      - `unique="true"`
+  - Para omitir campos en la BD uso 
+     `<transient name="campo"/>`
+  - Para personalizar el nombre de la tabla
+     `<table name="Mi_Tabla"/>`
+  - Para personalizar el nombre de las columnas
+     `<column name="Mi_Columna"/>`
   
 > ¡NOTA! : Si la tabla esta creada y cambio las caracteristicas de ésta (campos opcionales, not null...) me dará error -> tengo que hacer `DROP TABLE` de la BD
 
-3. Añado al `jpa-config.xml` la lista con los archivos orm de cada Clase -> debe ser la ruta completa.
+1. Añado al `jpa-config.xml` la lista con los archivos orm de cada Clase -> debe ser la ruta completa.
    ```
    <property name="mappingResources">
       <list>
@@ -598,16 +622,47 @@ Se pueden implementar por anotaciones o por xml
       </list>
    </property>
    ```
-4. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
-##### 8.3.3 Emplear las entidades en el Main
+2. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
+##### 8.3. Emplear las entidades en el Main
 
 Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
 
 1. Crear variable del tipo interfazDao y asignarle el Bean del Contenedor de la InterfazDAO.
    `EntidadDAO variableEntidadDAO = context.getBean(EntidadDAO.class);`
-1. mediante la variable de tipo interfaz uso los metodos de Jparepository para hacer el CRUD.
+1. mediante la variable de tipo interfaz uso los metodos de **JpaRepository** para hacer el **CRUD**.
    - Por ejemplo salvar:
      `variableEntidadDAO.save(new Entidad());`
 
-- Por ejemplo eliminar por ID:
-  `variableEntidadDAO.deleteById(3);`
+   - Por ejemplo eliminar por ID:
+    `variableEntidadDAO.deleteById(3);`
+
+### 8.4 Persisitencia de clases con herencia
+
+Se dara el caso que existan clases que hereden de otras y determinados campos no esten declarados en la clase hija (lo estarán en la clase padre), pero si sean del objeto.
+
+Las clases padres se han de declarar como si fueran entidades normales, pero se utiliza la etiqueta `<mapped-superclass>` en lugar de `<entity>` (o la anotación `@MappedSuperclass` si tengo acceso al codigo)
+
+> Hay que ir buscando las clases padres hasta encontrar las que tienen campos qeu sean heredados por las hijas
+
+1. Crear el `ClasePadre.orm.xml`
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm 
+                                     http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                 version="1.0">
+
+  <mapped-superclass class="es.ruta.ClasePadre"
+                     access="FIELD">
+    <attributes>
+      <id name="id" />
+    </attributes>
+  </mapped-superclass>
+
+</entity-mappings>
+```
+2. Crear la **interfazDAO** de la clase Padre
+3. Agregar el  `ClasePadre.orm.xml` al **`Entity-Manager`**
+
+>**El ORM de la clase hija ya no tendra su campo ID, sera heredado** 
