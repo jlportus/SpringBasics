@@ -30,6 +30,8 @@
         <property name="mappingResources">
             <list>
                 <value>jpa/UsuarioXML.orm.xml</value>
+                <value>jpa/Elemento.orm.xml</value>
+                <value>jpa/PadreConColeccion.orm.xml</value>
             </list>
         </property>
         

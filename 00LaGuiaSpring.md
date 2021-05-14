@@ -529,7 +529,7 @@ Se pueden implementar por anotaciones o por xml
 
 1. En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
 1. Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
-1.  Tiene que ser escaneada por el entity-manager
+1. Tiene que ser escaneada por el entity-manager
 
 > Se puede determinar que el ID sea autogenerado con:
 >
@@ -540,8 +540,9 @@ Se pueden implementar por anotaciones o por xml
 > ```
 
 Para omitir campos al almacenar en la BD se us **TRANSIENT**
+
 - Como anotacion antes del campo `@Transient`
-- como modificador de la declaracion de la variable 
+- como modificador de la declaracion de la variable
   `private transient String campo;`
 
 Para ponerle un nombre personalizado a la tabla usar
@@ -549,12 +550,14 @@ Para ponerle un nombre personalizado a la tabla usar
 Para ponerle un nombre personalizado a las colunas usar
 `@Column(name="Mi_Columna")`
 Para personalizar el dato de las colunas usar `@Column`
+
 ```
-@Column(length=200, 
+@Column(length=200,
           scale=10, precision=2,
-          unique=true, 
+          unique=true,
           nullable=false)
 ```
+
 ##### 8.3.2 Por ORM.XML
 
 **OBLIGATORIO** usar cuando no se tiene acceso al codigo (compilado o librerias externas)
@@ -603,13 +606,13 @@ Para personalizar el dato de las colunas usar `@Column`
       - `<column` + `/>`
       - `length="16"` -> Longitud maxima
       - `unique="true"`
-  - Para omitir campos en la BD uso 
-     `<transient name="campo"/>`
+  - Para omitir campos en la BD uso
+    `<transient name="campo"/>`
   - Para personalizar el nombre de la tabla
-     `<table name="Mi_Tabla"/>`
+    `<table name="Mi_Tabla"/>`
   - Para personalizar el nombre de las columnas
-     `<column name="Mi_Columna"/>`
-  
+    `<column name="Mi_Columna"/>`
+
 > ¡NOTA! : Si la tabla esta creada y cambio las caracteristicas de ésta (campos opcionales, not null...) me dará error -> tengo que hacer `DROP TABLE` de la BD
 
 1. Añado al `jpa-config.xml` la lista con los archivos orm de cada Clase -> debe ser la ruta completa.
@@ -623,6 +626,7 @@ Para personalizar el dato de las colunas usar `@Column`
    </property>
    ```
 2. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
+
 ##### 8.3. Emplear las entidades en el Main
 
 Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
@@ -630,11 +634,12 @@ Esto solo se hará en entorno de pruebas. En producción se captaria la entidad 
 1. Crear variable del tipo interfazDao y asignarle el Bean del Contenedor de la InterfazDAO.
    `EntidadDAO variableEntidadDAO = context.getBean(EntidadDAO.class);`
 1. mediante la variable de tipo interfaz uso los metodos de **JpaRepository** para hacer el **CRUD**.
+
    - Por ejemplo salvar:
      `variableEntidadDAO.save(new Entidad());`
 
    - Por ejemplo eliminar por ID:
-    `variableEntidadDAO.deleteById(3);`
+     `variableEntidadDAO.deleteById(3);`
 
 ### 8.4 Persisitencia de clases con herencia
 
@@ -645,11 +650,12 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 > Hay que ir buscando las clases padres hasta encontrar las que tienen campos qeu sean heredados por las hijas
 
 1. Crear el `ClasePadre.orm.xml`
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm 
+                 xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
                                      http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
                  version="1.0">
 
@@ -662,7 +668,87 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 </entity-mappings>
 ```
-2. Crear la **interfazDAO** de la clase Padre
-3. Agregar el  `ClasePadre.orm.xml` al **`Entity-Manager`**
 
->**El ORM de la clase hija ya no tendra su campo ID, sera heredado** 
+2. Crear la **interfazDAO** de la clase Padre
+3. Agregar el `ClasePadre.orm.xml` al **`Entity-Manager`**
+
+> **El ORM de la clase hija ya no tendra su campo ID, sera heredado**
+
+### 8.5 Persisitencia de clases con relación OneToMany
+
+Cuando tenga una entidad que contenga un campo que sea una lista(colección) de otros elementos usaré el **One to Many**.
+
+Para que la BD mantenga la trazabilidad de los elementos de una tabla a la otra, se hace con la propagacion de la FK.
+
+> Si fuese una relacion muchos a muchos, se podria hacer con una **@Join Table** con ambas PK de cada tabla, usando [**@ManyToMany**. Ver documentación.](https://en.wikibooks.org/wiki/Java_Persistence/ManyToMany)
+
+Para que la BD pueda hacer la relacion entre ambas Tablas, almacenara la PK de la tabla **@One** (se convertirá en FK) en un campo de cada elemento de la coleccion **@Many**.
+
+Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y tener ID.
+
+> Lo que voy a guardar en el campo FK será otro objeto.
+> JPA solo guarda primitivos u objetos si se estan empleando las relaciones @OneToMany.
+> Si no quiero que falle al intentar guardar un tipo objeto que no conoce, antes de hacer las relaciones, debo poner el campo como transient para que lo evite.
+
+1. Anotar el campo coleccion que contiene la clase contenedora con:
+
+   - **Por XML**. En el `orm.xml` de la clase que tiene la coleccion
+     - name: el nombre del campo de la clase contenedora
+     - target-entity: ruta a la clase del elemento de la lista (no puede ser una interfaz)
+     - mapped-by: campo Objetivo de la clase Elemento de la lista -> debe ser un objeto
+
+   ```
+   <one-to-many name="campoColeccion"
+                target-entity="es.ruta.ClaseElementoDeLista"
+                mapped-by="partido"/>
+   ```
+
+   - **Por @OneToMany**. En la clase que tiene la coleccion, le pongo al campo Coleccion
+     - mappedBy: campo Objetivo de la clase Elemento de la lista -> debe ser un objeto
+
+   ```
+   @OneToMany(mappedBy="nombreCampoDestino")
+   private Collection<Elementos> coleccion;
+   ```
+
+2. En la clase Elemento de la lista **Creo un campo** del tipo clase con campo coleccion("PadreContenedor") .
+   -> Aqui sera donde se almacene la FK en los objetos Elementos de la lista
+
+   - **Por XML**. En el `orm.xml` de la clase Elemento de la coleccion
+     - name: el nombre del campo tipo claseConColeccion
+       - fetch="LAZY"-> (atributo Opcional, mejora rendimiento)hace que no se carque en memoria el objeto con coleccion cada vez que se carque un elemento de la lista
+         `+` nodo interno xml
+     - join-column name: FK -> valor a almacenar en la BD
+     - referencedColumnName: nombre de la columna en la BD que contendra la FK
+
+   ```
+   <many-to-one name="campoClaseConColeccion"/>
+                             <!-- fetch="LAZY"/> -->
+
+         <join-column name="ID_PARTIDO"
+                 referencedColumnName="ID"/>
+
+   </many-to-one>
+   ```
+
+   - **Por @ManyToOne**. En la clase Elemento de la coleccion, le pongo al campo Contenedor
+
+   ```
+   @ManyToOne(fetch=FetchType.LAZY)
+   @JoinColumn(name="CampoIDDelContenedor")
+   private ElementoContenedor padreContenedor;
+   ```
+
+3. Crear un metodo sincronizador
+   -> Cada vez que se agregue un elemento en la coleccion se tiene que **propagar el ID** (PK) de la clase que tiene la lista al elemento de la lista (a su campo Padre Contenedor -> FK)
+
+   ```
+   public void addElemento(Elemento elemento) {
+    this.coleccionElementos.add(elemento);
+    elemento.setPadreoContenedor(this);
+   }
+   ```
+
+   > Cuando vaya a añadir un elemento a la lista, tendre que utilizar my metodo personalizado para que se propage la FK
+
+   > La tabla de los elementos de la lista tendran una nueva columna que hara referencia al elemento que los contiene.
