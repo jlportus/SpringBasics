@@ -85,9 +85,19 @@ public class SpringBasicsApplication {
 
 		System.out.println("Probando Persistencia Pre One to Many");
 		PadreConColeccionDAO padreContenedorColeccion = context.getBean(PadreConColeccionDAO.class);
-		padreContenedorColeccion.save(new PadreConColeccion("papa"));
-		ElementoDAO elemento = context.getBean(ElementoDAO.class);
-		elemento.save(new Elemento("hijo"));
+		PadreConColeccion padre = new PadreConColeccion("papa");
+		Elemento elemento = new Elemento("hijo");
+		padre.addElemento(elemento);
+		
+		
+		
+		
+		
+		
+		padreContenedorColeccion.save(padre);
+		ElementoDAO elementoElemento = context.getBean(ElementoDAO.class);
+		
+		elementoElemento.save(elemento);
 
 	}
 

@@ -650,6 +650,7 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 > Hay que ir buscando las clases padres hasta encontrar las que tienen campos qeu sean heredados por las hijas
 
 1. Crear el `ClasePadre.orm.xml` (El hijo debe estar tambien hecho como si fuera un POJO)
+
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
@@ -667,10 +668,11 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 </entity-mappings>
 ```
-2. Crear la **interfazDAO** de la clase que vaya a persistir (el Hijo)
-3. Agregar el  `ClasePadre.orm.xml` al **`Entity-Manager`**
 
->**El ORM de la clase hija ya no tendra su campo ID, sera heredado** 
+2. Crear la **interfazDAO** de la clase que vaya a persistir (el Hijo)
+3. Agregar el `ClasePadre.orm.xml` al **`Entity-Manager`**
+
+> **El ORM de la clase hija ya no tendra su campo ID, sera heredado**
 > El ORM de la clase padre no tendra nombre de tabla.
 
 ### 8.5 Persisitencia de clases con relación OneToMany
@@ -689,43 +691,45 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 > JPA solo guarda primitivos u objetos si se estan empleando las relaciones @OneToMany.
 > Si no quiero que falle al intentar guardar un tipo objeto que no conoce, antes de hacer las relaciones, debo poner el campo como transient para que lo evite.
 
-1. Anotar el campo coleccion que contiene la clase contenedora con:
+1. Anotar el **OneToMany** en el **campo coleccion(listado)** que contiene la claseContenedora con:
 
-   - **Por XML**. En el `orm.xml` de la clase que tiene la coleccion
+   - **Por XML**. En el `orm.xml` de la clase que tiene la coleccion (añadir un atributo mas)
      - name: el nombre del campo de la clase contenedora
      - target-entity: ruta a la clase del elemento de la lista (no puede ser una interfaz)
-     - mapped-by: campo Objetivo de la clase Elemento de la lista -> debe ser un objeto
+     - mapped-by: campo Objetivo de la clase ElementoDeLaLista en el que se va a lamacenar al padre-> debe ser un objeto y deben llamarse igual
+       > Si no pongo el maped by hace una join table
 
    ```
    <one-to-many name="campoColeccion"
                 target-entity="es.ruta.ClaseElementoDeLista"
-                mapped-by="partido"/>
+                mapped-by="padreContenedor"/>
    ```
 
    - **Por @OneToMany**. En la clase que tiene la coleccion, le pongo al campo Coleccion
-     - mappedBy: campo Objetivo de la clase Elemento de la lista -> debe ser un objeto
+     - mappedBy: campo Objetivo de la clase Elemento de la lista en el que se va a lamacenar al padre-> debe ser un objeto y deben llamarse igual
 
    ```
    @OneToMany(mappedBy="nombreCampoDestino")
    private Collection<Elementos> coleccion;
    ```
 
-2. En la clase Elemento de la lista **Creo un campo** del tipo clase con campo coleccion("PadreContenedor") .
+2. En la clase tipo ElementoDeLaLista **Creo un campo** del tipo ClaseContenedora que tiene la coleccion ("PadreContenedor") .
    -> Aqui sera donde se almacene la FK en los objetos Elementos de la lista
+3. Añado el **ManyToOne** al elemento (un atributo mas)
 
    - **Por XML**. En el `orm.xml` de la clase Elemento de la coleccion
      - name: el nombre del campo tipo claseConColeccion
        - fetch="LAZY"-> (atributo Opcional, mejora rendimiento)hace que no se carque en memoria el objeto con coleccion cada vez que se carque un elemento de la lista
          `+` nodo interno xml
-     - join-column name: FK -> valor a almacenar en la BD
+     - join-column name: FK -> valor a almacenar en la BD (no se puede llamar igual que otra columna de la tabla)
      - referencedColumnName: nombre de la columna en la BD que contendra la FK
 
    ```
-   <many-to-one name="campoClaseConColeccion"/>
-                             <!-- fetch="LAZY"/> -->
+   <many-to-one name="campoClaseConColeccion">
+                             <!-- fetch="LAZY"> -->
 
          <join-column name="ID_PARTIDO"
-                 referencedColumnName="ID"/>
+                 referencedColumnName="IDPadre"/>
 
    </many-to-one>
    ```
@@ -738,8 +742,8 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
    private ElementoContenedor padreContenedor;
    ```
 
-3. Crear un metodo sincronizador
-   -> Cada vez que se agregue un elemento en la coleccion se tiene que **propagar el ID** (PK) de la clase que tiene la lista al elemento de la lista (a su campo Padre Contenedor -> FK)
+4. Crear un metodo sincronizador en la clase con la coleccion
+   -> Cada vez que se añada un elemento a la coleccion se tiene que **propagar el ID** (PK) de la clase que tiene la lista, al elemento de la lista (a su campo Padre Contenedor -> FK)
 
    ```
    public void addElemento(Elemento elemento) {
@@ -747,6 +751,8 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
     elemento.setPadreoContenedor(this);
    }
    ```
+
+   > Tengo que tener los getters/setters
 
    > Cuando vaya a añadir un elemento a la lista, tendre que utilizar mi metodo personalizado para que se propage la FK
 

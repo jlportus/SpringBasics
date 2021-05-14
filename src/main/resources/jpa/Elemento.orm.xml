@@ -22,6 +22,9 @@
 			<basic name="nombre" optional="true">
 				<column length="16" />
 			</basic>
+			<many-to-one name="padreConColeccion" fetch="LAZY">
+				<join-column name="idPadre" />
+			</many-to-one>
 		</attributes>
 	</entity>
 </entity-mappings>

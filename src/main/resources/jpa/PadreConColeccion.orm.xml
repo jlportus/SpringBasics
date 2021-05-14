@@ -22,7 +22,9 @@
 			<basic name="nombre" optional="true">
 				<column length="16" />
 			</basic>
-			<transient name="listadoElementos"/>
+			<one-to-many name="listadoElementos"
+             			target-entity="es.mde.SpringBasics.entidades.oneToMany.Elemento"
+             			mapped-by="padreConColeccion"/>
 		</attributes>
 	</entity>
 </entity-mappings>

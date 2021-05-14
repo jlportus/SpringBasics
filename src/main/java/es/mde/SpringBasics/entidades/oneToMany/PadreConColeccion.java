@@ -1,5 +1,6 @@
 package es.mde.SpringBasics.entidades.oneToMany;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PadreConColeccion {
@@ -33,11 +34,17 @@ public class PadreConColeccion {
 	}
 
 	public PadreConColeccion() {
-
+		listadoElementos = new ArrayList<Elemento>();
 	}
 	
 	public PadreConColeccion(String nombre) {
+		this();
 		this.nombre = nombre;
 	}
 
+	//Metodo Sincronizador
+	public void addElemento(Elemento elemento) {
+		 this.listadoElementos.add(elemento);
+		 elemento.setPadreConColeccion(this);
+		}
 }
