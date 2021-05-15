@@ -13,6 +13,6 @@ public class Hijo extends Father {
 	}
 	
 	public Hijo() {
-		
+		super();
 	}
 }

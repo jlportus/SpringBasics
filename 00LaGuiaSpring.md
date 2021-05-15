@@ -727,6 +727,8 @@ En una de los `orm.xml` de una de las subclases le indico que va a ser una tabla
      </entity>
      ```
 
+      > A veces discriminator value Eclipse lo reconoce como error, pero funciona:)
+
 Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
 
 1. En la entidad que genera la tabla:
@@ -747,6 +749,7 @@ Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
    ```
 
 3. Ambas deben igualmente heradar de la misma Superclase, ya que sera esta la que las vincule por el **Mapped-Superclass** y el **ID-PK**
+4. Cada subclase debe tener su **itfzDAO** para poder persistir
 
 ### 8.7 Persisitencia de clases con relación OneToMany
 

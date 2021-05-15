@@ -8,7 +8,7 @@
 	<!-- ruta completa de la clase a Persistir -->
 	<!-- access:"FIELD" = cuando se va a acceder directamente a los campos -->
 	<!-- access"POPERTY"=cuando voy a acceder a los campos a traves de setter/getters -->
-	<mapped-superclass class="es.mde.SpringBasics.entidades.singleTable.Father"
+	<mapped-superclass class="es.mde.SpringBasics.entidades.singletable.Father"
 		access="FIELD">
 
 				

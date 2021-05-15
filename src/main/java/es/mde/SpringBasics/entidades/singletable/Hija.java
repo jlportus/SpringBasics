@@ -13,6 +13,6 @@ public class Hija extends Father {
 	}
 	
 	public Hija() {
-		
+		super();
 	}
 }

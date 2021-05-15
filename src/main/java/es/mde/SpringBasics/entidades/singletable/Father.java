@@ -1,6 +1,6 @@
 package es.mde.SpringBasics.entidades.singletable;
 
-public abstract class Father {
+public class Father {
 
 	private int id;
 	private String nombre;
