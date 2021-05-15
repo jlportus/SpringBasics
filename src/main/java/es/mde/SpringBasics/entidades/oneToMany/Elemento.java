@@ -4,6 +4,8 @@ public class Elemento {
 
 	private int id;
 	private String nombre;
+	private long precio;
+	private String fabricante;
 
 	private PadreConColeccion padreConColeccion;
 
@@ -21,6 +23,22 @@ public class Elemento {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public long getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(long precio) {
+		this.precio = precio;
+	}
+
+	public String getFabricante() {
+		return fabricante;
+	}
+
+	public void setFabricante(String fabricante) {
+		this.fabricante = fabricante;
 	}
 
 	public PadreConColeccion getPadreConColeccion() {

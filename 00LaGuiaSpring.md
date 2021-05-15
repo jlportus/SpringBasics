@@ -21,7 +21,7 @@ Añadir
 ⇒ mejor que sobre que no falte
 
 - Spring Boot Dev Tools
-- Spring Web 
+- Spring Web
 - Spring Web-services
 - Spring Rest Repositories
 - Spring Hateoas
@@ -404,7 +404,7 @@ public TestAutowired(Test testPorConstructor) {
 
 > Buscara un bean de tipo Test y lo inyectara para su empleo.
 
-  ### 7.1 Conflictos entre bean inyectables(varios candidatos)
+### 7.1 Conflictos entre bean inyectables(varios candidatos)
 
 Se puede dar el caso que tenga varios Bean del mismo tipo y Spring no sepa cual usar.
 
@@ -758,11 +758,12 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 
    > La tabla de los elementos de la lista tendran una nueva columna que hara referencia al elemento que los contiene.
 
-  ## 9. REST - Añadir la capa de presentación
+## 9. REST - Añadir la capa de presentación
 
 **RE**presentational **S**tate **T**ransfer define una interfaz para el acceso a la aplicacion a raves de un protocolo **HTTP**
 
 Mediante las operaciones de http se puede acceder a las operaciones de la BD de CRUD usando url´s.
+
 - **HTTP - BD**
 - POST - CREATE
 - GET - READ
@@ -784,17 +785,21 @@ Al arrancar la API en local, en el puerto que inicia TOMCAT [http://localhost:80
 
 Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 
-1. En el Properties añadir: 
+1. En el Properties añadir:
+
 ```
 spring.data.rest.basePath=/api
 spring.data.rest.detection-strategy=annotated
 ```
+
 - La ruta de acceso pasara a ser `http://url`**`/api`** -> se usa para versionado de api y pruebas
 - Solo se mostraran las entidades que tengan la anotacion **RestResource**
+
 2. Cambiar la anotaciones de las entidaes que se quieran mostrar
-  de `@Repository` a `@RepositoryRestResource`
-2. Perosnalizar las rutas URL para el acceso en las **intfazDAO**
+   de `@Repository` a `@RepositoryRestResource`
+3. Perosnalizar las rutas URL para el acceso en las **intfazDAO**
    - por defecto Spring pone nombre sa las rutas que no seran amigables -> personalizar con:
+
 ```
 @RepositoryRestResource(path="elemento"
 			,itemResourceRel="elemento"
@@ -803,6 +808,7 @@ spring.data.rest.detection-strategy=annotated
 public interface intfzDAO extends JpaRepository<Elemento, Long> {
 }
 ```
+
 - path: sera la ruta URL personalizada por la que accedo al recurso
 - exported=false: hace que el recurso no se muestre aunque tenga la anotacion
   Las siguientes hacen referencia a como se llamara el recurso dentro del Json devuelto
@@ -812,3 +818,60 @@ public interface intfzDAO extends JpaRepository<Elemento, Long> {
 > **Muy Importante**: Necesitare serializar los objetos Elementos de una coleccion que se exponen con REST.
 > Si no lo hago, al exponerlo, expondria tambien al objeto claseColeccion (Padre), que volveria a exponer a los Elementos de la Lista -> **Entra en Bucle recursivo**
 > Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista.
+
+### 9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins
+
+Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
+
+- que no se quieran mostrar
+- Que se les quiera cambiar el nombre
+- Que se quieran mostrar en un orden determinado.
+
+1. En la clase
+
+    ```
+    @Configuration
+    public class claseConfiguracionPorJava{
+        }
+    ```
+
+    se añade un Bean de tipo **ObjectMapper** a la que se le añaden los mixins.
+      - Para añadir un mixin, se usa el metodo `.addMixin(Clase, Mixin)` -> cuando se crea un objeto del tipo Clase -> se personalizan sus campos con las anotaciones que haya en el Mixin.
+
+    ```
+      @Bean
+      public ObjectMapper getObjectMapper() {
+        ObjectMapper mapper = new ObjectMapper();
+          mapper.addMixIn(Cliente.class, Mixins.Cliente.class);
+        return mapper;
+      }
+    ```
+1. Los **Mixins** sera una clase java que se guarde en el paquete `rest` 
+   -> esta clase contendra normalmente delcaraciones de intefaces (preferentemente) o clases abstractas con las anotaciones de **@Jackson** para serializar y personalizar los campos. Existen anotaciones de tipo:
+   - Para la clase (se pasan en un objeto array):
+      - de orden
+      - de campos ignorados
+      ```
+      @JsonPropertyOrder({ "campo1", "campo3", "campo2" })
+      @JsonIgnoreProperties(value = { "campo4", "campo5" })
+      public static interface Cliente {
+        //...campos y getters/setters
+      }
+      ```
+   - Para los campos y getters de la clase
+     - Para personalizar el nombre del campo  -> Si no se conoce el tipo de dato del getter -> Se puede usar `Object`
+     - para ignorar el campo (Tiene preferencia en las herencias)
+     - Para formatos personalizados (sobre todo en fechas)
+      ```
+      @JsonProperty("nombreCampoPersonalizado")
+      abstract String getNombre();
+      @JsonIgnore 
+      Object objeto;
+      @JsonFormat(
+            shape = JsonFormat.Shape.STRING,
+            pattern = "dd-MM-yyyy hh:mm:ss")
+      public Date eventDate;
+      ```
+> Hay configuraciones de serializacion que se pueden anotar en un properties, para que se realicen sobre todos los objetos
+
+> La serializacion es bidireccional, se aplica en los GET (salida) y en los POST (entrada) desde el front, es decir al mandar objetos tienen que tener la misma estructura con los mismos nombres en los campos.

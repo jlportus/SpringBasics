@@ -3,6 +3,10 @@ package es.mde.SpringBasics.entidades.inyeccionDeBeans;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import es.mde.SpringBasics.entidades.oneToMany.Elemento;
+import es.mde.SpringBasics.rest.Mixins;
 import net.bytebuddy.asm.Advice.This;
 
 @Configuration
@@ -24,4 +28,11 @@ public class ClaseConfiguracionJava {
 		return beanConfigJava;
 
 	}
+	
+	@Bean
+	public ObjectMapper getObjectMapper() {
+	    ObjectMapper mapper = new ObjectMapper();
+	      mapper.addMixIn(Elemento.class, Mixins.Elemento.class);
+	    return mapper;
+	  }
 }
