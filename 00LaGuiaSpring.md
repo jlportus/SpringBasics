@@ -525,40 +525,44 @@ Sera la clase java que quiero persistir. Tiene que tener:
 
 Se pueden implementar por anotaciones o por xml
 
-##### 8.3.1 Por anotaciones @Entity
+#### 8.3.1 Por anotaciones @Entity
 
 1. En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
-1. Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
-1. Tiene que ser escaneada por el entity-manager
+   - Para personalizar el nombre de la tabla, puede tener la anotacion **@Table**
+2. Tiene que tener un campo con la anotacion `@Id` **Obligatorio**
+3. - Se puede determinar que el ID sea autogenerado con **Generated Value**
+4. Tiene que ser escaneada por el entity-manager
 
-> Se puede determinar que el ID sea autogenerado con:
->
-> ```
-> @Id
-> @GeneratedValue
-> int id;
-> ```
+   ```
+   @Entity
+   @Table(name="NombreTablaPersonalizado")`
+   public class Clase {
 
-Para omitir campos al almacenar en la BD se us **TRANSIENT**
+       @Id
+       @GeneratedValue
+       int id;
+
+       //setters/getters
+       //+ Constructor por defecto
+   }
+   ```
+
+Para omitir campos al almacenar en la BD se usa **TRANSIENT**
 
 - Como anotacion antes del campo `@Transient`
 - como modificador de la declaracion de la variable
   `private transient String campo;`
+- Para ponerle un nombre personalizado a las colunas usar
+  `@Column(name="Mi_Columna")`
+- Para personalizar el dato en la BD de las colunas usar `@Column`
+  ```
+  @Column(length=200,
+            scale=10, precision=2,
+            unique=true,
+            nullable=false)
+  ```
 
-Para ponerle un nombre personalizado a la tabla usar
-`@Table("Mi_tabla")`
-Para ponerle un nombre personalizado a las colunas usar
-`@Column(name="Mi_Columna")`
-Para personalizar el dato de las colunas usar `@Column`
-
-```
-@Column(length=200,
-          scale=10, precision=2,
-          unique=true,
-          nullable=false)
-```
-
-##### 8.3.2 Por ORM.XML
+#### 8.3.2 Por ORM.XML
 
 **OBLIGATORIO** usar cuando no se tiene acceso al codigo (compilado o librerias externas)
 
@@ -645,7 +649,7 @@ Esto solo se hará en entorno de pruebas. En producción se captaria la entidad 
 
 Se dara el caso que existan clases que hereden de otras y determinados campos no esten declarados en la clase hija (lo estarán en la clase padre), pero si sean del objeto.
 
-Las clases padres se han de declarar como si fueran entidades normales, pero se utiliza la etiqueta `<mapped-superclass>` en lugar de `<entity>` (o la anotación `@MappedSuperclass` si tengo acceso al codigo)
+Las clases padres se han de declarar como si fueran entidades normales, pero se utiliza la etiqueta `<mapped-superclass>` en lugar de `<entity>` (o la anotación **`@MappedSuperclass`** si tengo acceso al codigo)
 
 > Hay que ir buscando las clases padres hasta encontrar las que tienen campos qeu sean heredados por las hijas
 
@@ -675,7 +679,76 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 > **El ORM de la clase hija ya no tendra su campo ID, sera heredado**
 > El ORM de la clase padre no tendra nombre de tabla.
 
-### 8.6 Persisitencia de clases con relación OneToMany
+### 8.6 Single Table
+
+Puede haber casos de especializacion de entidades que tengan una superclase en comun (Con campos comunes, ID-PK) y cada subclase tenga campos especificos diferentes.
+Por rendimiento en las consultas puede ser adecuado almacenar ambas especializaciones en una misma Tabla **Single Table** asumiedo que:
+
+- Necesitaré un campo discriminatorio **TipoSubclase**
+- Tendre **null´s** en los campos que no sean comunes
+
+> Prerrequisitos: Existira una `mapped-superclass` de la cual heredaran ambas subclases. Lo normal será que sea la superclase al qeu contenga el ID(PK) de la tabla (seria un campo heredado para ambas)
+
+En una de los `orm.xml` de una de las subclases le indico que va a ser una tabla Single
+
+1. Dentro de la etiqueta `<entity>` existente introduzco como cabecera:
+
+   - **inheritance strategy="SINGLE_TABLE"** para indicar que es una Single Table (strategy se puede omitir por ser el valor por defecto)
+   - **discriminator-column name="NombreColumna"** para indicar el nombre de la columna discriminatoria
+   - **`+`** **discriminator value** para cada entidad con su valor correspondiente
+   - ...el resto de atributos de la entidad
+
+     ```
+     <entity class="es.ruta.Clase" access="FIELD">
+          <table name="NombretablaSingle"/>
+
+          <inheritance strategy="SINGLE_TABLE"/>
+          <discriminator-column name="TIPO"/>
+          <discriminator-value>S</discriminator-value>
+
+          <attributes>
+              ...
+          </attributes>
+     </entity>
+     ```
+
+2. Agrego al `<entity-mappings>` la otra entidad como en un orm normal, añadiendo:
+
+   - Una etiqueta que sea el **valor discriminatorio**
+
+     ```
+     <entity class="es.ruta.OtraClase" access="FIELD">
+
+         <discriminator-value>T</discriminator-value>
+
+         <attributes>
+            ...
+         </attributes>
+     </entity>
+     ```
+
+Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
+
+1. En la entidad que genera la tabla:
+   ```
+   @Entity
+   @Table(name="NombreTablaSINGLE")`
+   @Access(value=AccessType.FIELD)
+   @DiscriminatorValue("Subclase 1")
+   public class ClaseTipo1 extends SuperClasePadre {...}
+   ```
+2. En el resto de subclases
+
+   ```
+   @Entity
+   @Access(value=AccessType.FIELD)
+   @DiscriminatorValue("Subclase 2")
+   public class ClaseTipo2 extends SuperClasePadre {...}
+   ```
+
+3. Ambas deben igualmente heradar de la misma Superclase, ya que sera esta la que las vincule por el **Mapped-Superclass** y el **ID-PK**
+
+### 8.7 Persisitencia de clases con relación OneToMany
 
 Cuando tenga una entidad que contenga un campo que sea una lista(colección) de otros elementos usaré el **One to Many**.
 
@@ -829,78 +902,73 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 
 1. En la clase
 
-    ```
-    @Configuration
-    public class claseConfiguracionPorJava{
-        }
-    ```
+   ```
+   @Configuration
+   public class claseConfiguracionPorJava{
+       }
+   ```
 
-    se añade un Bean de tipo **ObjectMapper** a la que se le añaden los mixins.
-      - Para añadir un mixin, se usa el metodo `.addMixin(Clase, Mixin)` -> cuando se crea un objeto del tipo Clase -> se personalizan sus campos con las anotaciones que haya en el Mixin.
+   se añade un Bean de tipo **ObjectMapper** a la que se le añaden los mixins.
 
-    ```
-      @Bean
-      public ObjectMapper getObjectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-          mapper.addMixIn(Cliente.class, Mixins.Cliente.class);
-        return mapper;
-      }
-    ```
-1. Los **Mixins** sera una clase java que se guarde en el paquete `rest` 
+   - Para añadir un mixin, se usa el metodo `.addMixin(Clase, Mixin)` -> cuando se crea un objeto del tipo Clase -> se personalizan sus campos con las anotaciones que haya en el Mixin.
+
+   ```
+     @Bean
+     public ObjectMapper getObjectMapper() {
+       ObjectMapper mapper = new ObjectMapper();
+         mapper.addMixIn(Cliente.class, Mixins.Cliente.class);
+       return mapper;
+     }
+   ```
+
+1. Los **Mixins** sera una clase java que se guarde en el paquete `rest`
    -> esta clase contendra normalmente delcaraciones de intefaces (preferentemente) o clases abstractas con las anotaciones de **@Jackson** para serializar y personalizar los campos. Existen anotaciones de tipo:
    - Para la clase (se pasan en un objeto array):
-      - de orden
-      - de campos ignorados
-      ```
-      @JsonPropertyOrder({ "campo1", "campo3", "campo2" })
-      @JsonIgnoreProperties(value = { "campo4", "campo5" })
-      public static interface Cliente {
-        //...campos y getters/setters
-      }
-      ```
-   - Para los campos y getters de la clase
-     - Para personalizar el nombre del campo  -> Si no se conoce el tipo de dato del getter -> Se puede usar `Object`
-     - para ignorar el campo (Tiene preferencia en las herencias)
-     - Para formatos personalizados (sobre todo en fechas)
-      ```
-      @JsonProperty("nombreCampoPersonalizado")
-      abstract String getNombre();
-      @JsonIgnore 
-      Object objeto;
-      @JsonFormat(
-            shape = JsonFormat.Shape.STRING,
-            pattern = "dd-MM-yyyy hh:mm:ss")
-      public Date eventDate;
-      ```
-> Hay configuraciones de serializacion que se pueden anotar en un properties, para que se realicen sobre todos los objetos
+     - de orden
+     - de campos ignorados
+     ```
+     @JsonPropertyOrder({ "campo1", "campo3", "campo2" })
+     @JsonIgnoreProperties(value = { "campo4", "campo5" })
+     public static interface Cliente {
+       //...campos y getters/setters
+     }
+     ```
+   - Para los campos y getters de la clase - Para personalizar el nombre del campo -> Si no se conoce el tipo de dato del getter -> Se puede usar `Object` - para ignorar el campo (Tiene preferencia en las herencias) - Para formatos personalizados (sobre todo en fechas)
+     `@JsonProperty("nombreCampoPersonalizado") abstract String getNombre(); @JsonIgnore Object objeto; @JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss") public Date eventDate;`
+     > Hay configuraciones de serializacion que se pueden anotar en un properties, para que se realicen sobre todos los objetos
 
 > La serializacion es bidireccional, se aplica en los GET (salida) y en los POST (entrada) desde el front, es decir al mandar objetos tienen que tener la misma estructura con los mismos nombres en los campos.
 
-### 9.3 Pasar a nuvel 3 HATEOAS
+### 9.3 Pasar a nivel 3 HATEOAS
 
-Hará que los enlaces sean autodescubribles, es decir, donde antes me ponia un objetoConColeccion en un campo de un elemento (me ponia un JSON), y tenia el problema de la recursividad en los objetos 
--> me saldra un hipervinculo: 
+Hará que los enlaces sean autodescubribles, es decir, donde antes me ponia un objetoConColeccion en un campo de un elemento (me ponia un JSON), y tenia el problema de la recursividad en los objetos
+-> me saldra un hipervinculo:
+
 - un enlace al padre en el campo del objetoConColeccion del elemento
 - y enlaces a cada uno de los elementos de la coleccion en campo lista del objetoConColeccion
--> me permite navegar de un objeto a otro
+  -> me permite navegar de un objeto a otro
 
 > **ya no tendre que ignorar** el campo del elemento que me generaba la recusividad al elementoConColeccion (el campo de la FK)
 
 Necesito acceder a los campo para hacer anotaciones (**solo se puede hacer con anotaciones**)
-> Si no tengo acceso
-> 1. hago una claseImpl hija que extienda a la que estoy haciendo la persistencia-REST. En la carpeta repositorios (al lado de su DAO).
-> 2. Sobreescribo el metodo -> `@Overrride` ... getColeccion() 
-1. Pongo la anotacion `@OneToMany` y le pongo la **targetEntity** al elemento de la lista(tiene que ser un objeto implementado, no puede ser una interfaz)
-     - El metodo devolvera el `super.get()`
 
-    ```
-    //@Overrride (si lo estuviese haciendo con la clase heredera)
-    @OneToMany(targetEntity=Elemento.class)
-    public Collection<Elementos> getColeccion(){
-        return super.getColeccion();
-    }
-    ```
+> Si no tengo acceso
+>
+> 1. hago una claseImpl hija que extienda a la que estoy haciendo la persistencia-REST. En la carpeta repositorios (al lado de su DAO).
+> 2. Sobreescribo el metodo -> `@Overrride` ... getColeccion()
+
+1. Pongo la anotacion `@OneToMany` y le pongo la **targetEntity** al elemento de la lista(tiene que ser un objeto implementado, no puede ser una interfaz)
+
+   - El metodo devolvera el `super.get()`
+
+   ```
+   //@Overrride (si lo estuviese haciendo con la clase heredera)
+   @OneToMany(targetEntity=Elemento.class)
+   public Collection<Elementos> getColeccion(){
+       return super.getColeccion();
+   }
+   ```
+
 1. Pongo la anotacion `@ManyToOne` en el campo **FK** del Elemento que hace referencia al elementoConColeccion
    - No tiene que estar ignorado con el `ObjectMapper + mixin`
-2. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
-
+1. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
