@@ -12,7 +12,7 @@ public class Mixins {
 	@JsonIgnoreProperties(value = { "fabricante", "precio" })
 	public abstract class Elemento {
 
-		@JsonIgnore
+//		@JsonIgnore
 		private PadreConColeccion padreConColeccion;
 
 	}

@@ -1,5 +1,7 @@
 package es.mde.SpringBasics.entidades.oneToMany;
 
+import javax.persistence.ManyToOne;
+
 public class Elemento {
 
 	private int id;
@@ -7,6 +9,7 @@ public class Elemento {
 	private long precio;
 	private String fabricante;
 
+	@ManyToOne
 	private PadreConColeccion padreConColeccion;
 
 	public int getId() {

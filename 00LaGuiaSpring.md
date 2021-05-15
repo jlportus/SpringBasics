@@ -817,7 +817,7 @@ public interface intfzDAO extends JpaRepository<Elemento, Long> {
 
 > **Muy Importante**: Necesitare serializar los objetos Elementos de una coleccion que se exponen con REST.
 > Si no lo hago, al exponerlo, expondria tambien al objeto claseColeccion (Padre), que volveria a exponer a los Elementos de la Lista -> **Entra en Bucle recursivo**
-> Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista.
+> Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista (el campo de la FK).
 
 ### 9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins
 
@@ -875,3 +875,32 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 > Hay configuraciones de serializacion que se pueden anotar en un properties, para que se realicen sobre todos los objetos
 
 > La serializacion es bidireccional, se aplica en los GET (salida) y en los POST (entrada) desde el front, es decir al mandar objetos tienen que tener la misma estructura con los mismos nombres en los campos.
+
+### 9.3 Pasar a nuvel 3 HATEOAS
+
+Hará que los enlaces sean autodescubribles, es decir, donde antes me ponia un objetoConColeccion en un campo de un elemento (me ponia un JSON), y tenia el problema de la recursividad en los objetos 
+-> me saldra un hipervinculo: 
+- un enlace al padre en el campo del objetoConColeccion del elemento
+- y enlaces a cada uno de los elementos de la coleccion en campo lista del objetoConColeccion
+-> me permite navegar de un objeto a otro
+
+> **ya no tendre que ignorar** el campo del elemento que me generaba la recusividad al elementoConColeccion (el campo de la FK)
+
+Necesito acceder a los campo para hacer anotaciones (**solo se puede hacer con anotaciones**)
+> Si no tengo acceso
+> 1. hago una claseImpl hija que extienda a la que estoy haciendo la persistencia-REST. En la carpeta repositorios (al lado de su DAO).
+> 2. Sobreescribo el metodo -> `@Overrride` ... getColeccion() 
+1. Pongo la anotacion `@OneToMany` y le pongo la **targetEntity** al elemento de la lista(tiene que ser un objeto implementado, no puede ser una interfaz)
+     - El metodo devolvera el `super.get()`
+
+    ```
+    //@Overrride (si lo estuviese haciendo con la clase heredera)
+    @OneToMany(targetEntity=Elemento.class)
+    public Collection<Elementos> getColeccion(){
+        return super.getColeccion();
+    }
+    ```
+1. Pongo la anotacion `@ManyToOne` en el campo **FK** del Elemento que hace referencia al elementoConColeccion
+   - No tiene que estar ignorado con el `ObjectMapper + mixin`
+2. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
+
