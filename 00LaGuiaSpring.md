@@ -21,7 +21,9 @@ Añadir
 ⇒ mejor que sobre que no falte
 
 - Spring Boot Dev Tools
-- Spring Web
+- Spring Web 
+- Spring Web-services
+- Spring Rest Repositories
 - Spring Hateoas
 - JDBC API
 - Spring JDBC API
@@ -31,9 +33,7 @@ Añadir
   Opcionales
 - Java mail sender
 
-enlace resumen de lo generado en el inicializer:
-
-https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail
+enlace resumen de lo [generado en el inicializer](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail,web-services,data-rest,data-jdbc)
 
 ## 1. Iniciar Proyecto en Eclipse
 
@@ -83,7 +83,7 @@ application {
 ejecutar:
 
 - **refresh gradle proyect**
-- **boot run**
+- **boot run** -> debe arrancar Spring sin errores
 
 ## 3. Creando la estructura de carpetas de mi proyecto
 
