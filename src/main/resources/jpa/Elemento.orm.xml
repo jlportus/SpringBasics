@@ -22,7 +22,7 @@
 			<basic name="nombre" optional="true">
 				<column length="16" />
 			</basic>
-			<many-to-one name="padreConColeccion" fetch="LAZY">
+			<many-to-one name="padreConColeccion" >
 				<join-column name="idPadre" />
 			</many-to-one>
 		</attributes>

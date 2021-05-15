@@ -404,7 +404,7 @@ public TestAutowired(Test testPorConstructor) {
 
 > Buscara un bean de tipo Test y lo inyectara para su empleo.
 
-### 7.1 Conflictos entre bean inyectables(varios candidatos)
+  ### 7.1 Conflictos entre bean inyectables(varios candidatos)
 
 Se puede dar el caso que tenga varios Bean del mismo tipo y Spring no sepa cual usar.
 
@@ -479,7 +479,7 @@ Para añadir los repositorios a escanear usar `@EnableJpaRepositories("ruta...")
 Para añadir las entidades a escanear usar
 `@EntityScan("ruta...")`
 
-> ### Arrancar la BD de H2
+> ### Arrancar la BD Local de H2
 >
 > Voy a la ruta de la libreria ⇒ H2.jar
 > ↳ creo acceso directo a la libreria de la BD en la raiz de mi proyecto (o en el escritorio)
@@ -627,7 +627,7 @@ Para personalizar el dato de las colunas usar `@Column`
    ```
 2. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
 
-##### 8.3. Emplear las entidades en el Main
+### 8.4. Emplear las entidades en el Main
 
 Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
 
@@ -641,7 +641,7 @@ Esto solo se hará en entorno de pruebas. En producción se captaria la entidad 
    - Por ejemplo eliminar por ID:
      `variableEntidadDAO.deleteById(3);`
 
-### 8.4 Persisitencia de clases con herencia
+### 8.5 Persisitencia de clases con herencia
 
 Se dara el caso que existan clases que hereden de otras y determinados campos no esten declarados en la clase hija (lo estarán en la clase padre), pero si sean del objeto.
 
@@ -675,7 +675,7 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 > **El ORM de la clase hija ya no tendra su campo ID, sera heredado**
 > El ORM de la clase padre no tendra nombre de tabla.
 
-### 8.5 Persisitencia de clases con relación OneToMany
+### 8.6 Persisitencia de clases con relación OneToMany
 
 Cuando tenga una entidad que contenga un campo que sea una lista(colección) de otros elementos usaré el **One to Many**.
 
@@ -757,3 +757,58 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
    > Cuando vaya a añadir un elemento a la lista, tendre que utilizar mi metodo personalizado para que se propage la FK
 
    > La tabla de los elementos de la lista tendran una nueva columna que hara referencia al elemento que los contiene.
+
+  ## 9. REST - Añadir la capa de presentación
+
+**RE**presentational **S**tate **T**ransfer define una interfaz para el acceso a la aplicacion a raves de un protocolo **HTTP**
+
+Mediante las operaciones de http se puede acceder a las operaciones de la BD de CRUD usando url´s.
+- **HTTP - BD**
+- POST - CREATE
+- GET - READ
+- PUT - UPDATE
+- DELETE - DELETE
+
+Si la API es de nivel 3 (**HATEOAS**), implica que las llamadas a la BD sean autodescubribles mediante enlaces URL
+
+### 9.0 Prerequisitos para Spring
+
+El proyecto Spring debe tener las dependencias de REST para el correcto funcionamiento.
+
+Al arrancar la API en local, en el puerto que inicia TOMCAT [http://localhost:8080](http://localhost:8080) (si no se ha cambiado en el properties con `server.port=`), se podra acceder a todos los elementos del proyecto que sean `@Repository`
+
+> Se puede acceder mediante **POSTMAN**
+> Ya no será necesario crear elementos en el main, se harian desde POSTMAN (o el front)
+
+### 9.1 Limitando el acceso a repositorios
+
+Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
+
+1. En el Properties añadir: 
+```
+spring.data.rest.basePath=/api
+spring.data.rest.detection-strategy=annotated
+```
+- La ruta de acceso pasara a ser `http://url`**`/api`** -> se usa para versionado de api y pruebas
+- Solo se mostraran las entidades que tengan la anotacion **RestResource**
+2. Cambiar la anotaciones de las entidaes que se quieran mostrar
+  de `@Repository` a `@RepositoryRestResource`
+2. Perosnalizar las rutas URL para el acceso en las **intfazDAO**
+   - por defecto Spring pone nombre sa las rutas que no seran amigables -> personalizar con:
+```
+@RepositoryRestResource(path="elemento"
+			,itemResourceRel="elemento"
+			,collectionResourceRel="elementos")
+                        //,exported=false
+public interface intfzDAO extends JpaRepository<Elemento, Long> {
+}
+```
+- path: sera la ruta URL personalizada por la que accedo al recurso
+- exported=false: hace que el recurso no se muestre aunque tenga la anotacion
+  Las siguientes hacen referencia a como se llamara el recurso dentro del Json devuelto
+- itemResourceRel="elemento"
+- collectionResourceRel="elementos"
+
+> **Muy Importante**: Necesitare serializar los objetos Elementos de una coleccion que se exponen con REST.
+> Si no lo hago, al exponerlo, expondria tambien al objeto claseColeccion (Padre), que volveria a exponer a los Elementos de la Lista -> **Entra en Bucle recursivo**
+> Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista.
