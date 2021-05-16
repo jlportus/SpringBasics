@@ -36,6 +36,8 @@
                 <value>jpa/PadreConColeccion.orm.xml</value>
                 <value>jpa/Father.orm.xml</value>
                 <value>jpa/Hijo.orm.xml</value>
+                <value>jpa/Generador.orm.xml</value>
+                
             </list>
         </property>
         

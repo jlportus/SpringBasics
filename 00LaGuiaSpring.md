@@ -986,27 +986,94 @@ Por rendimiento puede hacer falta cargar al iniciar la API determinados elemento
 Generar un servicio Entidad:
 
 1. Crear un `@Bean` con un **metodo** clase java
+
    - llamado `getServicioEntidadACargar()`
    - que recibe por parametro las entidades de la BD que equeremos almacenar en memoria.
    - que devuelva el propio objeto **Map<Clase, ID>** servicioEntidad (que almacena pares campo-valor ).
    - Al cargarse en el contenedor, recupera de la BD los elementos que nos interesan y los almacena en una variable.
+
      - (Se puede crear en el archivo de configuracionPorJava)
 
-      ```
-      @Bean
-      public Map<Clase, ID> getServicioEntidad(IntfDAO intfDAO){
-          Map<Clase, ID> servicioEntidad = new HashMap<>();
-          intfDAO.findAll().forEach(p -> {
-              servicioEntidad.add(Participante.class, p)
-          })
-          return servicioEntidad;
-      }
-      ```
+     ```
+     @Bean
+     public Map<Clase, ID> getServicioEntidad(IntfDAO intfDAO){
+         Map<Clase, ID> servicioEntidad = new HashMap<>();
+         intfDAO.findAll().forEach(p -> {
+             servicioEntidad.add(Participante.class, p)
+         })
+         return servicioEntidad;
+     }
+     ```
 
 1. Las entidades que necesiten recuperar algun dato de los que se almacenen en el Servicio Entidad
    - Tendran una variable de tipo Servicio Entidad
-2. Agrego el **parametro ServicioEntidad** al constructor/setter del resto de entidades que van a a necesitar algun elemento de lo almacenado en él, para que cuando se cree una entidad de ese tipo, recuperen los datos de lo almacenado en él sin acceder a la BD.
+1. Agrego el **parametro ServicioEntidad** al constructor/setter del resto de entidades que van a a necesitar algun elemento de lo almacenado en él, para que cuando se cree una entidad de ese tipo, recuperen los datos de lo almacenado en él sin acceder a la BD.
    - Al insertar por el constructor se asignara el parametro(que sera un bean a la variable local)
 
-
 > Esto esta sin probar.
+
+## 11.Listeners
+
+Las operaciones con la BD tienen un "Ciclo de Vida" con la operacioens que serealizan en el CRUD de datos:
+
+- PostLoad
+- PrePersist
+- PostPersist
+- PreUpdate
+- PostUpdate
+- PreRemove
+- PostRemove
+ > Se pueden poner en una entidad estas anotaciones (**@PostLoad**, ...) sobre alguno de sus metodos para que se inicien a lo largo de su ciclo de Vida 
+
+Un listener sera una llamada desde una clase(cuando se instancia) a otra clase para que se ejecute codigo de allí aprovechando las operaciones del ciclo de VIDA.
+
+Pasos
+
+1. Añado a la clase iniciadora la referencia a la clase que se inicia en cascada con **EntityListener**
+
+   - Por anotaciones
+     ```
+     @EntityListeners(ClaseObjetivo.class)
+     public class ClaseIniciadora { ... }
+     ```
+   - Por XML, en su ORM añado las clases listener
+
+     ```
+     <entity name="ClaseIniciadora" class="es.ruta.ClaseIniciadora" access="FIELD">
+         <entity-listeners>
+             <entity-listener class="es.ruta.ListernerObjetivo"/>
+         </entity-listeners>
+         ...
+     </entity>
+     ```
+
+2. En la clase ListernerObjetivo tiene que ser un **@Bean** -> en el paquete de repositorios 
+3. Le añado las anotaciones del ciclo de vida sobre los metodos que se tienenen que lanzar.
+     - Por anotaciones
+        ```
+        @Component
+        class ListernerObjetivo{
+        
+        @PrePersist
+        public void prePersist(Object object) {
+            //instrucciones
+        }
+        @PreUpdate
+        public void preUpdate(Object object) {
+          //instrucciones
+        }
+        ```
+ - Por XML, en su ORM añado las clases listener
+
+     ```
+     <entity name="ListernerObjetivo" class="es.ruta.ListernerObjetivo" access="FIELD">
+        <pre-persist method-name="prePersist"/>
+        <pre-update method-name="preUpdate"/>
+         ...
+     </entity>
+     ```
+
+     > Sera normal que se pase el propio objeto iniciador (va implicito el paso) como parametro a alguno de los metodos objetivo.
+     > Tambien puede ser un **@Bean** el que se emplee en el método
+
+ 
