@@ -727,7 +727,7 @@ En una de los `orm.xml` de una de las subclases le indico que va a ser una tabla
      </entity>
      ```
 
-      > A veces discriminator value Eclipse lo reconoce como error, pero funciona:)
+     > A veces discriminator value Eclipse lo reconoce como error, pero funciona:)
 
 Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
 
@@ -975,3 +975,38 @@ Necesito acceder a los campo para hacer anotaciones (**solo se puede hacer con a
 1. Pongo la anotacion `@ManyToOne` en el campo **FK** del Elemento que hace referencia al elementoConColeccion
    - No tiene que estar ignorado con el `ObjectMapper + mixin`
 1. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
+
+## 10. Servicio Entidad
+
+Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
+
+- menos accesos a la BD
+- Mayor rapidez al leer los datos (Ya estan en memoria).
+
+Generar un servicio Entidad:
+
+1. Crear un `@Bean` con un **metodo** clase java
+   - llamado `getServicioEntidadACargar()`
+   - que recibe por parametro las entidades de la BD que equeremos almacenar en memoria.
+   - que devuelva el propio objeto **Map<Clase, ID>** servicioEntidad (que almacena pares campo-valor ).
+   - Al cargarse en el contenedor, recupera de la BD los elementos que nos interesan y los almacena en una variable.
+     - (Se puede crear en el archivo de configuracionPorJava)
+
+      ```
+      @Bean
+      public Map<Clase, ID> getServicioEntidad(IntfDAO intfDAO){
+          Map<Clase, ID> servicioEntidad = new HashMap<>();
+          intfDAO.findAll().forEach(p -> {
+              servicioEntidad.add(Participante.class, p)
+          })
+          return servicioEntidad;
+      }
+      ```
+
+1. Las entidades que necesiten recuperar algun dato de los que se almacenen en el Servicio Entidad
+   - Tendran una variable de tipo Servicio Entidad
+2. Agrego el **parametro ServicioEntidad** al constructor/setter del resto de entidades que van a a necesitar algun elemento de lo almacenado en él, para que cuando se cree una entidad de ese tipo, recuperen los datos de lo almacenado en él sin acceder a la BD.
+   - Al insertar por el constructor se asignara el parametro(que sera un bean a la variable local)
+
+
+> Esto esta sin probar.
