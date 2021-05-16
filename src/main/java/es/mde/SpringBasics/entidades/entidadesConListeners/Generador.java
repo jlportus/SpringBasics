@@ -1,5 +1,10 @@
 package es.mde.SpringBasics.entidades.entidadesConListeners;
 
+import javax.persistence.EntityListeners;
+
+import es.mde.SpringBasics.repositorios.GeneradorListener;
+
+@EntityListeners(GeneradorListener.class)
 public class Generador {
 
 	private int id;

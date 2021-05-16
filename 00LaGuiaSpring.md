@@ -1047,7 +1047,8 @@ Pasos
      </entity>
      ```
 
-2. En la clase ListernerObjetivo tiene que ser un **@Bean** -> en el paquete de repositorios 
+2. En la `ClaseListerner` objetivo tiene que ser una clase java -> en el paquete de repositorios 
+    -  Tiene que ser un **Bean (@Component)** 
 3. Le añado las anotaciones del ciclo de vida sobre los metodos que se tienenen que lanzar.
      - Por anotaciones
         ```
@@ -1073,7 +1074,8 @@ Pasos
      </entity>
      ```
 
+     > **¡Es obligatorio que los metodos @PrePersist,... reciban un parametro!**
      > Sera normal que se pase el propio objeto iniciador (va implicito el paso) como parametro a alguno de los metodos objetivo.
-     > Tambien puede ser un **@Bean** el que se emplee en el método
+     > Tambien puede ser un **@Bean** el que se pase al método
 
  
