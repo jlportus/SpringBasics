@@ -874,7 +874,7 @@ spring.data.rest.detection-strategy=annotated
 2. Cambiar la anotaciones de las entidaes que se quieran mostrar
    de `@Repository` a `@RepositoryRestResource`
 3. Perosnalizar las rutas URL para el acceso en las **intfazDAO**
-   - por defecto Spring pone nombre sa las rutas que no seran amigables -> personalizar con:
+   - por defecto Spring pone nombres a las rutas que no seran amigables -> personalizar con:
 
 ```
 @RepositoryRestResource(path="elemento"
@@ -976,6 +976,69 @@ Necesito acceder a los campo para hacer anotaciones (**solo se puede hacer con a
    - No tiene que estar ignorado con el `ObjectMapper + mixin`
 1. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
 
+### 9.4 Personalizar Endpoints
+
+A traves del hiperenlace **Profile** de cada entidad puedo acceder a todos los metodos que se pueden realizar sobre esa entidad desde una llamada HTTP.
+
+`url/api/profile/pathElemento`
+
+Si voy a la IntfzDAO puedo hacer @Override de los metodos heredados de JpaRepository (ClickSecundario - source - Override)
+
+Al sobreescribirlos puedo anotarlos Con **@RestResource** y personalizar:
+- (exported = false) -> para que no se muestren
+- (path="name") -> para añadir una ruta personalizada al metodo
+#### 9.4.1 Personalizar Querys
+
+ JPA ofrece por defecto una serie de [metodos **"Query"**](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repository-query-keywords) que permiten realizar operaciones sobre la BD
+
+ Puedo hacer metodos personalizados utilizando la sintaxis del enlace en la firma del metodo para que me realice una consulta personalizada.
+
+ JPA -> trocea el String del nombre del metodo y lo transforma en una consulta SQL.
+> las consultas solo funcionan sobre campos de existentes de las tablas -> Si se necesita hay que exponer con rest controler
+
+ Las Consultas generales son:
+ - findBy
+ - getBy
+ - deleteBy
+  `+`
+    - NombreDeLaColumnaDeLaTabla
+      - `AND`, `OR`
+      - OtraColumna
+    `+` modificadores:
+        - IgnoreCase
+        - Containing
+        - Between
+Quedando asi:
+```
+List<Person> findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
+
+//Equivaldria +/- a:
+SELECT person 
+FROM tablaEntidadInterfazDao
+WHERE emailAdress="parametro1" AND lastName="Parametro2"
+
+```
+> los delete en principio solo funcionan por ID
+#### 9.4.2 Recibir parametros por la URL
+
+Se pasarán parametros por la URL, que se han de asignar al metodo personalizado con **@Param**
+- Automaticamente coge el valor String de la URL y lo inserta como parametro al metodo donde este la anotacion.
+```
+ObjetoRetorno metodoFindBy(@Param("ParametroEnlaURL") String parametroLocal);
+```
+Los parametros por la URL se pasan con el simbolo `?`
+ `url/search/metodo?nombreParametroEnlaURL=valor&otroParametro=valor`:
+
+#### 9.4.3 Añadir los Query personalizados:
+1. Ir a la interfazDAO de la entidad y en el cuerpo de la interfaz añadir el metodo Query con los parametros necesarios
+2. Ponerle la anotacion **@RestResource**
+3. Añadir Path personalizado y parametros de la URL si hubiera
+   ```
+   @RestResource(path="personaemail")
+   List<Person> findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
+   ```
+
+> Puedo encontrar los metodos personalizados por la URL: en el `path`**`/entidadPath/search`** de cada recurso
 ## 10. Servicio Entidad
 
 Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
