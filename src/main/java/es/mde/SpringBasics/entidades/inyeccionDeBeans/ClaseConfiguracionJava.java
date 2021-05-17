@@ -1,18 +1,25 @@
 package es.mde.SpringBasics.entidades.inyeccionDeBeans;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
-import org.springframework.data.rest.webmvc.PersistentEntityResourceAssembler;
 import org.springframework.data.rest.webmvc.RepositorySearchesResource;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.RepresentationModelProcessor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -22,7 +29,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import es.mde.SpringBasics.entidades.oneToMany.Elemento;
 import es.mde.SpringBasics.rest.ElementoController;
 import es.mde.SpringBasics.rest.Mixins;
-import net.bytebuddy.asm.Advice.This;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Configuration
 public class ClaseConfiguracionJava {
@@ -43,61 +51,58 @@ public class ClaseConfiguracionJava {
 		return beanConfigJava;
 
 	}
-	
+
 	@Bean
 	public ObjectMapper getObjectMapper() {
-	    ObjectMapper mapper = new ObjectMapper();
-	      mapper.addMixIn(Elemento.class, Mixins.Elemento.class);
-	    return mapper;
-	  }
-	
-	@Bean
-	RepresentationModelProcessor<RepositorySearchesResource> searchLinks(RepositoryRestConfiguration config) {
-	    return new RepresentationModelProcessor<RepositorySearchesResource>() {
-
-	        @Override
-	        public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
-
-	            //le indico la entidad donde tiene que insertar el enlace
-	            if (searchResource.getDomainType().equals(Elemento.class)) {
-
-	              //si el enlace coincide lo insertara con el siguiente bloque
-
-	                try {
-
-	                    //Le digo el nombre de mi metodo personalizado
-	                    String nombreMetodo = "getPacos";
-
-	                    //busco en la entidad el metodo que coincide con el mio personalizado
-	                    //(le tengo que decir tambien los parametros que recibe + Assembler)
-	                    Method method = ElementoController.class.getMethod(nombreMetodo, String.class,
-	                            PersistentEntityResourceAssembler.class);
-
-	                    //capto la URI de la entidad con linkTo
-	                    URI uri = org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
-	                            .linkTo(method).toUri();
-
-	                    //me construyo la url al metodo
-	                    String url = new URI(uri.getScheme()
-	                                        , uri.getUserInfo()
-	                                        , uri.getHost()
-	                                        , uri.getPort()
-	                                        , config.getBasePath() + uri.getPath()
-	                                        , uri.getQuery()
-	                                        , uri.getFragment()).toString();
-	                          //el ?txt sera el parametro recibido
-	                    searchResource.add(new Link(url + "{?txt}", nombreMetodo));
-	                } catch (NoSuchMethodException | URISyntaxException e) {
-	                    e.printStackTrace();
-	                }
-	            }
-
-	            return searchResource;
-	        }
-
-	    };
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.addMixIn(Elemento.class, Mixins.Elemento.class);
+		return mapper;
 	}
-	
+
+	@Bean
+	RepresentationModelProcessor<RepositorySearchesResource> addSearchLinks(RepositoryRestConfiguration config) {
+		Map<Class<?>, Class<?>> controllersRegistrados = new HashMap<>();
+
+		//le indico la entidad donde tiene que insertar el enlace y el controlador
+		controllersRegistrados.put(Elemento.class, ElementoController.class);
+
+		return new RepresentationModelProcessor<RepositorySearchesResource>() {
+
+			@SuppressWarnings("deprecation")
+			@Override
+			public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
+				
+				//si el enlace coincide lo insertara con el siguiente bloque
+				if (controllersRegistrados.containsKey(searchResource.getDomainType())) {
+					Method[] metodos = controllersRegistrados.get(searchResource.getDomainType()).getDeclaredMethods();
+					for (Method m : metodos) {
+						if (!m.isAnnotationPresent(ResponseBody.class))
+							continue;
+						try {
+							Object[] pathVars = Stream.of(m.getParameters())
+									.filter(p -> p.isAnnotationPresent(PathVariable.class))
+									.map(p -> "(" + p.getName() + ")").collect(Collectors.toList()).toArray();
+							URI uri = linkTo(m, pathVars).toUri();
+							String path = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(),
+									config.getBasePath() + uri.getPath(), uri.getQuery(), uri.getFragment()).toString()
+											.replace("(", "{").replace(")", "}");
+							String requestParams = Stream.of(m.getParameters())
+									.filter(p -> p.isAnnotationPresent(RequestParam.class)).map(Parameter::getName)
+									.collect(Collectors.joining(","));
+							searchResource.add(new Link(path + "{?" + requestParams + "}", m.getName()));
+						} catch (URISyntaxException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+
+				return searchResource;
+			}
+
+		};
+
+	}
+
 	@Bean
 	CorsFilter corsFilter() {
 		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
