@@ -22,6 +22,8 @@ public interface PadreConColeccionDAO extends JpaRepository<PadreConColeccion, I
 	@RestResource(path = "nombre")
 	List<PadreConColeccion> findByNombre(@Param("nombre") String nombre);
 
+	List<PadreConColeccion> findByNombreIgnoreCaseContaining(String txt);
+
 //	@RestResource(path = "borrarid")
 //	void deleteById(@Param("id") Integer id);
 

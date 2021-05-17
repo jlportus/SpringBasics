@@ -8,6 +8,6 @@ import es.mde.SpringBasics.entidades.oneToMany.Elemento;
 @RepositoryRestResource(path="elemento"
 						,itemResourceRel="elemento"
 						,collectionResourceRel="elementos")
-public interface ElementoDAO extends JpaRepository<Elemento, Integer>{
+public interface ElementoDAO extends JpaRepository<Elemento, Integer>, ElementoDAOCustom{
 
 }
