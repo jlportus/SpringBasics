@@ -47,4 +47,11 @@ public class PadreConColeccion {
 		 this.listadoElementos.add(elemento);
 		 elemento.setPadreConColeccion(this);
 		}
+
+	@Override
+	public String toString() {
+		return "PadreConColeccion [id=" + id + ", nombre=" + nombre + "]";
+	}
+	
+	
 }

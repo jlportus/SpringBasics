@@ -985,51 +985,56 @@ A traves del hiperenlace **Profile** de cada entidad puedo acceder a todos los m
 Si voy a la IntfzDAO puedo hacer @Override de los metodos heredados de JpaRepository (ClickSecundario - source - Override)
 
 Al sobreescribirlos puedo anotarlos Con **@RestResource** y personalizar:
+
 - (exported = false) -> para que no se muestren
 - (path="name") -> para añadir una ruta personalizada al metodo
+
 #### 9.4.1 Personalizar Querys
 
- JPA ofrece por defecto una serie de [metodos **"Query"**](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repository-query-keywords) que permiten realizar operaciones sobre la BD
+JPA ofrece por defecto una serie de [metodos **"Query"**](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repository-query-keywords) que permiten realizar operaciones sobre la BD
 
- Puedo hacer metodos personalizados utilizando la sintaxis del enlace en la firma del metodo para que me realice una consulta personalizada.
+Puedo hacer metodos personalizados utilizando la sintaxis del enlace en la firma del metodo para que me realice una consulta personalizada.
 
- JPA -> trocea el String del nombre del metodo y lo transforma en una consulta SQL.
+JPA -> trocea el String del nombre del metodo y lo transforma en una consulta SQL.
+
 > las consultas solo funcionan sobre campos de existentes de las tablas -> Si se necesita hay que exponer con rest controler
 
- Las Consultas generales son:
- - findBy
- - getBy
- - deleteBy
-  `+`
-    - NombreDeLaColumnaDeLaTabla
-      - `AND`, `OR`
-      - OtraColumna
-    `+` modificadores:
-        - IgnoreCase
-        - Containing
-        - Between
-Quedando asi:
+Las Consultas generales son:
+
+- findBy
+- getBy
+- deleteBy
+  `+` - NombreDeLaColumnaDeLaTabla - `AND`, `OR` - OtraColumna
+  `+` modificadores: - IgnoreCase - Containing - Between
+  Quedando asi:
+
 ```
 List<Person> findByEmailAddressAndLastname(EmailAddress emailAddress, String lastname);
 
 //Equivaldria +/- a:
-SELECT person 
+SELECT person
 FROM tablaEntidadInterfazDao
 WHERE emailAdress="parametro1" AND lastName="Parametro2"
 
 ```
+
 > los delete en principio solo funcionan por ID
+
 #### 9.4.2 Recibir parametros por la URL
 
 Se pasarán parametros por la URL, que se han de asignar al metodo personalizado con **@Param**
+
 - Automaticamente coge el valor String de la URL y lo inserta como parametro al metodo donde este la anotacion.
+
 ```
 ObjetoRetorno metodoFindBy(@Param("ParametroEnlaURL") String parametroLocal);
 ```
+
 Los parametros por la URL se pasan con el simbolo `?`
- `url/search/metodo?nombreParametroEnlaURL=valor&otroParametro=valor`:
+`url/search/metodo?nombreParametroEnlaURL=valor&otroParametro=valor`:
 
 #### 9.4.3 Añadir los Query personalizados:
+
 1. Ir a la interfazDAO de la entidad y en el cuerpo de la interfaz añadir el metodo Query con los parametros necesarios
 2. Ponerle la anotacion **@RestResource**
 3. Añadir Path personalizado y parametros de la URL si hubiera
@@ -1039,41 +1044,203 @@ Los parametros por la URL se pasan con el simbolo `?`
    ```
 
 > Puedo encontrar los metodos personalizados por la URL: en el `path`**`/entidadPath/search`** de cada recurso
-## 10. Servicio Entidad
 
-Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
+## 10. Métodos Personalizados
 
-- menos accesos a la BD
-- Mayor rapidez al leer los datos (Ya estan en memoria).
+Jpa esta limitado a la hora de hacer consultas a la BD, solo ofrece los querys con una pequeña personalizacion a traves de la sintaxis de la firma de los metodos.
 
-Generar un servicio Entidad:
+En caso de querer hacer consultas mas elaboradas que requieran el **Join** de varias tablas, y que las consultas no esten relacionadas por FK, se ha de hacer un metodo personalizado (**Custom**).
 
-1. Crear un `@Bean` con un **metodo** clase java
+Pasos:
 
-   - llamado `getServicioEntidadACargar()`
-   - que recibe por parametro las entidades de la BD que equeremos almacenar en memoria.
-   - que devuelva el propio objeto **Map<Clase, ID>** servicioEntidad (que almacena pares campo-valor ).
-   - Al cargarse en el contenedor, recupera de la BD los elementos que nos interesan y los almacena en una variable.
+1.  Hacer en `repositorios` una interfaz nombreClaseDAO**Custom**
+     ↳ En dicha interfaz incluyo la declaracion de los metodos personalizados.
+    ⇒ No tiene que tener ninguna anotacion (la IntzDAO original seguirá siendo la encargada del acceso al repositorio y ofrecer los metodos).
 
-     - (Se puede crear en el archivo de configuracionPorJava)
+1.  Creo en el paquete `repositorios` una clase **`nombreClaseDAOImpl`**
+    ↳ ¡Obligatorio! Tiene que tener al final **`Impl`** -> Permite que Spring la auto detecte para emplear el metodo personalizado implementado.
+    > tiene que ser exactamente el mismo nombre que la intfzDAO + Impl
 
-     ```
-     @Bean
-     public Map<Clase, ID> getServicioEntidad(IntfDAO intfDAO){
-         Map<Clase, ID> servicioEntidad = new HashMap<>();
-         intfDAO.findAll().forEach(p -> {
-             servicioEntidad.add(Participante.class, p)
-         })
-         return servicioEntidad;
-     }
-     ```
+    ↳ La claseDAOImpl **implementara la interfazCustom** ⇒ Sera aqui donde se desarrollen los metodos
+    ⇒ Tendra la Anotación encima de la clase **`@Transactional`** -> Permite que se compartan las consultas de la clase en el acceso a la BD
+1.  Tendre que acceder a las tablas sencillas para luego poder hacer el Join personalizado. Se puede hacer de dos modos, por la interfazDAO o con Query "A mano".
+1.  Para cada tabla "simple" necesitará:
+    ↳ Tendra campos tipo:
 
-1. Las entidades que necesiten recuperar algun dato de los que se almacenen en el Servicio Entidad
-   - Tendran una variable de tipo Servicio Entidad
-1. Agrego el **parametro ServicioEntidad** al constructor/setter del resto de entidades que van a a necesitar algun elemento de lo almacenado en él, para que cuando se cree una entidad de ese tipo, recuperen los datos de lo almacenado en él sin acceder a la BD.
-   - Al insertar por el constructor se asignara el parametro(que sera un bean a la variable local)
+    - **IntfzDAO** de la entidad sobre la que se quiera hacer la consulta -> Se aprovechara para poder acceder a los metodos query de JPA y poder personalizarlos despues con el resultado
+      - Tiene que tener **@Autowired** para que se autoinicialize con el Bean de la IntfzDAO.
+      - El metodo findBy..tiene que estar creado en la IntfzDAO
+    - **EntityManager** permite crear query personalizados (como consultas clasicas de SQL) para luego tratarlas.
+      - Tiene que tener la anotacion **@PersistenceContext** (es ~ un autowired para el EntityManager)
+      - Permite hacer las **Query** - SQL a mano (de java Persistance)
+        > No es obligatorio usar el entityManager, podrian ser dos IntfzDAO para cada tabla simple usando los queryMethods de JPA, o hacer ambas con entityManager.
 
-> Esto esta sin probar.
+    ↳ El join personalizado
+
+    ```
+    @Transactional(readOnly = true)
+    class PartidoDAOImpl implements EventoDAOCustom<PartidoConId> {
+
+        @Autowired
+        ParticipanteDAO participanteDAO;
+
+        @PersistenceContext
+        EntityManager entityManager;
+
+        @Override //Desarrolla el metodo de la IntfzCustom
+        public List<PartidoConId> getEventosConParticipanteConTexto(String txt) {
+
+            //Uso la EntidadDAO para acceder a un queryJPA
+            List<Participante> participantes = participanteDAO.findByNombreIgnoreCaseContaining(txt);
+
+            //creo la variable donde voy a almacenar el resultado
+            Set<PartidoConId> partidos = new HashSet<PartidoConId>();
+
+            //Creo un QuerySQL a traves del EntityManger
+            Query query = entityManager.createNativeQuery(
+                "SELECT p.* FROM partidos as p " +
+                "WHERE p.local = ?1 OR p.visitante = ?1", PartidoConId.class);
+
+            //al resultado del queryJPA le aplico mi QuerySQL (estoy haciendo un "join")
+            //pasandole los parametros por ~ par clave valor (.setparameter)
+            participantes.forEach(p -> {
+                query.setParameter(1, p.getIdentificador());
+                //los voy almacenando en la variable
+                partidos.addAll(query.getResultList());
+            });
+
+            return new ArrayList<PartidoConId>(partidos);
+        }
+
+    }
+    ```
+
+1.  Añado a la **IntfzDAO** normal que implemente tambien la **IntzDAOCustom**
+    - Spring buscará la implementacion a traves del **Impl** y el metodo personalizado se podra emplear para atacar la BD desde la IntfzDAO original.
+    - El metodo no estará expuesto (link Hateoas) -> Necesito un controlador
+1.  Añado el **Controlador**
+    ↳ Creo en el paquete `rest` una clase **`EntidadController`**
+
+    - Sera la responsable de exponer el metodo en la API
+      → lo expongo con la anotacion **@RepositoryRestControler**
+      → Le añado el path a la url con **@RequestMapping(path = /entidad/search)** para toda la clase
+
+    ↳ Tendra un campo del tipo **EntidadDAO**, que se insertara por el constructor -> me permitira acceder al metodo personalizado
+
+    ```
+    @RepositoryRestController
+    @RequestMapping(path = "/entidad/search")
+    public class EntidadController {
+
+      private EntidadDAO EntidadDAO;
+
+      public EntidadController(EntidadDAO EntidadDAO) {
+        this.clienteDAO = clienteDAO;
+      }
+      //Metodos personalizados
+    }
+    ```
+
+1.  En la clase controlador creo un metodo (con el mismo nombre que mi **metodo personalizado**) que llame al metodo personalizado de la IntfzDao
+    ⇒ Tendra las anotaciones en el metodo:
+
+    - **`@GetMapping("/mimetodo")`** - define la ruta al metodo despues del `/search` + `/mimetodo`
+      - puede ser Get, Post...
+      - Es equivalenete a @RequestMapping(method=GET,path=..).
+    - **`@ResponseBody`** -> Spring hace que lo que se devuelva se trate como una respuesta web
+      ↳ Devuelve un objeto del tipo `CollectionModel<PersistentEntityResource>`
+      ↳ recibe como parametro un objeto del tipo **assembler**
+      ↳ Si recibe un parametro por la URL se anota en los parametros con **`@RequestParam`** equivale a **@Param**
+      `PersistentEntityResourceAssembler assembler` - sera el encargado de conformar el objeto de salida para que la capte una llamada Http
+      ```
+      @GetMapping("/por-fecha")
+      @ResponseBody
+      public CollectionModel<PersistentEntityResource> getMimetodoPersonalizado(
+      PersistentEntityResourceAssembler assembler) {
+
+            //aqui llamo a mi emtodo personalizado Custom de la IntfzDAO
+            List<Entidad> entidades = intfzDAO.getMimetodoPersonalizadoDelDAO();
+
+            //el assembler.toColletionModel me construye la salida
+            return assembler.toCollectionModel(entidades);
+          }
+          ```
+
+### 10.1 Hacer Métodos Personalizados autodescubribles
+
+Para que el link sea autodescubierto hay que añador un Bean (en la clase de configuracion por java por ejemplo)
+
+Se se sobreescribe el objeto de Spring y que gestiona los hiperenlaces y se le añade el enlace a nuestro metodo personalizado.
+
+```
+@Bean
+RepresentationModelProcessor<RepositorySearchesResource> searchLinks(RepositoryRestConfiguration config) {
+    return new RepresentationModelProcessor<RepositorySearchesResource>() {
+
+        @Override
+        public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
+
+            //le indico la entidad donde tiene que insertar el enlace
+            if (searchResource.getDomainType().equals(MiEntidad.class)) {
+
+              //si el enlace coincide lo insertara con el siguiente bloque
+
+                try {
+
+                    //Le digo el nombre de mi metodo personalizado
+                    String nombreMetodo = "getMiMetodoPersonalizado";
+
+                    //busco en la entidad el metodo que coincide con el mio personalizado(impoorto de java reflex)
+                    //(le tengo que decir tambien los parametros que recibe + Assembler)
+                    Method method = PartidoController.class.getMethod(nombreMetodo, String.class,
+                            PersistentEntityResourceAssembler.class);
+
+                    //capto la URI de la entidad con linkTo
+                    URI uri = org.springframework.hateoas.server.mvc.WebMvcLinkBuilder
+                            .linkTo(method).toUri();
+
+                    //me construyo la url al metodo
+                    String url = new URI(uri.getScheme()
+                                        , uri.getUserInfo()
+                                        , uri.getHost()
+                                        , uri.getPort()
+                                        , config.getBasePath() + uri.getPath()
+                                        , uri.getQuery()
+                                        , uri.getFragment()).toString();
+                          //el ?txt sera el parametro recibido
+                    searchResource.add(new Link(url + "{?txt}", nombreMetodo));
+                } catch (NoSuchMethodException | URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return searchResource;
+        }
+
+    };
+}
+```
+
+### 10.2 Evitar los filtros del CORS del navegador
+
+Para que la API pueda ser atacada por un navegador se debe añadir el **CORS Filter** como otro Bean (al archivo de configuracion por java)
+
+Copy&Paste:
+
+```
+@Bean
+	CorsFilter corsFilter() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		final CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.setAllowedOrigins(Collections.singletonList("*"));
+		config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
+		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+		source.registerCorsConfiguration("/**", config);
+
+		return new CorsFilter(source);
+	}
+```
 
 ## 11.Listeners
 
@@ -1086,7 +1253,7 @@ Las operaciones con la BD tienen un "Ciclo de Vida" con la operacioens que serea
 - PostUpdate
 - PreRemove
 - PostRemove
- > Se pueden poner en una entidad estas anotaciones (**@PostLoad**, ...) sobre alguno de sus metodos para que se inicien a lo largo de su ciclo de Vida 
+  > Se pueden poner en una entidad estas anotaciones (**@PostLoad**, ...) sobre alguno de sus metodos para que se inicien a lo largo de su ciclo de Vida
 
 Un listener sera una llamada desde una clase(cuando se instancia) a otra clase para que se ejecute codigo de allí aprovechando las operaciones del ciclo de VIDA.
 
@@ -1094,40 +1261,43 @@ Pasos
 
 1. Añado a la clase iniciadora la referencia a la clase que se inicia en cascada con **EntityListener**
 
-   - Por anotaciones
-     ```
-     @EntityListeners(ClaseObjetivo.class)
-     public class ClaseIniciadora { ... }
-     ```
-   - Por XML, en su ORM añado las clases listener
+- Por anotaciones
+  ```
+  @EntityListeners(ClaseObjetivo.class)
+  public class ClaseIniciadora { ... }
+  ```
+- Por XML, en su ORM añado las clases listener
 
-     ```
-     <entity name="ClaseIniciadora" class="es.ruta.ClaseIniciadora" access="FIELD">
-         <entity-listeners>
-             <entity-listener class="es.ruta.ListernerObjetivo"/>
-         </entity-listeners>
-         ...
-     </entity>
-     ```
+  ```
+  <entity name="ClaseIniciadora" class="es.ruta.ClaseIniciadora" access="FIELD">
+      <entity-listeners>
+          <entity-listener class="es.ruta.ListernerObjetivo"/>
+      </entity-listeners>
+      ...
+  </entity>
+  ```
 
-2. En la `ClaseListerner` objetivo tiene que ser una clase java -> en el paquete de repositorios 
-    -  Tiene que ser un **Bean (@Component)** 
+2. En la `ClaseListerner` objetivo tiene que ser una clase java -> en el paquete de repositorios
+   - Tiene que ser un **Bean (@Component)**
 3. Le añado las anotaciones del ciclo de vida sobre los metodos que se tienenen que lanzar.
-     - Por anotaciones
-        ```
-        @Component
-        class ListernerObjetivo{
-        
-        @PrePersist
-        public void prePersist(Object object) {
-            //instrucciones
-        }
-        @PreUpdate
-        public void preUpdate(Object object) {
-          //instrucciones
-        }
-        ```
- - Por XML, en su ORM añado las clases listener
+
+   - Por anotaciones
+
+     ```
+     @Component
+     class ListernerObjetivo{
+
+     @PrePersist
+     public void prePersist(Object object) {
+         //instrucciones
+     }
+     @PreUpdate
+     public void preUpdate(Object object) {
+       //instrucciones
+     }
+     ```
+
+   - Por XML, en su ORM añado las clases listener
 
      ```
      <entity name="ListernerObjetivo" class="es.ruta.ListernerObjetivo" access="FIELD">
@@ -1141,4 +1311,45 @@ Pasos
      > Sera normal que se pase el propio objeto iniciador (va implicito el paso) como parametro a alguno de los metodos objetivo.
      > Tambien puede ser un **@Bean** el que se pase al método
 
- 
+## 12. Servicio Entidad
+
+Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
+
+- menos accesos a la BD
+- Mayor rapidez al leer los datos (Ya estan en memoria).
+
+Generar un servicio Entidad:
+
+1. Crear un `@Bean` con un **metodo** clase java
+
+- llamado `getServicioEntidadACargar()`
+- que recibe por parametro las entidades de la BD que equeremos almacenar en memoria.
+- que devuelva el propio objeto **Map<Clase, ID>** servicioEntidad (que almacena pares campo-valor ).
+- Al cargarse en el contenedor, recupera de la BD los elementos que nos interesan y los almacena en una variable.
+
+  - (Se puede crear en el archivo de configuracionPorJava)
+
+  ```
+  @Bean
+  public Map<Clase, ID> getServicioEntidad(IntfDAO intfDAO){
+      Map<Clase, ID> servicioEntidad = new HashMap<>();
+      intfDAO.findAll().forEach(p -> {
+          servicioEntidad.add(Participante.class, p)
+      })
+      return servicioEntidad;
+  }
+  ```
+
+1. Las entidades que necesiten recuperar algun dato de los que se almacenen en el Servicio Entidad
+
+- Tendran una variable de tipo Servicio Entidad
+
+1. Agrego el **parametro ServicioEntidad** al constructor/setter del resto de entidades que van a a necesitar algun elemento de lo almacenado en él, para que cuando se cree una entidad de ese tipo, recuperen los datos de lo almacenado en él sin acceder a la BD.
+
+- Al insertar por el constructor se asignara el parametro(que sera un bean a la variable local)
+
+> Esto esta sin probar.
+
+```
+
+```

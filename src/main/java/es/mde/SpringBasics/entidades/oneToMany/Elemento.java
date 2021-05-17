@@ -59,4 +59,11 @@ public class Elemento {
 	public Elemento(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+	public String toString() {
+		return "Elemento [id=" + id + ", nombre=" + nombre + ", padreConColeccion=" + padreConColeccion + "]";
+	}
+
+	
 }
