@@ -1221,6 +1221,11 @@ RepresentationModelProcessor<RepositorySearchesResource> searchLinks(RepositoryR
 }
 ```
 
+> NOTA: la interfazDAO de la entidad que tiene el metodo personalizado -> tiene que tener un QUerymetod de JPA con la anotacion @RestResources(path= "ruta") para que se autodescubra
+> ```
+> @RestResource(path = "nombre")
+> List<Elemento> findByNombre(@Param("nombre") String nombre);
+  >```
 ### 10.2 Evitar los filtros del CORS del navegador
 
 Para que la API pueda ser atacada por un navegador se debe añadir el **CORS Filter** como otro Bean (al archivo de configuracion por java)
