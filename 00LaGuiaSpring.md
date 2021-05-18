@@ -1,5 +1,49 @@
 # Guia de pasos a seguir para el desarrollo de un proyecto Spring
 
+### O.INDICE
+[Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
+1. [Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
+1. [Añadir mas dependencias a Gradle](#2-a%C3%B1adir-mas-dependencias-a-gradle)
+1. [Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
+1. [Inyectando Beans](#4-inyectando-beans)
+	1. [Beans por XML](#41-beans-por-xml)
+	1. [Beans por clase de configuracion Java](#42-beans-por-clase-de-configuracion-java)
+	1. [Beans por @Anotaciones](#43-beans-por-anotaciones)
+	1. [Prelacion de Beans](#44-prelacion-de-beans)
+	1. [Desambiguando Beans](#45-desambiguando-beans)
+1. [Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
+	1. [Añadiendo recursos externos a Spring Boot](#51-a%C3%B1adiendo-recursos-externos-a-spring-boot)
+	1. [Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
+1. [Logging](#6-logging)
+	1. [Configurando el Logging](#61-configurando-el-logging)
+1. [Autowired](#7-autowired)
+	1. [Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
+1. [PERSISTENCIA DE DATOS](#8-persistencia-de-datos)
+	1. [El Entity manager](#81-el-entity-manager)
+	1. [Los repositorios - interfazDAO](#82-los-repositorios---interfazdao)
+	1. [Las Entidades - Entity](#83-las-entidades---entity)
+	1. [Emplear las entidades en el Main](#84-emplear-las-entidades-en-el-main)
+	1. [Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
+	1. [Single Table](#86-single-table)
+	1. [Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relaci%C3%B3n-onetomany)
+1. [REST - Añadir la capa de presentación](#9-rest---a%C3%B1adir-la-capa-de-presentaci%C3%B3n)
+	1. [Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
+	1. [Personalizar los objetos mostrados - Serializador Jackson y mixins](#92-personalizar-los-objetos-mostrados---serializador-jackson-y-mixins)
+	1. [Pasar a nivel 3 HATEOAS](#93-pasar-a-nivel-3-hateoas)
+	1. [Personalizar Endpoints](#94-personalizar-endpoints)
+		1. [Personalizar Querys](#941-personalizar-querys)
+		1. [Recibir parametros por la URL](#942-recibir-parametros-por-la-url)
+		1. [Añadir los Query personalizados:](#943-a%C3%B1adir-los-query-personalizados)
+1. [Métodos Personalizados](#10-m%C3%A9todos-personalizados)
+	1. [Hacer Métodos Personalizados autodescubribles](#101-hacer-m%C3%A9todos-personalizados-autodescubribles)
+	1. [Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
+1. [Listeners](#11listeners)
+1. [Servicio Entidad](#12-servicio-entidad)
+
+
+
+
+
 ## Inicializar un proyecto Spring con initialitzer
 
 Ideal → iniciar el proyecto directamente con initializer
