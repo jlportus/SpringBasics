@@ -484,7 +484,8 @@ Para añadir las entidades a escanear usar
 > Voy a la ruta de la libreria ⇒ H2.jar
 > ↳ creo acceso directo a la libreria de la BD en la raiz de mi proyecto (o en el escritorio)
 > ↳ doy permisos de ejecución ⇒ cmd → `chmod +x H2`
-> ⇒ Necesito un archivo test en el home del usuario
+> ⇒ Necesito archivo `test.mv.db` copiado en el `user/home`
+> (archivo de la carpeta BD H2)
 > ↳ ejecuto la BD → `java -jar nombreArchivoH2`  
 >  ↳ Me abre el navegador con el acceso a la BD
 > ⇒ Seleccionar Generic H2 (Server)
