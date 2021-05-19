@@ -62,20 +62,29 @@
 ## Inicializar un proyecto Spring con initialitzer
 
 Ideal → iniciar el proyecto directamente con initializer
+
 ↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
+
 ↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
 
 1. ir a la pagina [Spring Initalizer](https://start.spring.io/)
 
 Crear con Initializer
+
 → proyecto gradle + java
+
 → version spring boot → recomendada
-⇒ group es.mde
-→ nombre
+
+⇒ group es.mde → nombre
+
 ⇒ packing ⇒ .jar
+
 → java version → 8
+
 ⇒ Añadir dependencias
+
 ↳ Se podría añadir con el build.gradle → Spring lo suple
+
 Añadir
 ⇒ mejor que sobre que no falte
 
