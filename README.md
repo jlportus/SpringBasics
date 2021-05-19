@@ -94,7 +94,7 @@ Añadir
 
 enlace resumen de lo [generado en el inicializer](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail,web-services,data-rest,data-jdbc)
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ## 1. Iniciar Proyecto en Eclipse
 
@@ -146,7 +146,7 @@ Ejecutar:
 - **`refresh gradle proyect`**
 - **`boot run`** -> debe arrancar Spring sin errores
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ## 3. Creando la estructura de carpetas de mi proyecto
 
@@ -174,7 +174,7 @@ Tendre la siguiente estructura:
   - paquete **jpa**
     - con todos los archivos.**orm.xml** para cada clase a persistir
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ## 4. Inyectando Beans
 
@@ -344,7 +344,8 @@ Para recuperar uso el **`.getBean`** sobrecargado.
 variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
 ```
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ## 5. Arrancando con SPRINGBoot
 
 Una vez hecho el proyecto spring con initializer, me crea una serie de anotaciones por defecto
@@ -375,7 +376,8 @@ En el main
     	);
     ```
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
   ### 5.1 Añadiendo recursos externos a Spring Boot
 
 Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir donde puede buscar mas recursos que quiera inyectar.
@@ -424,7 +426,8 @@ Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir don
          applicationContext
      ```
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ## 6. Logging
 
 Pretendo llevar un registro de sucesos que ocurren con la aplicacion.
@@ -496,7 +499,8 @@ Fuente http://logback.qos.ch/manual/layouts.html
 logging.file.name=archivo.log
 ```
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ## 7. Autowired
 
 Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired` en el Bean que vaya a ser inyectado
@@ -557,7 +561,8 @@ public Test miTest() {...}
 > Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
 
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 # 8. PERSISTENCIA DE DATOS
 
 Se va a usar Java Persitance API **JPA** Con la implemnetacion **Hibernate**.
@@ -612,7 +617,7 @@ Para añadir las entidades a escanear usar
 > ⇒ connect - Si da pega cambiar a embebed y volver a Server - Puede dar pega el puerto
 > ↳ añadir al properties `server.port = 8082` → Conflicto con Tomcat porque dice que esta ocupado
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ### 8.2 Los repositorios - interfazDAO
 
@@ -754,7 +759,8 @@ Para **omitir campos** al almacenar en la BD se usa **TRANSIENT**
    ```
 2. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ### 8.4. Emplear las entidades en el Main
 
 Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
@@ -803,7 +809,8 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 > **El ORM de la clase hija ya no tendra su campo ID, sera heredado**
 > El ORM de la clase padre no tendra nombre de tabla.
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ### 8.6 Single Table
 
 Puede haber casos de especializacion de entidades que tengan una superclase en comun (Con campos comunes, ID-PK) y cada subclase tenga campos especificos diferentes.
@@ -876,7 +883,7 @@ Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
 3. Ambas deben igualmente heradar de la misma Superclase, ya que sera esta la que las vincule por el **Mapped-Superclass** y el **ID-PK**
 4. Cada subclase debe tener su **itfzDAO** para poder persistir
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ### 8.7 Persisitencia de clases con relación OneToMany
 
@@ -962,7 +969,7 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 
    > La tabla de los elementos de la lista tendran una nueva columna que hara referencia al elemento que los contiene.
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ## 9. REST - Añadir la capa de presentación
 
@@ -1026,7 +1033,8 @@ Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 > Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista (el campo de la FK).
 
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ### 9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins
 
 Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
@@ -1082,7 +1090,7 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 
 > La serializacion es bidireccional, se aplica en los GET (salida) y en los POST (entrada) desde el front, es decir al mandar objetos tienen que tener la misma estructura con los mismos nombres en los campos.
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ### 9.3 Pasar a nivel 3 HATEOAS
 
@@ -1121,7 +1129,8 @@ Pasos:
 1. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
 
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+
 ### 9.4 Personalizar Endpoints
 
 A traves del hiperenlace **Profile** de cada entidad puedo acceder a todos los metodos que se pueden realizar sobre esa entidad desde una llamada HTTP.
@@ -1198,7 +1207,7 @@ Los parametros por la URL se pasan con el simbolo `?`
 
 > Puedo encontrar los metodos personalizados por la URL: en el `path`**`/entidadPath/search`** de cada recurso
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ## 10. Métodos Personalizados
 
@@ -1333,7 +1342,7 @@ Pasos:
           ```
       ````
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
 
 ### 10.1 Hacer Métodos Personalizados autodescubribles
 
@@ -1489,8 +1498,8 @@ Pasos
      > Sera normal que se pase el propio objeto iniciador (va implicito el paso) como parametro a alguno de los metodos objetivo.
      > Tambien puede ser un **@Bean** el que se pase al método
 
-
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
+	
 ## 12. Servicio Entidad
 
 Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
@@ -1530,4 +1539,4 @@ Generar un servicio Entidad:
 
 > Esto esta sin probar.
 
-[Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
+[Volver a inicio](#springbasics)
