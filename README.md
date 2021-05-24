@@ -58,6 +58,11 @@
     - [10.2 Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
   - [11.Listeners](#11listeners)
   - [12. Servicio Entidad](#12-servicio-entidad)
+  - [13. Integrando Librerias](#13-integrando-librerias)
+      - [13.1 Integrar Proyecto Local](#131-integrar-proyecto-local)
+      - [13.2 Integrar Proyecto de GitHub](#132-integrar-proyecto-de-github)
+      - [13.3 Integrar Proyecto de Repositorio en la nube](#133-integrar-proyecto-de-repositorio-en-la-nube)
+      - [13.4 Precedencia y exportacion de dependencias](#134-precedencia-y-exportacion-de-dependencias)
 
 ## Inicializar un proyecto Spring con initialitzer
 
@@ -1547,5 +1552,110 @@ Generar un servicio Entidad:
    - Al insertar por el constructor se asignara el parametro(que sera un bean a la variable local)
 
 > Esto esta sin probar.
+
+[Volver a inicio](#springbasics)
+	
+## 13. Integrando Librerias
+
+Voy a utilizar código de otro proyecto en el mio. Podré desarrollar por un lado el proyecto-**API** para realizar la persistencia y la capa REST y en otro proyecto-**LIB** (mi libreria) desarrollaré la lógica de mi negocio (java "puro")
+
+El código de la libreria se puede obtener de un repositorio en la nube (gradle lo autocompila) o aprovechar el código de un proyecto en local. 
+
+Ambos proyectos deberían ser Proyectos Gradle: 
+- El de la API con Spring con todas las dependencias para REST y pesrsistencia
+- El de la LIB sera un proyecto Gradle Spring, sin dependencias (aunque se le quitarán las anotaciones Spring).
+
+#### 13.1 Integrar Proyecto Local
+
+
+
+Prerrequisitos: 
+- Está generado el proyecto API y la libreria con Spring. 
+- Están en local (clonados o generados).
+- Ambos Proyectos deberian tener su propio **GIT**
+
+1. El `proyecto-LIBreria` esta en la misma carpeta donde está mi `proyecto-API` (en carpetas hermanas).
+2. Al proyecto **LIB**reria le quito todas las anotaciones e importaciones de Spring
+   - En el main
+     -  @SpringApplication
+     -  SpringContext = `SpringApplication.run`
+   - dependencias y plugins Spring del  build.gradle
+3. Importar ambos proyectos Gradle en eclipse.
+     - Usar valores por defecto
+4. En el `build.gradle` del proyecto **LIB**
+   - **NO** puede haber plugins de `Springframework`
+   - Eclipse Necesita el plugin
+     - `id 'java'`
+     - `id 'java-library'`
+     - `id 'eclipse'`
+5. En el **`settings.gradle`** del proyecto **API**
+   - Debe coincidir el nombre del directorio con el del preyecto 
+     `rootProject.name = 'nombreProyectoAPI'` (si esta hecho con Spring lo genera automáticamente)
+   - Introduzco una linea nueva con: 
+      `includeFlat 'proyecto-LIBreria'`
+      > Debe ser el mismo nombre que tiene el proyectoLIB en su settings.gradle
+6. En el **`build.gradle`** del proyecto **API**
+   - Introduzco en el apartado **`dependencias`**
+      ```
+      dependencies {
+        //
+        implementation project(':proyecto-LIBreria')
+      }
+      ```
+7. Ejecutar **Refresh gradle project**
+   - en propiedades de mi proyecto en java build path → saldrá la librería como una dependencia
+8.  Ejecutar en eclipse gradle
+        **gradle task ide ⇒ generate all eclipse files**
+
+  > En propiedades de mi proyecto en java build path (o en la carpeta Project and External Dependencies) → saldrá la librería como una dependencia
+
+  > Comprobar llamando desde la API a una clase de la libreria
+#### 13.2 Integrar Proyecto de GitHub
+
+Se podrá integrar una libreria de un repositorio de codigo abierto como **MAVEN Central** (Compilado), o de un repositorio publico de **GitHub** (Sin compilar) para lo que se necesita compilar con **jit-pack**.
+
+Eclipse Necesita el plugin
+`id 'application'`
+
+1. Añado el repositorio y JitPack
+    ```
+    repositories {
+          mavenCentral()
+          maven { url 'https://jitpack.io' }
+    }
+    ```
+
+2. Ir a dependencias y añadir linea 
+  `implementation:'Grupo : artefacto : Versión'`
+      - grupo: es la ruta al usuario de GitHub
+      - artefacto: es el proyecto del usuario
+      - versión: es el tag-release
+        - en version se puede poner
+          - 1 version concreta
+          - `sanapshot` (ultima versión)
+          - 1 commit concreto
+        > puedo poner varias versiones que se crearan en sus carpetas correspondientes
+
+1. ejecutar gradle → refresh project
+
+    - Saldrán en `project and external dependencies` las que haya añadido, pudiendo emplearlas en mi codigo
+
+#### 13.3 Integrar Proyecto de Repositorio en la nube
+
+Podre integrar una API o una dependencia.
+
+Api vs Dependencia
+   - una api alguien puede utilizar los métodos de la api desde mi librería
+   - una dependencia No se puede → solo los puede usar mi librería en local
+
+1.  Ir a dependencias y añadir linea 
+    `implementation/api:'Grupo : artefacto : Versión'`
+
+#### 13.4 Precedencia y exportacion de dependencias 
+
+Existe precedencia cuando hay conflicto entre clases iguales
+* 1° la mas arriba del build path → order export
+         
+* **export** ⇒ cualquiera que use mi liberia tendrá acceso a las librerias externas que esa integre.
 
 [Volver a inicio](#springbasics)
