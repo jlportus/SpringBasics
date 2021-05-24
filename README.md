@@ -1580,6 +1580,7 @@ Prerrequisitos:
      -  @SpringApplication
      -  SpringContext = `SpringApplication.run`
    - dependencias y plugins Spring del  build.gradle
+   - La carpeta de Tests
 3. Importar ambos proyectos Gradle en eclipse.
      - Usar valores por defecto
 4. En el `build.gradle` del proyecto **LIB**
