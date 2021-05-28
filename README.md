@@ -4,34 +4,29 @@
 
 ### 0.INDICE
 
-[Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
-
-- [SpringBasics](#springbasics)
-  - [GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-GRADLE-SPRING](#guia-para-el-desarrollo-de-un-proyecto-java-gradle-spring)
-    - [0.INDICE](#0indice)
-  - [Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
-  - [1. Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
-  - [2. Añadir mas dependencias a Gradle](#2-añadir-mas-dependencias-a-gradle)
-  - [3. Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
-  - [4. Inyectando Beans](#4-inyectando-beans)
-    - [4.1 Beans por XML](#41-beans-por-xml)
-    - [4.2 Beans por clase de configuracion Java](#42-beans-por-clase-de-configuracion-java)
-    - [4.3 Beans por @Anotaciones](#43-beans-por-anotaciones)
-    - [4.4 Prelacion de Beans](#44-prelacion-de-beans)
-    - [4.5 Desambiguando Beans](#45-desambiguando-beans)
-  - [5. Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
-    - [5.1 Añadiendo recursos externos a Spring Boot](#51-añadiendo-recursos-externos-a-spring-boot)
-    - [5.2 Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
-  - [6. Logging](#6-logging)
-    - [6.1 Configurando el Logging](#61-configurando-el-logging)
-        - [Nivel de salida de mensajes](#nivel-de-salida-de-mensajes)
-        - [Patron de salida de mensajes](#patron-de-salida-de-mensajes)
-        - [Formato de Color de salida de mensajes](#formato-de-color-de-salida-de-mensajes)
-        - [Salida de mensajes a fichero](#salida-de-mensajes-a-fichero)
-  - [7. Autowired](#7-autowired)
-    - [7.1 Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
-      - [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
-      - [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
+- [Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
+- [1. Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
+- [2. Añadir mas dependencias a Gradle](#2-añadir-mas-dependencias-a-gradle)
+- [3. Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
+- [4. Inyectando Beans](#4-inyectando-beans)
+	- [4.1 Beans por XML](#41-beans-por-xml)
+	- [4.2 Beans por clase de configuracion Java](#42-beans-por-clase-de-configuracion-java)
+	- [4.3 Beans por @Anotaciones](#43-beans-por-anotaciones)
+	- [4.4 Prelacion de Beans](#44-prelacion-de-beans)
+	- [4.5 Desambiguando Beans](#45-desambiguando-beans)
+- [5. Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
+	- [5.1 Añadiendo recursos externos a Spring Boot](#51-añadiendo-recursos-externos-a-spring-boot)
+	- [5.2 Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
+- [6. Logging](#6-logging)
+	- [6.1 Configurando el Logging](#61-configurando-el-logging)
+		- [Nivel de salida de mensajes](#nivel-de-salida-de-mensajes)
+		- [Patron de salida de mensajes](#patron-de-salida-de-mensajes)
+		- [Formato de Color de salida de mensajes](#formato-de-color-de-salida-de-mensajes)
+		- [Salida de mensajes a fichero](#salida-de-mensajes-a-fichero)
+- [7. Autowired](#7-autowired)
+	- [7.1 Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
+		- [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
+		- [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
 - [8. PERSISTENCIA DE DATOS](#8-persistencia-de-datos)
     - [8.1 El Entity manager](#81-el-entity-manager)
       - [Por Xml](#por-xml)
@@ -44,7 +39,7 @@
     - [8.5 Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
     - [8.6 Single Table](#86-single-table)
     - [8.7 Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relación-onetomany)
-  - [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
+- [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
     - [9.0 Prerequisitos para Spring](#90-prerequisitos-para-spring)
     - [9.1 Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
     - [9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins](#92-personalizar-los-objetos-mostrados---serializador-jackson-y-mixins)
@@ -53,42 +48,40 @@
       - [9.4.1 Personalizar Querys](#941-personalizar-querys)
       - [9.4.2 Recibir parametros por la URL](#942-recibir-parametros-por-la-url)
       - [9.4.3 Añadir los Query personalizados:](#943-añadir-los-query-personalizados)
-  - [10. Métodos Personalizados](#10-métodos-personalizados)
+- [10. Métodos Personalizados](#10-métodos-personalizados)
     - [10.1 Hacer Métodos Personalizados autodescubribles](#101-hacer-métodos-personalizados-autodescubribles)
     - [10.2 Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
-  - [11.Listeners](#11listeners)
-  - [12. Servicio Entidad](#12-servicio-entidad)
-  - [13. Integrando Librerias](#13-integrando-librerias)
-      - [13.1 Integrar Proyecto Local](#131-integrar-proyecto-local)
-      - [13.2 Integrar Proyecto de GitHub](#132-integrar-proyecto-de-github)
-      - [13.3 Integrar Proyecto de Repositorio en la nube](#133-integrar-proyecto-de-repositorio-en-la-nube)
-      - [13.4 Precedencia y exportacion de dependencias](#134-precedencia-y-exportacion-de-dependencias)
+- [11.Listeners](#11listeners)
+- [12. Servicio Entidad](#12-servicio-entidad)
+- [13. Integrando Librerias](#13-integrando-librerias)
+	- [13.1 Integrar Proyecto Local](#131-integrar-proyecto-local)
+	- [13.2 Integrar Proyecto de GitHub](#132-integrar-proyecto-de-github)
+	- [13.3 Integrar Proyecto de Repositorio en la nube](#133-integrar-proyecto-de-repositorio-en-la-nube)
+	- [13.4 Precedencia y exportacion de dependencias](#134-precedencia-y-exportacion-de-dependencias)
 
 ## Inicializar un proyecto Spring con initialitzer
 
 Ideal → iniciar el proyecto directamente con initializer
 
-↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
+	↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
 
-↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
+	↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
 
-1. ir a la pagina [Spring Initalizer](https://start.spring.io/)
+Crear con Initializer →	Ir a la pagina [Spring Initalizer](https://start.spring.io/)
 
-Crear con Initializer
+	→ proyecto gradle + java
 
-→ proyecto gradle + java
+	→ version spring boot → recomendada
 
-→ version spring boot → recomendada
+	⇒ group es.mde → nombre
 
-⇒ group es.mde → nombre
+	⇒ packing ⇒ .jar
 
-⇒ packing ⇒ .jar
+	→ java version → 8
 
-→ java version → 8
+	⇒ Añadir dependencias
 
-⇒ Añadir dependencias
-
-↳ Se podría añadir con el build.gradle → Spring lo suple
+	↳ Se podría añadir con el build.gradle → Spring lo suple
 
 Añadir
 ⇒ mejor que sobre que no falte
