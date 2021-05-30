@@ -906,7 +906,7 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 
 > Lo que voy a guardar en el campo FK será otro objeto.
 > JPA solo guarda primitivos u objetos si se estan empleando las relaciones @OneToMany.
-> Si no quiero que falle al intentar guardar un tipo objeto que no conoce, antes de hacer las relaciones, debo poner el campo como transient para que lo evite.
+> Si no quiero que falle al intentar guardar un tipo objeto que no conoce, antes de hacer las relaciones, debo poner el campo **coleccion como transient** para que lo evite.
 
 1. Anotar el **OneToMany** en el **campo coleccion(listado)** que contiene la claseContenedora con:
 
