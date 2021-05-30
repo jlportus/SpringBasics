@@ -306,6 +306,8 @@ Es el modo intermedio.
 1. Necesito que la clase sea escaneada al crear el contenedor configurandolo con un xml
 
    - Tengo que añadir el XML al contenedor
+   - ó
+   - @Import({ ClaseConfiguracionJava.class })
 
    ### 4.3 Beans por @Anotaciones
 
