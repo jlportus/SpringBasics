@@ -828,11 +828,12 @@ Por rendimiento en las consultas puede ser adecuado almacenar ambas especializac
 - Necesitaré un campo discriminatorio **TipoSubclase**
 - Tendre **null´s** en los campos que no sean comunes
 
-> Prerrequisitos: Existira una `mapped-superclass` de la cual heredaran ambas subclases. Lo normal será que sea la superclase al qeu contenga el ID(PK) de la tabla (seria un campo heredado para ambas)
+> Prerrequisitos: Existira una `mapped-superclass` de la cual heredaran ambas subclases. Lo normal será que sea la superclase al que contenga el ID(PK) de la tabla (seria un campo heredado para ambas)
 
-En una de los **`orm.xml`** de una de las subclases le indico que va a ser una tabla Single
+Habra un **`orm.xml`** para todas las subclases.
+Dentro del `<entity-mappings>` le indico que va a ser una tabla Single y declaro todos los subtipos en el.
 
-1. Dentro de la etiqueta `<entity>` existente introduzco como cabecera:
+1. Dentro de la primera etiqueta `<entity>` de una subclase introduzco como cabecera el **SINGLE_TABLE** y el nombre de la columna discriminatoria:
 
    - **inheritance strategy="SINGLE_TABLE"** para indicar que es una Single Table (strategy se puede omitir por ser el valor por defecto)
    - **discriminator-column name="NombreColumna"** para indicar el nombre de la columna discriminatoria
@@ -851,10 +852,15 @@ En una de los **`orm.xml`** de una de las subclases le indico que va a ser una t
               ...
           </attributes>
      </entity>
+     
+     <entity class="es.ruta.otraSubClase" access="FIELD">
+     	...
+     </entity>
      ```
 
-2. Agrego al `<entity-mappings>` la otra entidad como en un orm normal, añadiendo:
+2. Agrego las otras subentidades como en un orm normal, añadiendo:
 
+   - la declaracion de la entidad con su ruta y sus atributos especificos
    - Una etiqueta que sea el **valor discriminatorio**
 
      ```
