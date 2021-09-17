@@ -5,5 +5,3 @@
 ### Riesgos
 
 ### Dependencias
-
-### Duración
