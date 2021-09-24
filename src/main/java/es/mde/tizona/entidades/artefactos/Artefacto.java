@@ -13,7 +13,7 @@ public interface Artefacto {
 	String getFuncionamiento();
 	String getFabricacion();
 	String[] getEncontradoEn();
-	Collection<ArchivoArtefacto> getListadoImagenes();
+//	Collection<ArchivoArtefacto> getListadoImagenes();
 	String getMarcasFrio();
 	String getMarcasPintura();
 	

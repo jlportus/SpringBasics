@@ -31,50 +31,50 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @ComponentScan("mde")
 public class ClaseConfiguracionJava {
 
-	@Bean
-	RepresentationModelProcessor<RepositorySearchesResource> addSearchLinks(RepositoryRestConfiguration config) {
-		Map<Class<?>, Class<?>> controllersRegistrados = new HashMap<>();
-
-		// le indico la entidad donde tiene que insertar el enlace y el controlador
-//		controllersRegistrados.put(ActividadConID.class, ListadoController.class);
-//		controllersRegistrados.put(AusenciaConID.class, AusenciasController.class);
-
-		return new RepresentationModelProcessor<RepositorySearchesResource>() {
-
-			@SuppressWarnings("deprecation")
-			@Override
-			public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
-
-				// si el enlace coincide lo insertara con el siguiente bloque
-				if (controllersRegistrados.containsKey(searchResource.getDomainType())) {
-					Method[] metodos = controllersRegistrados.get(searchResource.getDomainType()).getDeclaredMethods();
-					for (Method m : metodos) {
-						if (!m.isAnnotationPresent(ResponseBody.class))
-							continue;
-						try {
-							Object[] pathVars = Stream.of(m.getParameters())
-									.filter(p -> p.isAnnotationPresent(PathVariable.class))
-									.map(p -> "(" + p.getName() + ")").collect(Collectors.toList()).toArray();
-							URI uri = linkTo(m, pathVars).toUri();
-							String path = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(),
-									config.getBasePath() + uri.getPath(), uri.getQuery(), uri.getFragment()).toString()
-											.replace("(", "{").replace(")", "}");
-							String requestParams = Stream.of(m.getParameters())
-									.filter(p -> p.isAnnotationPresent(RequestParam.class)).map(Parameter::getName)
-									.collect(Collectors.joining(","));
-							searchResource.add(new Link(path + "{?" + requestParams + "}", m.getName()));
-						} catch (URISyntaxException e) {
-							e.printStackTrace();
-						}
-					}
-				}
-
-				return searchResource;
-			}
-
-		};
-
-	}
+//	@Bean
+//	RepresentationModelProcessor<RepositorySearchesResource> addSearchLinks(RepositoryRestConfiguration config) {
+//		Map<Class<?>, Class<?>> controllersRegistrados = new HashMap<>();
+//
+//		// le indico la entidad donde tiene que insertar el enlace y el controlador
+////		controllersRegistrados.put(ActividadConID.class, ListadoController.class);
+////		controllersRegistrados.put(AusenciaConID.class, AusenciasController.class);
+//
+//		return new RepresentationModelProcessor<RepositorySearchesResource>() {
+//
+//			@SuppressWarnings("deprecation")
+//			@Override
+//			public RepositorySearchesResource process(RepositorySearchesResource searchResource) {
+//
+//				// si el enlace coincide lo insertara con el siguiente bloque
+//				if (controllersRegistrados.containsKey(searchResource.getDomainType())) {
+//					Method[] metodos = controllersRegistrados.get(searchResource.getDomainType()).getDeclaredMethods();
+//					for (Method m : metodos) {
+//						if (!m.isAnnotationPresent(ResponseBody.class))
+//							continue;
+//						try {
+//							Object[] pathVars = Stream.of(m.getParameters())
+//									.filter(p -> p.isAnnotationPresent(PathVariable.class))
+//									.map(p -> "(" + p.getName() + ")").collect(Collectors.toList()).toArray();
+//							URI uri = linkTo(m, pathVars).toUri();
+//							String path = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(),
+//									config.getBasePath() + uri.getPath(), uri.getQuery(), uri.getFragment()).toString()
+//											.replace("(", "{").replace(")", "}");
+//							String requestParams = Stream.of(m.getParameters())
+//									.filter(p -> p.isAnnotationPresent(RequestParam.class)).map(Parameter::getName)
+//									.collect(Collectors.joining(","));
+//							searchResource.add(new Link(path + "{?" + requestParams + "}", m.getName()));
+//						} catch (URISyntaxException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//
+//				return searchResource;
+//			}
+//
+//		};
+//
+//	}
 
 	@Bean
 	CorsFilter corsFilter() {

@@ -4,9 +4,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefacto;
 
+@Entity
+
+@Table(name = "ARTEFACTOS")
 public class ArtefactoImpl implements Artefacto {
+
+	@Id
+	@GeneratedValue
+	Long id;
 
 	private String nombre;
 	private String descripcion;
@@ -15,9 +27,18 @@ public class ArtefactoImpl implements Artefacto {
 	private String color;
 	private String fabricacion;
 	private String[] encontradoEn;
-	private Collection<ArchivoArtefacto> listadoImagenes;
+	
+//	private Collection<ArchivoArtefacto> listadoImagenes;
 	private String marcasFrio;
 	private String marcasPintura;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -75,13 +96,13 @@ public class ArtefactoImpl implements Artefacto {
 		this.encontradoEn = encontradoEn;
 	}
 
-	public Collection<ArchivoArtefacto> getListadoImagenes() {
-		return listadoImagenes;
-	}
-
-	public void setListadoImagenes(Collection<ArchivoArtefacto> listadoImagenes) {
-		this.listadoImagenes = listadoImagenes;
-	}
+//	public Collection<ArchivoArtefacto> getListadoImagenes() {
+//		return listadoImagenes;
+//	}
+//
+//	public void setListadoImagenes(Collection<ArchivoArtefacto> listadoImagenes) {
+//		this.listadoImagenes = listadoImagenes;
+//	}
 
 	public String getMarcasFrio() {
 		return marcasFrio;
@@ -100,14 +121,14 @@ public class ArtefactoImpl implements Artefacto {
 	}
 
 	public ArtefactoImpl() {
-		this.listadoImagenes = new ArrayList<>();
+//		this.listadoImagenes = new ArrayList<>();
 	}
 
 	@Override
 	public String toString() {
 		return "ArtefactiImpl [nombre=" + nombre + ", descripcion=" + descripcion + ", funcionamiento=" + funcionamiento
 				+ ", forma=" + forma + ", color=" + color + ", fabricacion=" + fabricacion + ", encontradoEn="
-				+ Arrays.toString(encontradoEn) + ", listadoImagenes=" + listadoImagenes + ", marcasFrio=" + marcasFrio
+				+ Arrays.toString(encontradoEn) + ", listadoImagenes=" + ", marcasFrio=" + marcasFrio
 				+ ", marcasPintura=" + marcasPintura + "]";
 	}
 
