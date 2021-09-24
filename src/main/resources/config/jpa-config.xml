@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+
+	<!-- Para persistencia -->
+	<!--Debo decirle donde buscar en el paquete Base donde se encuentran los 
+		REPOSITORIOS que voy a persistir Seran las interfacesDAO extend jpaRepository -->
+	<!-- Elegir un metodo u otro si no sobreescribe y puede generar conflicto -->
+	<!-- Con un placeHolder al Properties -->
+	<jpa:repositories
+		base-package="${es.mde.tizona}" />
+	<!-- Con la ruta directa -->
+	<!-- <jpa:repositories base-package="es.mde.SpringBasics" /> -->
+
+	<!-- Bean de Spring de la factoria de gestion de entidades -->
+	<!-- Hay que pasarle el Data Source por archivo properties -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<!-- Bean que crea Spring con la fuente de datos -->
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- Decimos donde buscar las ENTIDADES que se van a persistir (con la 
+			conversion que haga el repositorio) -->
+		<property name="packagesToScan"
+			value="${es.mde.entidades}" />
+
+		<!-- Decimos como se mapean de Java a BD y viceversa, si no existen puede 
+			dar pegas -->
+		<property name="mappingResources">
+			<list>
+				<!--<value>jpa/Persona.orm.xml</value>
+				<value>jpa/PersonaConPermiso.orm.xml</value>-->
+				<!-- <value>jpa/PersonaConPermisoConID.orm.xml</value> -->
+
+				<!-- <value>jpa/permisos/PermisoConID.orm.xml</value> -->
+				<!--<value>jpa/permisos/Permiso.orm.xml</value>
+
+				<value>jpa/ausencias/AusenciaConID.orm.xml</value>
+				<value>jpa/ausencias/Ausencia.orm.xml</value>-->
+
+				<!-- <value>jpa/ausencias/Baja.orm.xml</value> -->
+				<!-- <value>jpa/ausencias/BajaConID.orm.xml</value> -->
+
+				<!-- <value>jpa/ausencias/ComisionServicioConID.orm.xml</value> -->
+				<!-- <value>jpa/ausencias/ComisionServicio.orm.xml</value> -->
+
+				<!-- <value>jpa/ausencias/PermisoOficialConID.orm.xml</value> -->
+				<!-- <value>jpa/ausencias/PermisoOficial.orm.xml</value> -->
+
+				<!-- <value>jpa/ausencias/ServicioConID.orm.xml</value> -->
+				<!-- <value>jpa/ausencias/Servicio.orm.xml</value> -->
+
+				<!--<value>jpa/faltas/Actividad.orm.xml</value>
+				<value>jpa/faltas/ActividadConID.orm.xml</value>
+				<value>jpa/faltas/FaltaALista.orm.xml</value>
+				<value>jpa/faltas/FaltaAListaConID.orm.xml</value>-->
+
+
+			</list>
+		</property>
+
+		<property name="jpaVendorAdapter">
+
+			<!-- Le digo al factory la Implementacion de JPA que vamos a usar -> HIBERNATE -->
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+
+		<!-- Propiedades de jpa para el enlace y configuracion propiamente dicha 
+			de la base de datos -->
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+			</props>
+		</property>
+
+	</bean>
+
+	<!-- Configuracion necesaria para la comunicacion con la BD -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory"
+			ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+</beans>
