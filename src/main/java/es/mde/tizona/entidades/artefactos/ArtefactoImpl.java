@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefacto;
+import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefactoImpl;
 
 @Entity
 
@@ -21,14 +24,17 @@ public class ArtefactoImpl implements Artefacto {
 	Long id;
 
 	private String nombre;
+	@Column(length = 5000)
 	private String descripcion;
+	@Column(length = 5000)
 	private String funcionamiento;
 	private String forma;
 	private String color;
 	private String fabricacion;
 	private String[] encontradoEn;
 	
-//	private Collection<ArchivoArtefacto> listadoImagenes;
+	@OneToMany
+	private Collection<ArchivoArtefactoImpl> listadoImagenes = new ArrayList<ArchivoArtefactoImpl>();
 	private String marcasFrio;
 	private String marcasPintura;
 
@@ -96,13 +102,13 @@ public class ArtefactoImpl implements Artefacto {
 		this.encontradoEn = encontradoEn;
 	}
 
-//	public Collection<ArchivoArtefacto> getListadoImagenes() {
-//		return listadoImagenes;
-//	}
-//
-//	public void setListadoImagenes(Collection<ArchivoArtefacto> listadoImagenes) {
-//		this.listadoImagenes = listadoImagenes;
-//	}
+	public Collection<ArchivoArtefactoImpl> getListadoImagenes() {
+		return listadoImagenes;
+	}
+
+	public void setListadoImagenes(Collection<ArchivoArtefactoImpl> listadoImagenes) {
+		this.listadoImagenes = listadoImagenes;
+	}
 
 	public String getMarcasFrio() {
 		return marcasFrio;
