@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import firebase from "firebase/app";
 import 'firebase/storage';
 import "firebase/analytics";
 import "firebase/firestore";
@@ -6,7 +7,7 @@ import "firebase/database";
 import "firebase/auth";
 import { FotografiasService } from '../service/fotografias.service';
 import { environment } from 'src/environments/environment';
-import { initializeApp } from 'firebase/app';
+
 
 @Component({
   selector: 'app-fotografias',
@@ -15,12 +16,12 @@ import { initializeApp } from 'firebase/app';
 })
 
 export class FotografiasComponent implements OnInit {
-  app: any =  initializeApp(environment.firebaseConfig);
+
   constructor(private fotografiasService: FotografiasService) { }
 
   ngOnInit() {
     // Initialize Firebase
-    
+    firebase.initializeApp(environment.firebaseConfig);
     //this.getImage();
     this.showImages();
   }
@@ -51,7 +52,7 @@ export class FotografiasComponent implements OnInit {
   public showImages(): void {
     if (this.fotografiasService.userCredentials == undefined) {
       //Referencia a la carpeta de imagenes
-      var imagenesFBRef = this.app.database().ref().child('imagenesFB');
+      var imagenesFBRef = firebase.database().ref().child('imagenesFB');
       var result = "<div class='container'>";
       imagenesFBRef.on("value", function (snapshot) {
         //Capturar lo que hay en la BBDD (son pares clave valor)

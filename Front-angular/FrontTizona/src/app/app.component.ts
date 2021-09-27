@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,7 +8,6 @@ import { environment } from 'src/environments/environment';
   styles: [],
 })
 export class AppComponent {
-  app = initializeApp(environment.firebaseConfig);
-  analytics = getAnalytics(this.app);
+
   title = environment.title;
 }

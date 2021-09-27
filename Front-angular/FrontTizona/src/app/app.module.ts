@@ -14,7 +14,7 @@ import { HomeModule } from "./comunes/home/home.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FotografiasModule
+    FotografiasModule,
     EsqueletoModule,
     HomeModule,
     HttpClientModule,

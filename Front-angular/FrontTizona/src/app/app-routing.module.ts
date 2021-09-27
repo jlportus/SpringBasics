@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./comunes/home/home/home.component";
 import { NoEncontradoComponent } from "./esqueleto/no-encontrado/no-encontrado.component";
+import { FotografiasComponent } from "./fotografias/fotografias/fotografias.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
     path: `not-found`,
     component: NoEncontradoComponent,
   },
+  {
+    path: `fotografias`,
+    component: FotografiasComponent,
+  }
 ];
 
 @NgModule({
