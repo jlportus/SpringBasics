@@ -16,7 +16,13 @@ const routes: Routes = [
         (m) => m.AcercaModule
       ),
   },
-  
+  {
+    path: `ficha`,
+    loadChildren: () =>
+      import("src/app/fichas/fichas.module").then(
+        (m) => m.FichasModule),
+  },
+
   {
     path: `**`,
     redirectTo: `not-found`,
@@ -28,7 +34,7 @@ const routes: Routes = [
   {
     path: `fotografias`,
     component: FotografiasComponent,
-  }
+  },
 ];
 
 @NgModule({
