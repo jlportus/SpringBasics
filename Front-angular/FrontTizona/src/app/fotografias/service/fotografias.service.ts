@@ -21,16 +21,14 @@ export class FotografiasService {
     //Subir imagen a Firebase storage
     var storageRef = firebase.storage().ref().child(`imagenes/${file.name}`);
     storageRef.put(file);
-    alert('Subiendo fotografia')
+    alert('Subiendo fotografia');
 
     //Crear registo en Firebase Realtime Database con la URL de la imagen (necesita un delay para que primero se suba la foto a Storage)
     setTimeout(() => {
-      var imagenesFBRef = firebase.database().ref().child('imagenesFB');
-      storageRef.getDownloadURL().then(function (url) {
-        console.log(url)
-        imagenesFBRef.push({ nombre: file.name, url: url });
-      })
-    }, 4000)
+       storageRef.getDownloadURL().then(function (url) {
+         console.log(url)
+       })
+     }, 4000)
   }
 
     //Para obtener una imagen de Firebase Storge por su nombre (no usado)

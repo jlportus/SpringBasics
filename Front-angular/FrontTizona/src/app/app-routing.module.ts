@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./comunes/home/home/home.component";
 import { NoEncontradoComponent } from "./esqueleto/no-encontrado/no-encontrado.component";
-import { FotografiasComponent } from "./fotografias/fotografias/fotografias.component";
 
 const routes: Routes = [
   {
@@ -21,8 +20,15 @@ const routes: Routes = [
     loadChildren: () =>
       import("src/app/fichas/fichas.module").then(
         (m) => m.FichasModule),
-  },
+  },{
 
+    path: `fotografias`,
+    loadChildren: () =>
+      import("src/app/fotografias/fotografias.module").then(
+        (m) => m.FotografiasModule
+      ),
+  },
+  
   {
     path: `**`,
     redirectTo: `not-found`,
@@ -30,11 +36,7 @@ const routes: Routes = [
   {
     path: `not-found`,
     component: NoEncontradoComponent,
-  },
-  {
-    path: `fotografias`,
-    component: FotografiasComponent,
-  },
+  }
 ];
 
 @NgModule({
