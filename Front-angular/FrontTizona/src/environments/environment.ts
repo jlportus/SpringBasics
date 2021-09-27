@@ -12,7 +12,10 @@ export const environment = {
     messagingSenderId: '${firebase.messagingSenderId}',
     appId: '${firebase.appId}',
     measurementId: '${firebase.measurementId}'
-  }
+  },
+  title: `Tizona del C.I.D.`,
+  urlAPI: `http://localhost:8080/api`,
+  //urlAPI: `https://sargento-de-cuartel.herokuapp.com/api`
 };
 
 /*
