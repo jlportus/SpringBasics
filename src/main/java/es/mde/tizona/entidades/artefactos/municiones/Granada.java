@@ -1,24 +1,26 @@
-package es.mde.tizona.entidades.artefactos;
+package es.mde.tizona.entidades.artefactos.municiones;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
+@DiscriminatorValue("Granada")
 @Table(name = "GRANADAS")
 public class Granada extends Municion {
 
-	private String medioLanzamineto;
+	private String medioLanzamiento;
 
 	public Granada() {
 		super();
 	}
 
-	public String getMedioLanzamineto() {
-		return medioLanzamineto;
+	public String getMedioLanzamiento() {
+		return medioLanzamiento;
 	}
 
-	public void setMedioLanzamineto(String medioLanzamineto) {
-		this.medioLanzamineto = medioLanzamineto;
+	public void setMedioLanzamiento(String medioLanzamineto) {
+		this.medioLanzamiento = medioLanzamineto;
 	}
 
 }

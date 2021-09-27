@@ -1,9 +1,11 @@
-package es.mde.tizona.entidades.artefactos;
+package es.mde.tizona.entidades.artefactos.minas;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 
 @Entity
 @Table(name = "MINAS")

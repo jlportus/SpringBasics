@@ -8,13 +8,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefacto;
 import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefactoImpl;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 
 @Table(name = "ARTEFACTOS")
 public class ArtefactoImpl implements Artefacto {
@@ -32,7 +34,7 @@ public class ArtefactoImpl implements Artefacto {
 	private String color;
 	private String fabricacion;
 	private String[] encontradoEn;
-	
+
 	@OneToMany
 	private Collection<ArchivoArtefactoImpl> listadoImagenes = new ArrayList<ArchivoArtefactoImpl>();
 	private String marcasFrio;

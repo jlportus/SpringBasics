@@ -1,10 +1,9 @@
-package es.mde.tizona.repositorios.artefactos;
+package es.mde.tizona.repositorios.artefactos.minas;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-
-import es.mde.tizona.entidades.artefactos.Mina;
+import es.mde.tizona.entidades.artefactos.minas.Mina;
 
 @RepositoryRestResource(path="minas"
 ,itemResourceRel="mina"

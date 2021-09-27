@@ -1,7 +1,9 @@
-package es.mde.tizona.entidades.artefactos;
+package es.mde.tizona.entidades.artefactos.otros;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 
 @Entity
 @Table(name = "OTROS")
