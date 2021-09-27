@@ -35,3 +35,4 @@ out/
 
 ### VS Code ###
 .vscode/
+Front-angular/FrontTizona/src/environments/firebase.ts

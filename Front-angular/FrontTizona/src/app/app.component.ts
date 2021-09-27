@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'FrontTizona';
+  app = initializeApp(environment.firebaseConfig);
+  analytics = getAnalytics(this.app);
 }
