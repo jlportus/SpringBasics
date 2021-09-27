@@ -16,6 +16,13 @@ const routes: Routes = [
         (m) => m.AcercaModule
       ),
   },
+  {
+    path: `fotografias`,
+    loadChildren: () =>
+      import("src/app/fotografias/fotografias.module").then(
+        (m) => m.FotografiasModule
+      ),
+  },
   
   {
     path: `**`,
@@ -24,10 +31,6 @@ const routes: Routes = [
   {
     path: `not-found`,
     component: NoEncontradoComponent,
-  },
-  {
-    path: `fotografias`,
-    component: FotografiasComponent,
   }
 ];
 
