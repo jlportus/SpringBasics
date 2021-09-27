@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  title: `Tizona del C.I.D.`,
+  urlAPI: `http://localhost:8080/api`,
+  //urlAPI: `https://sargento-de-cuartel.herokuapp.com/api`
 };
 
 /*
