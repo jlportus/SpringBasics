@@ -35,7 +35,7 @@ public class ArtefactoImpl implements Artefacto {
 	private String fabricacion;
 	private String[] encontradoEn;
 
-	@OneToMany
+	@OneToMany(mappedBy = "artefacto")
 	private Collection<ArchivoArtefactoImpl> listadoImagenes = new ArrayList<ArchivoArtefactoImpl>();
 	private String marcasFrio;
 	private String marcasPintura;
@@ -130,6 +130,11 @@ public class ArtefactoImpl implements Artefacto {
 
 	public ArtefactoImpl() {
 //		this.listadoImagenes = new ArrayList<>();
+	}
+	
+	public void addImagen(ArchivoArtefactoImpl archivo) {
+		this.listadoImagenes.add(archivo);
+		archivo.setArtefacto(this);
 	}
 
 	@Override
