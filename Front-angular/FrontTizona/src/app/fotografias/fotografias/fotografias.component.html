@@ -11,7 +11,11 @@
     </div>
     <hr>
     <h4>Imagenes subidas a Firebase</h4>
-    <div id="fotos" class="container-fluid my-2"></div>
+    <div id="fotos" class="container-fluid my-2">
+        <div *ngFor="let fotografia of fotografias">
+            <img src=fotografia alt="">
+        </div>
+    </div>
     <br>
 </body>
 
