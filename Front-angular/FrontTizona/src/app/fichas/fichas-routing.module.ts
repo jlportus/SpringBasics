@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { FormularioFichaComponent } from "./formulario-ficha/formulario-ficha.component";
+import { ListadofichasComponent } from "./listadofichas/listadofichas.component";
 
 const routes: Routes = [
   {
@@ -10,10 +11,10 @@ const routes: Routes = [
         path: `formulario`,
         component: FormularioFichaComponent,
       },
-      // {
-      //   path: `contacto`,
-      //   component: ContactoComponent,
-      // },
+      {
+         path: `fichas`,
+         component: ListadofichasComponent,
+       },
     ],
   },
 ];
