@@ -1,16 +1,22 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { FichasRoutingModule } from './fichas-routing.module';
-import { FormularioFichaComponent } from './formulario-ficha/formulario-ficha.component';
-import { FichaArtificioComponent } from './ficha-artificio/ficha-artificio.component';
-
+import { FichasRoutingModule } from "./fichas-routing.module";
+import { FormularioFichaComponent } from "./formulario-ficha/formulario-ficha.component";
+import { FormsModule } from "@angular/forms";
+import { ListadofichasComponent } from "./listadofichas/listadofichas.component";
+import { FichaComponent } from "./listadofichas/ficha/ficha.component";
 
 @NgModule({
-  declarations: [FormularioFichaComponent, FichaArtificioComponent],
+  declarations: [
+    FormularioFichaComponent,
+    ListadofichasComponent,
+    FichaComponent,
+  ],
   imports: [
     CommonModule,
-    FichasRoutingModule
-  ]
+    FichasRoutingModule,
+    FormsModule
+  ],
 })
-export class FichasModule { }
+export class FichasModule {}

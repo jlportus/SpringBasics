@@ -1,1 +1,139 @@
-<p>formulario-ficha works!</p>
+<div class="container">
+  <h3>Introduzca nuevo artefacto</h3>
+  <div class="row fluid">
+    <form class="my-4">
+      <!-- input nombre -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Nombre</span>
+        </div>
+        <input
+          name="nombre"
+          type="text"
+          [(ngModel)]="artefacto.nombre"
+          class="form-control"
+        />
+      </div>
+      <!-- input descripcion -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Descripción</span>
+        </div>
+        <input
+          name="descripcion"
+          type="text"
+          [(ngModel)]="artefacto.descripcion"
+          class="form-control"
+        />
+      </div>
+      <!-- input funcionamiento -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Funcionamiento</span>
+        </div>
+        <input
+          name="funcionamiento"
+          type="text"
+          [(ngModel)]="artefacto.funcionamiento"
+          class="form-control"
+        />
+      </div>
+      <!-- input forma -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Forma</span>
+        </div>
+        <input
+          name="forma"
+          type="text"
+          [(ngModel)]="artefacto.forma"
+          class="form-control"
+        />
+      </div>
+      <!-- input color -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Color</span>
+        </div>
+        <input
+          name="color"
+          type="text"
+          [(ngModel)]="artefacto.color"
+          class="form-control"
+        />
+      </div>
+      <!-- input fabricacion -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Fabricación</span>
+        </div>
+        <input
+          name="fabricacion"
+          type="text"
+          [(ngModel)]="artefacto.fabricacion"
+          class="form-control"
+        />
+      </div>
+      <!-- input encontrado en -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Encontrado en</span>
+        </div>
+        <input
+          name="encontradoEn"
+          type="text"
+          [(ngModel)]="artefacto.encontradoEn"
+          class="form-control"
+          disabled
+        />
+      </div>
+      <!-- input aniador imagenes -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Añadir imagenes</span>
+        </div>
+        <input name="aniadirImagenes" type="text" class="form-control" />
+      </div>
+      <!-- input marcas frio -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Marcas en frio</span>
+        </div>
+        <input
+          name="marcasFrio"
+          type="text"
+          [(ngModel)]="artefacto.marcasFrio"
+          class="form-control"
+        />
+      </div>
+      <!-- input marcas Pintura -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Marcas Pintura</span>
+        </div>
+        <input
+          name="marcasPintura"
+          type="text"
+          [(ngModel)]="artefacto.marcasPintura"
+          class="form-control"
+        />
+      </div>
+
+      <!-- 
+    desplegable
+    <select name="situacionLaboral" [(ngModel)]="persona.situacionLboral" class="custom-select">
+      <option selected>Trabajas o estudias?</option>
+      <option value="desconocido">desconocido</option>
+      <option value="Galgo">Galgo</option>
+      <option value="Parado">Parado</option>
+      <option value="Levantador de Paises">Levantador de Paises</option>
+    </select> -->
+      <div class="d-flex justify-content-center" routerLink="../">
+        <input value="Guardar" type="submit" (click)="salvarArtefacto()" />
+      </div>
+    </form>
+    <!-- <pre>
+    <p>{{ artefacto | json }}</p>
+  </pre> -->
+  </div>
+</div>
