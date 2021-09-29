@@ -13,8 +13,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import es.mde.tizona.entidades.archivosArtefactos.ArchivoArtefactos.ArchivoArtefactoImpl;
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
@@ -35,8 +33,6 @@ public class ArtefactoImpl implements Artefacto {
 	private String fabricacion;
 	private String[] encontradoEn;
 
-	@OneToMany(mappedBy = "artefacto")
-	private Collection<ArchivoArtefactoImpl> listadoImagenes = new ArrayList<ArchivoArtefactoImpl>();
 	private String marcasFrio;
 	private String marcasPintura;
 
@@ -104,14 +100,6 @@ public class ArtefactoImpl implements Artefacto {
 		this.encontradoEn = encontradoEn;
 	}
 
-	public Collection<ArchivoArtefactoImpl> getListadoImagenes() {
-		return listadoImagenes;
-	}
-
-	public void setListadoImagenes(Collection<ArchivoArtefactoImpl> listadoImagenes) {
-		this.listadoImagenes = listadoImagenes;
-	}
-
 	public String getMarcasFrio() {
 		return marcasFrio;
 	}
@@ -129,12 +117,7 @@ public class ArtefactoImpl implements Artefacto {
 	}
 
 	public ArtefactoImpl() {
-//		this.listadoImagenes = new ArrayList<>();
-	}
-	
-	public void addImagen(ArchivoArtefactoImpl archivo) {
-		this.listadoImagenes.add(archivo);
-		archivo.setArtefacto(this);
+
 	}
 
 	@Override
