@@ -1,6 +1,5 @@
 package es.mde.tizona.entidades.artefactos;
 
-import javax.persistence.Column;
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -14,5 +13,7 @@ public class ArtefactoImpl_ {
 	public static volatile ListAttribute<ArtefactoImpl, String> encontradoEn;
 	public static volatile SingularAttribute<ArtefactoImpl, String> marcasFrio;
 	public static volatile SingularAttribute<ArtefactoImpl, String> marcasPintura;
+
+
 
 }

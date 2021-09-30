@@ -39,7 +39,17 @@ public class ArtefactoController {
 			@RequestParam(required = false) 
 			Optional<String> forma, 
 			@RequestParam(required = false) 
-			Optional<String> color, 
+			Optional<String> color,
+			@RequestParam(required = false) 
+			Optional<String> fabricacion,
+			@RequestParam(required = false) 
+			Optional<String> marcasFrio,
+			@RequestParam(required = false) 
+			Optional<String> marcasPintura,
+			
+			//de minas
+			@RequestParam(required = false) 
+			Optional<String> materialEnvuelta,
 			
 			//El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
@@ -48,9 +58,15 @@ public class ArtefactoController {
 
 		// hago un objeto que construye los criterios de busqueda opcionales.
 		ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
-				// meto aqui los parametros de la clase SearcCriteria
+				// meto aqui los parametros de la clase SearchCriteria
 				.forma(forma)
 				.color(color)
+				.fabricacion(fabricacion)
+				.marcasFrio(marcasFrio)
+				.marcasPintura(marcasPintura)
+				
+				//de mina
+				.materialEnvuelta(materialEnvuelta)
 
 				// Construyo
 				.build();
