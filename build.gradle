@@ -5,6 +5,7 @@ plugins {
 	id 'java-library'
 	id 'eclipse'
 	id 'application'
+	id "io.freefair.lombok" version "6.2.0"
 }
 
 group = 'es.mde'
@@ -37,7 +38,9 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'org.mapstruct:mapstruct:1.3.1.Final'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compileOnly 'org.projectlombok:lombok:1.18.16'
 }
 
 dependencyManagement {

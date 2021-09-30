@@ -3,6 +3,13 @@ package es.mde.tizona.rest;
 import java.util.Optional;
 import java.util.Set;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder
 public class ArtefactoSearchCriteria {
 
 	private Optional<String> forma;
@@ -58,10 +65,6 @@ public class ArtefactoSearchCriteria {
 
 	public void setMarcasPintura(Optional<String> marcasPintura) {
 		this.marcasPintura = marcasPintura;
-	}
-
-	public ArtefactoSearchCriteria() {
-		super();
 	}
 
 }

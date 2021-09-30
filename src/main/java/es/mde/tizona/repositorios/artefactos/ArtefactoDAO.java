@@ -22,5 +22,5 @@ public interface ArtefactoDAO extends JpaRepository<ArtefactoImpl, Long>, JpaSpe
 //						"filmActors", 
 //						"filmActors.actor" 
 //						})
-	List<ArtefactoImpl> finAll(@Nullable Specification<ArtefactoImpl> spec);
+	List<ArtefactoImpl> findAll(@Nullable Specification<ArtefactoImpl> spec);
 }

@@ -8,11 +8,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ArtefactoImpl.class)
 public class ArtefactoImpl_ {
 
-	private static volatile SingularAttribute<ArtefactoImpl, String> forma;
-	private static volatile SingularAttribute<ArtefactoImpl, String> color;
-	private static volatile SingularAttribute<ArtefactoImpl, String> fabricacion;
-	private static volatile ListAttribute<ArtefactoImpl, String> encontradoEn;
-	private static volatile SingularAttribute<ArtefactoImpl, String> marcasFrio;
-	private static volatile SingularAttribute<ArtefactoImpl, String> marcasPintura;
+	public static volatile SingularAttribute<ArtefactoImpl, String> forma;
+	public static volatile SingularAttribute<ArtefactoImpl, String> color;
+	public static volatile SingularAttribute<ArtefactoImpl, String> fabricacion;
+	public static volatile ListAttribute<ArtefactoImpl, String> encontradoEn;
+	public static volatile SingularAttribute<ArtefactoImpl, String> marcasFrio;
+	public static volatile SingularAttribute<ArtefactoImpl, String> marcasPintura;
 
 }

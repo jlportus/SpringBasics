@@ -4,25 +4,26 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.mde.tizona.entidades.artefactos.Artefacto;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.repositorios.artefactos.ArtefactoDAO;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
+@Service
 @Transactional
 public class ArtefactoDAOImpl implements ArtefactoDAOCustom {
 
 	@Autowired
 	ArtefactoDAO artefactoDAO;
 
-	public ArtefactoDAOImpl() {
-	}
-
 	@Override
-	public List<Artefacto> getArtefactos(ArtefactoSearchCriteria searchCriteria) {
-//		Specification<ArtefactoImpl> artefactoSpecifications = Artefacto.createFilmSpecifications(searchCriteria);
-		return null;
+	public List<ArtefactoImpl> getArtefactos(ArtefactoSearchCriteria searchCriteria) {
+		Specification<ArtefactoImpl> artefactoSpecifications = ArtefactoSpecifications.createArtefactoSpecifications(searchCriteria);
+		return this.artefactoDAO.findAll(artefactoSpecifications);
 	}
 
 }
