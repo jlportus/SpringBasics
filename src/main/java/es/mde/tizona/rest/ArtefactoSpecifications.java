@@ -17,13 +17,22 @@ public class ArtefactoSpecifications {
 
 	//Aniado los criterios posibles de busqueda a las especificaciones
 	public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
-		return formaEqualTo(searchCriteria.getForma());
+		return formaEqualTo(searchCriteria.getForma())
+				.and(colorEqualTo(searchCriteria.getColor()));
 	}
 
 	//declaro cada uno de los posibles criterios de busqueda que agrego al createSpecifications
 	public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
 		return (root, query, builder) -> {
-			return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
+			return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form)))
+					.orElse(null);
+		};
+	}
+	
+	public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
+		return (root, query, builder) -> {
+			return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
+					.orElse(null);
 		};
 	}
 }

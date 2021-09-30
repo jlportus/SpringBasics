@@ -35,7 +35,14 @@ public class ArtefactoController {
 	@GetMapping(path = "filtrar")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> buscarArtefacto(
-			@RequestParam(required = false) Optional<String> forma, PersistentEntityResourceAssembler assembler
+			//meto los parametros opcionales -> luego los debo meter al builder y tienen que estar en Specifications
+			@RequestParam(required = false) 
+			Optional<String> forma, 
+			@RequestParam(required = false) 
+			Optional<String> color, 
+			
+			//El assembler para que construya la respuesta
+			PersistentEntityResourceAssembler assembler
 
 	) {
 
@@ -43,6 +50,7 @@ public class ArtefactoController {
 		ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
 				// meto aqui los parametros de la clase SearcCriteria
 				.forma(forma)
+				.color(color)
 
 				// Construyo
 				.build();
