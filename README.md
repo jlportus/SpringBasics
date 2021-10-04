@@ -1489,8 +1489,24 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
       public static volatile SetAttribute<Film, FilmCategory> filmCategories;
     }
     ```
+  1. Creo la Interfaz `EntidadCustom`(_la guia la llama Service_)
+     - Le añado el metodo `List<Entidad> getListado(EntidadSearchCriteria searchCriteria)`
+  1. Implemento la interfazCustom en una clase `EntidadDAOImpl`.
+     -  Implemento el metodo **getListado**
+      ```
+      @Autowired
+      EntidadDAO entidadDAO;
+
+      @Override
+      public List<EntidadImpl> getListado(EntidadtoSearchCriteria searchCriteria) {
+      Specification<EntidadImpl> entidadSpecifications = EntidadSpecifications.createEbtidadSpecifications(searchCriteria);
+
+      return this.EntidadDAO.findAll(entidadSpecifications);
+      }
+      ```
+
   1. Añadir a extends la **interface**  `JpaSpecificationExecutor<Entity>` en la **interfazDAO** de la entidad origen
-  1. En la **interfazDAO** creo un metodo query que llamare desde el controlador. tiene que recibir como parametros `@Nullable Specification<Entity>`. Puede tener la anotacion [`@EntityGraph`](https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html)
+  1. En la **interfazDAO** implemento la InterfazDAOCustom. -> Sobreescribe el metodo de la interfaz `findAll` tiene que recibir como parametros `@Nullable Specification<Entity>`. Puede tener la anotacion [`@EntityGraph`](https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html)
       ```
       List<Entity> finAll(@Nullable Specification<Entity> especificaciones
       ``` 
@@ -1499,61 +1515,61 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
      - anotaciones de `lombok`
        - `@Getter @setter @Builder`
   
-  ```
-    @Getter
-    @Setter
-    @Builder
-    public class ArtefactoSearchCriteria {
+      ```
+        @Getter
+        @Setter
+        @Builder
+        public class ArtefactoSearchCriteria {
 
-      private Optional<String> forma;
-      private Optional<String> color;
-      private Set<ClaseColeccion> listadoCosas;
-   ```
+          private Optional<String> forma;
+          private Optional<String> color;
+          private Set<ClaseColeccion> listadoCosas;
+      ```
 
-  2. Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
-  3. Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada. 
+  1. Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
+  1. Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada. 
       - Usare las `StaticMetamodel` para acceder a los campos de comparacion 
    
-  ```
-  //En esta clase se aniaden los diferentes posibles criterios de busqueda
+            ```
+              //En esta clase se aniaden los diferentes posibles criterios de busqueda
 
-  public class ArtefactoSpecifications {
+              public class ArtefactoSpecifications {
 
-    private ArtefactoSpecifications() {
-    }
+                private ArtefactoSpecifications() {
+                }
 
-    // Aniado los criterios posibles de busqueda a las especificaciones
-    public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
-      return formaEqualTo(searchCriteria.getForma())
-          .and(colorEqualTo(searchCriteria.getColor()))
-          .and(fabricacionEqualTo(searchCriteria.getFabricacion()))
-          .and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
-          .and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
+                // Aniado los criterios posibles de busqueda a las especificaciones
+                public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
+                  return formaEqualTo(searchCriteria.getForma())
+                      .and(colorEqualTo(searchCriteria.getColor()))
+                      .and(fabricacionEqualTo(searchCriteria.getFabricacion()))
+                      .and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
+                      .and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
 
-      // Puedo aniador mas criterios con **and** u **or**
-      
-      ;
-    }
+                  // Puedo aniador mas criterios con **and** u **or**
+                  
+                  ;
+                }
 
-    // declaro cada uno de los posibles criterios de busqueda que agrego al
-    // createSpecifications
-    public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
-      return (root, query, builder) -> {
-        return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
-      };
-    }
+                // declaro cada uno de los posibles criterios de busqueda que agrego al
+                // createSpecifications
+                public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
+                  return (root, query, builder) -> {
+                    return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
+                  };
+                }
 
-    public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
-      return (root, query, builder) -> {
-        return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
-            .orElse(null);
-      };
-    }
-    
-  }
-  ```
+                public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
+                  return (root, query, builder) -> {
+                    return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
+                        .orElse(null);
+                  };
+                }
+                
+              }
+            ```
 
-   6. En la clase controlador de la clase **EntityController**  creo el metodo que que me proporcione las busquedas con parametros dinamicos. Debe tener:
+   1. En la clase controlador de la clase **EntityController**  creo el metodo que que me proporcione las busquedas con parametros dinamicos. Debe tener:
       - Parametros Opcionales con **required=false** 
       - El `Assembler`
       - Un objeto SearchCriteria que construya los parametros de busqueda
