@@ -1476,7 +1476,7 @@ Añadir al `build.gradle`
 Pasos:
 Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entity` o por `orm.xml`)
 1. **Crear el @StaticMetamodel**
-   - De las clases que quiera hacer busquedas dinamicas creo una nueva clase `Entidad_` a la que le pongo la Anotacion `@StaticMetamodel(Entidad.class)` (El nombre se puede usar con la barra baja `_` por convenio)
+   - De las clases que quiera hacer busquedas dinamicas creo una nueva clase `Entidad_` a la que le pongo la Anotacion `@StaticMetamodel(Entidad.class)` (El nombre se puede usar con la barra baja `_` por convenio) -> **Tiene que estar en el mismo Paqeuete**
    - En esa metaEntidad declaro los atributos que seran opcionales en mis busquedas con los modificadores ` public static volatile` del tipo:
      - `SingularAtributte<Entity, TipoCampo>` para campos unicos
      - `SetAttribute<Entity, ClaseColeccion>` para campos de listas o colecciones
