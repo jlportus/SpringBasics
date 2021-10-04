@@ -4,29 +4,32 @@
 
 ### 0.INDICE
 
-- [Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
-- [1. Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
-- [2. Añadir mas dependencias a Gradle](#2-añadir-mas-dependencias-a-gradle)
-- [3. Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
-- [4. Inyectando Beans](#4-inyectando-beans)
-	- [4.1 Beans por XML](#41-beans-por-xml)
-	- [4.2 Beans por clase de configuracion Java](#42-beans-por-clase-de-configuracion-java)
-	- [4.3 Beans por @Anotaciones](#43-beans-por-anotaciones)
-	- [4.4 Prelacion de Beans](#44-prelacion-de-beans)
-	- [4.5 Desambiguando Beans](#45-desambiguando-beans)
-- [5. Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
-	- [5.1 Añadiendo recursos externos a Spring Boot](#51-añadiendo-recursos-externos-a-spring-boot)
-	- [5.2 Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
-- [6. Logging](#6-logging)
-	- [6.1 Configurando el Logging](#61-configurando-el-logging)
-		- [Nivel de salida de mensajes](#nivel-de-salida-de-mensajes)
-		- [Patron de salida de mensajes](#patron-de-salida-de-mensajes)
-		- [Formato de Color de salida de mensajes](#formato-de-color-de-salida-de-mensajes)
-		- [Salida de mensajes a fichero](#salida-de-mensajes-a-fichero)
-- [7. Autowired](#7-autowired)
-	- [7.1 Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
-		- [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
-		- [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
+- [SpringBasics](#springbasics)
+  - [GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-GRADLE-SPRING](#guia-para-el-desarrollo-de-un-proyecto-java-gradle-spring)
+    - [0.INDICE](#0indice)
+  - [Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
+  - [1. Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
+  - [2. Añadir mas dependencias a Gradle](#2-añadir-mas-dependencias-a-gradle)
+  - [3. Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
+  - [4. Inyectando Beans](#4-inyectando-beans)
+    - [4.1 Beans por XML](#41-beans-por-xml)
+    - [4.2 Beans por clase de configuracion Java](#42-beans-por-clase-de-configuracion-java)
+    - [4.3 Beans por @Anotaciones](#43-beans-por-anotaciones)
+    - [4.4 Prelacion de Beans](#44-prelacion-de-beans)
+    - [4.5 Desambiguando Beans](#45-desambiguando-beans)
+  - [5. Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
+    - [5.1 Añadiendo recursos externos a Spring Boot](#51-añadiendo-recursos-externos-a-spring-boot)
+    - [5.2 Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
+  - [6. Logging](#6-logging)
+    - [6.1 Configurando el Logging](#61-configurando-el-logging)
+        - [Nivel de salida de mensajes](#nivel-de-salida-de-mensajes)
+        - [Patron de salida de mensajes](#patron-de-salida-de-mensajes)
+        - [Formato de Color de salida de mensajes](#formato-de-color-de-salida-de-mensajes)
+        - [Salida de mensajes a fichero](#salida-de-mensajes-a-fichero)
+  - [7. Autowired](#7-autowired)
+    - [7.1 Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
+      - [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
+      - [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
 - [8. PERSISTENCIA DE DATOS](#8-persistencia-de-datos)
     - [8.1 El Entity manager](#81-el-entity-manager)
       - [Por Xml](#por-xml)
@@ -39,7 +42,7 @@
     - [8.5 Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
     - [8.6 Single Table](#86-single-table)
     - [8.7 Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relación-onetomany)
-- [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
+  - [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
     - [9.0 Prerequisitos para Spring](#90-prerequisitos-para-spring)
     - [9.1 Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
     - [9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins](#92-personalizar-los-objetos-mostrados---serializador-jackson-y-mixins)
@@ -48,40 +51,41 @@
       - [9.4.1 Personalizar Querys](#941-personalizar-querys)
       - [9.4.2 Recibir parametros por la URL](#942-recibir-parametros-por-la-url)
       - [9.4.3 Añadir los Query personalizados:](#943-añadir-los-query-personalizados)
-- [10. Métodos Personalizados](#10-métodos-personalizados)
+  - [10. Métodos Personalizados](#10-métodos-personalizados)
     - [10.1 Hacer Métodos Personalizados autodescubribles](#101-hacer-métodos-personalizados-autodescubribles)
     - [10.2 Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
-- [11.Listeners](#11listeners)
-- [12. Servicio Entidad](#12-servicio-entidad)
-- [13. Integrando Librerias](#13-integrando-librerias)
-	- [13.1 Integrar Proyecto Local](#131-integrar-proyecto-local)
-	- [13.2 Integrar Proyecto de GitHub](#132-integrar-proyecto-de-github)
-	- [13.3 Integrar Proyecto de Repositorio en la nube](#133-integrar-proyecto-de-repositorio-en-la-nube)
-	- [13.4 Precedencia y exportacion de dependencias](#134-precedencia-y-exportacion-de-dependencias)
+  - [11.Query Dinamicos](#11query-dinamicos)
+  - [12.Listeners](#12listeners)
+  - [13. Servicio Entidad](#13-servicio-entidad)
+  - [14. Integrando Librerias](#14-integrando-librerias)
+      - [14.1 Integrar Proyecto Local](#141-integrar-proyecto-local)
+      - [14.2 Integrar Proyecto de GitHub](#142-integrar-proyecto-de-github)
+      - [14.3 Integrar Proyecto de Repositorio en la nube](#143-integrar-proyecto-de-repositorio-en-la-nube)
+      - [14.4 Precedencia y exportacion de dependencias](#144-precedencia-y-exportacion-de-dependencias)
 
 ## Inicializar un proyecto Spring con initialitzer
 
 Ideal → iniciar el proyecto directamente con initializer
 
-	↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
+    ↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
 
-	↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
+    ↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
 
-Crear con Initializer →	Ir a la pagina [Spring Initalizer](https://start.spring.io/)
+Crear con Initializer → Ir a la pagina [Spring Initalizer](https://start.spring.io/)
 
-	→ proyecto gradle + java
+    → proyecto gradle + java
 
-	→ version spring boot → recomendada
+    → version spring boot → recomendada
 
-	⇒ group es.mde → nombre
+    ⇒ group es.mde → nombre
 
-	⇒ packing ⇒ .jar
+    ⇒ packing ⇒ .jar
 
-	→ java version → 8
+    → java version → 8
 
-	⇒ Añadir dependencias
+    ⇒ Añadir dependencias
 
-	↳ Se podría añadir con el build.gradle → Spring lo suple
+    ↳ Se podría añadir con el build.gradle → Spring lo suple
 
 Añadir
 ⇒ mejor que sobre que no falte
@@ -257,7 +261,7 @@ Es el modo mas desacoplado de todos.
    ```
     <?xml version="1.0" encoding="UTF-8"?>
     <beans xmlns="http://www.springframework.org/schema/beans"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.springframework.org/schema/beans
                                http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -265,17 +269,18 @@ Es el modo mas desacoplado de todos.
         <!--debo poner la ruta a la clase del Bean-->
         <!--Puedo poner un ID del Bean = Alias-->
         <!--Puedo poner un metodo que se inicie al crearse el Bean con init-method. No puede tener parametros-->
-        
+
         <bean class="es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML" id="test" init-method="init">
-          
+
           <!--pongo los campos de mi Bean (deben estar declarados en la clase y tener setter) y les puedo asignar valor inicial por defecto-->
-          
+
           <property name="campoNombre" value="¡He sido inyectada por XML!"></property>
         </bean>
         <!--puedo poner mas beans-->
 
     </beans>
    ```
+
 2. añado el archivo al contenedor (o lo importo en mi main si estoy usando SpringBoot)
    ```
     [...]ClassPathXmlApplicationContext(
@@ -285,11 +290,11 @@ Es el modo mas desacoplado de todos.
    ```
 3. Defino los Bean en el XML con
 
-    ```
-    <bean class="ruta.clase" id="alias">
-        <property name="campoBean"></property>
-    </bean>
-    ```
+   ```
+   <bean class="ruta.clase" id="alias">
+       <property name="campoBean"></property>
+   </bean>
+   ```
 
 ### 4.2 Beans por clase de configuracion Java
 
@@ -360,13 +365,14 @@ variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
 Una vez hecho el proyecto spring con initializer, me crea una serie de anotaciones por defecto
 
 En el main
--  **`@SpringBootApplication`**
-  Equivale a: 
+
+- **`@SpringBootApplication`**
+  Equivale a:
   **`@Configuration + @EnableAutoConfiguration + @ComponentScan`**
 
-     - Automaticamente escanea buscando `@anotaciones` en todos los archivos del paquete en el que se encuentra, **y en los que cuelguen de él** .
-     - Lo que esta fuera **¡NO lo escanea!** salvo que se lo diga expresamente.
-     - Tambien escaneara el `application.properties` por defecto de Spring
+  - Automaticamente escanea buscando `@anotaciones` en todos los archivos del paquete en el que se encuentra, **y en los que cuelguen de él** .
+  - Lo que esta fuera **¡NO lo escanea!** salvo que se lo diga expresamente.
+  - Tambien escaneara el `application.properties` por defecto de Spring
 
 - **`SpringApplication.run(SpringBasicsApplication.class, args)`**
 
@@ -387,18 +393,19 @@ En el main
 
 [Volver a inicio](#springbasics)
 
-  ### 5.1 Añadiendo recursos externos a Spring Boot
+### 5.1 Añadiendo recursos externos a Spring Boot
 
 Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir donde puede buscar mas recursos que quiera inyectar.
 
 - Insertando por **config.xml**
-  1. en el `main` le digo que debe escanear el recurso (resource) de mi archivo XML. 
+  1. en el `main` le digo que debe escanear el recurso (resource) de mi archivo XML.
   2. Agrego la anotacion
-     `@ImportResource({"classpath:jpa-config.xml"})` 
+     `@ImportResource({"classpath:jpa-config.xml"})`
      - Puedo poner mas archivos separados por comas `,`
   3. Ahi tendré las configuraciones al estilo Bean (se ve mas adelante)
-- **Importando clases** de configuracion por java externas 
-  - Añado al `main` la anotacion 
+- **Importando clases** de configuracion por java externas
+
+  - Añado al `main` la anotacion
     `@Import({ruta.ClaseConfiguracionJava.class})` con la ruta a la clase
 
   ### 5.2 Insertando valores externos en campos de Beans
@@ -407,12 +414,12 @@ Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir don
 
   1. Inserto el archivo properties nuevo al main:
      `@PropertySource({"valoresConstantes.properties"}) `
-  2. Creo en la carpeta `resources` el archivo 
-      `valoresConstantes.properties`
+  2. Creo en la carpeta `resources` el archivo
+     `valoresConstantes.properties`
   3. Introduzco en el los pares clave valor que quiero insertar despues en mi codigo
      `campoExterno=valor de campo Externo`
-  4. En el Bean que quiero usar el campo externo, pongo la anotacion **con el placeHolder** 
-      `@Value("${campoExterno}")` antes del campo o del parametro del metodo Bean que voy a usar
+  4. En el Bean que quiero usar el campo externo, pongo la anotacion **con el placeHolder**
+     `@Value("${campoExterno}")` antes del campo o del parametro del metodo Bean que voy a usar
 
      - Me sustiuira el valor de la variable por el almacenado en el archivo properties
      - En el metodo bean tiene que ir como un parametro
@@ -450,18 +457,20 @@ Podre hacer un log por cada singleton
 En la clase que quiera emplear el **log**
 
 1. Creo un objeto Logger estatico final
-   `private final Logger log = LoggerFactory.getLogger(ClaseAHacerLog.class);` 
+   `private final Logger log = LoggerFactory.getLogger(ClaseAHacerLog.class);`
    - Al importar tengo que importar el logger de **slf4j** - Me dará acceso a los metodos de log
 2. Donde quiera que me elabore un mensaje de log (donde pondria un System.out.prntln), llamo a mi objeto **Log** y uso sus metodos:
-   `log.info("Mi mensaje: {}", testString) ` 
-   - Personalizo el mensaje de salida. 
-    > Uso String con placeHolders llamados por `{}`, insertados en orden de los `elementos.toString` separados por las comas 
-    > Tendré varios niveles de prioridad: 
-    > - 1 ERROR - Errores 
-    > - 2 WARN - Alertas 
-    > - 3 INFO - Nivel Por defecto. Mostrara de info hacia arriba 
-    > - 4 DEBUG - Informacion importante para depuracion 
-    > - 5 TRACE - Capta todo
+   `log.info("Mi mensaje: {}", testString) `
+
+   - Personalizo el mensaje de salida.
+     > Uso String con placeHolders llamados por `{}`, insertados en orden de los `elementos.toString` separados por las comas
+     > Tendré varios niveles de prioridad:
+     >
+     > - 1 ERROR - Errores
+     > - 2 WARN - Alertas
+     > - 3 INFO - Nivel Por defecto. Mostrara de info hacia arriba
+     > - 4 DEBUG - Informacion importante para depuracion
+     > - 5 TRACE - Capta todo
 
    ### 6.1 Configurando el Logging
 
@@ -568,7 +577,6 @@ public Test miTest() {...}
 ```
 
 > Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
-
 
 [Volver a inicio](#springbasics)
 
@@ -735,26 +743,26 @@ Para **omitir campos** al almacenar en la BD se usa **TRANSIENT**
 </entity-mappings>
 ```
 
-   - los campos:
-     - En la clase tiene que haber un campo ID **Obligatorio**
-       - Si quiero que se cree de manera automatica el ID
-         `<generated-value strategy="IDENTITY"/>`
-     - El resto si no se pone nada se almacenan automaticamente
-     - Si pongo alguno uso la etiqueta `<basic>`es para poder ponerle alguna restriccion de campo
-       - como atributo xml:
-         - `optional="false"` ->campo obligatorio (no puede ser opcional)
-       - como sub-nodo xml
-         - `<column` + `/>`
-         - `length="16"` -> Longitud maxima
-         - `unique="true"`
-     - Para omitir campos en la BD uso
-       `<transient name="campo"/>`
-     - Para personalizar el nombre de la tabla
-       `<table name="Mi_Tabla"/>`
-     - Para personalizar el nombre de las columnas
-       `<column name="Mi_Columna"/>`
+- los campos:
+  - En la clase tiene que haber un campo ID **Obligatorio**
+    - Si quiero que se cree de manera automatica el ID
+      `<generated-value strategy="IDENTITY"/>`
+  - El resto si no se pone nada se almacenan automaticamente
+  - Si pongo alguno uso la etiqueta `<basic>`es para poder ponerle alguna restriccion de campo
+    - como atributo xml:
+      - `optional="false"` ->campo obligatorio (no puede ser opcional)
+    - como sub-nodo xml
+      - `<column` + `/>`
+      - `length="16"` -> Longitud maxima
+      - `unique="true"`
+  - Para omitir campos en la BD uso
+    `<transient name="campo"/>`
+  - Para personalizar el nombre de la tabla
+    `<table name="Mi_Tabla"/>`
+  - Para personalizar el nombre de las columnas
+    `<column name="Mi_Columna"/>`
 
-  > ¡NOTA! : Si la tabla esta creada y cambio las caracteristicas de ésta (campos opcionales, not null...) me dará error -> tengo que hacer `DROP TABLE` de la BD
+> ¡NOTA! : Si la tabla esta creada y cambio las caracteristicas de ésta (campos opcionales, not null...) me dará error -> tengo que hacer `DROP TABLE` de la BD
 
 3. Añado al `jpa-config.xml` la lista con los archivos orm de cada Clase -> debe ser la ruta completa.
    ```
@@ -766,7 +774,7 @@ Para **omitir campos** al almacenar en la BD se usa **TRANSIENT**
       </list>
    </property>
    ```
-2. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
+4. tendre que tener igualmente mi `interfazDAO` de la clase a persistir.
 
 [Volver a inicio](#springbasics)
 
@@ -794,23 +802,23 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 1. Crear el `ClasePadre.orm.xml` (El hijo debe estar tambien hecho como si fuera un POJO)
 
-    ```
-    <?xml version="1.0" encoding="UTF-8"?>
-    <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
-                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
-                                        http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
-                    version="1.0">
+   ```
+   <?xml version="1.0" encoding="UTF-8"?>
+   <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm
+                                       http://java.sun.com/xml/ns/persistence/orm_1_0.xsd"
+                   version="1.0">
 
-      <mapped-superclass class="es.ruta.ClasePadre"
-                        access="FIELD">
-        <attributes>
-          <id name="id" />
-        </attributes>
-      </mapped-superclass>
+     <mapped-superclass class="es.ruta.ClasePadre"
+                       access="FIELD">
+       <attributes>
+         <id name="id" />
+       </attributes>
+     </mapped-superclass>
 
-    </entity-mappings>
-    ```
+   </entity-mappings>
+   ```
 
 2. Crear la **interfazDAO** de la clase que vaya a persistir (el Hijo)
 3. Agregar el `ClasePadre.orm.xml` al **`Entity-Manager`**
@@ -852,7 +860,7 @@ Dentro del `<entity-mappings>` le indico que va a ser una tabla Single y declaro
               ...
           </attributes>
      </entity>
-     
+
      <entity class="es.ruta.otraSubClase" access="FIELD">
      	...
      </entity>
@@ -919,56 +927,59 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 1. Anotar el **OneToMany** en el **campo coleccion(listado)** que contiene la claseContenedora con:
 
    - **Por XML**. En el `orm.xml` de la clase que tiene la coleccion (añadir un atributo mas)
+
      - name: el nombre del campo de la clase contenedora
      - target-entity: ruta a la clase del elemento de la lista (no puede ser una interfaz)
      - mapped-by: campo Objetivo de la clase ElementoDeLaLista en el que se va a lamacenar al padre-> debe ser un objeto y deben llamarse igual
        > Si no pongo el maped by hace una join table
 
-      ```
-      <one-to-many name="campoColeccion"
-                    target-entity="es.ruta.ClaseElementoDeLista"
-                    mapped-by="padreContenedor"/>
-      ```
+     ```
+     <one-to-many name="campoColeccion"
+                   target-entity="es.ruta.ClaseElementoDeLista"
+                   mapped-by="padreContenedor"/>
+     ```
 
    - **Por @OneToMany**. En la clase que tiene la coleccion, le pongo al campo Coleccion
+
      - mappedBy: campo Objetivo de la clase Elemento de la lista en el que se va a lamacenar al padre-> debe ser un objeto y deben llamarse igual
 
-      ```
-      @OneToMany(mappedBy="nombreCampoDestino")
-      private Collection<Elementos> coleccion;
-      ```
+     ```
+     @OneToMany(mappedBy="nombreCampoDestino")
+     private Collection<Elementos> coleccion;
+     ```
 
 2. En la clase tipo ElementoDeLaLista **Creo un campo** del tipo ClaseContenedora que tiene la coleccion ("PadreContenedor") .
    -> Aqui sera donde se almacene la FK en los objetos Elementos de la lista
 3. Añado el **ManyToOne** al elemento (un atributo mas)
 
    - **Por XML**. En el `orm.xml` de la clase Elemento de la coleccion
+
      - name: el nombre del campo tipo claseConColeccion
        - fetch="LAZY"-> (atributo Opcional, mejora rendimiento)hace que no se carque en memoria el objeto con coleccion cada vez que se carque un elemento de la lista
          `+` nodo interno xml
      - join-column name: FK -> valor a almacenar en la BD (no se puede llamar igual que otra columna de la tabla)
      - referencedColumnName: nombre de la columna en la BD que contendra la FK
 
-      ```
-      <many-to-one name="campoClaseConColeccion">
-                                <!-- fetch="LAZY"> -->
+     ```
+     <many-to-one name="campoClaseConColeccion">
+                               <!-- fetch="LAZY"> -->
 
-            <join-column name="ID_PARTIDO"
-                    referencedColumnName="IDPadre"/>
+           <join-column name="ID_PARTIDO"
+                   referencedColumnName="IDPadre"/>
 
-      </many-to-one>
-      ```
+     </many-to-one>
+     ```
 
    - **PorAnotacion @ManyToOne**. En la clase Elemento de la coleccion, le pongo al campo Contenedor
 
-      ```
-      @ManyToOne(fetch=FetchType.LAZY)
-      @JoinColumn(name="CampoIDDelContenedor")
-      private ElementoContenedor padreContenedor;
-      ```
+     ```
+     @ManyToOne(fetch=FetchType.LAZY)
+     @JoinColumn(name="CampoIDDelContenedor")
+     private ElementoContenedor padreContenedor;
+     ```
 
 4. Crear un metodo sincronizador en la clase con la coleccion
-   
+
    -> Cada vez que se añada un elemento a la coleccion se tiene que **propagar el ID** (PK) de la clase que tiene la lista, al elemento de la lista (a su campo Padre Contenedor -> FK)
 
    ```
@@ -1015,10 +1026,10 @@ Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 
 1. En el Properties añadir:
 
-    ```
-    spring.data.rest.basePath=/api
-    spring.data.rest.detection-strategy=annotated
-    ```
+   ```
+   spring.data.rest.basePath=/api
+   spring.data.rest.detection-strategy=annotated
+   ```
 
    - La ruta de acceso pasara a ser `http://url`**`/api`** -> se usa para versionado de api y pruebas
    - Solo se mostraran las entidades que tengan la anotacion **RestResource**
@@ -1026,16 +1037,17 @@ Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 2. Cambiar la anotaciones de las entidaes que se quieran mostrar
    de `@Repository` a `@RepositoryRestResource`
 3. Perosnalizar las rutas URL para el acceso en las **intfazDAO**
+
    - por defecto Spring pone nombres a las rutas que no seran amigables -> personalizar con:
 
-      ```
-      @RepositoryRestResource(path="elemento"
-            ,itemResourceRel="elemento"
-            ,collectionResourceRel="elementos")
-                              //,exported=false
-      public interface intfzDAO extends JpaRepository<Elemento, Long> {
-      }
-      ```
+     ```
+     @RepositoryRestResource(path="elemento"
+           ,itemResourceRel="elemento"
+           ,collectionResourceRel="elementos")
+                             //,exported=false
+     public interface intfzDAO extends JpaRepository<Elemento, Long> {
+     }
+     ```
 
      - path: sera la ruta URL personalizada por la que accedo al recurso
      - exported=false: hace que el recurso no se muestre aunque tenga la anotacion
@@ -1046,7 +1058,6 @@ Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 > **Muy Importante**: Necesitare serializar los objetos Elementos de una coleccion que se exponen con REST.
 > Si no lo hago, al exponerlo, expondria tambien al objeto claseColeccion (Padre), que volveria a exponer a los Elementos de la Lista -> **Entra en Bucle recursivo**
 > Hay que **ignorar el campo claseColeccion** (Padre) del elemento de la lista (el campo de la FK).
-
 
 [Volver a inicio](#springbasics)
 
@@ -1068,8 +1079,8 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 
    se añade un Bean de tipo **ObjectMapper** a la que se le añaden los mixins.
 
-   - Para añadir un mixin, se usa el metodo `.addMixin(Clase, Mixin)` 
-    -> cuando se crea un objeto del tipo Clase -> se personalizan sus campos con las anotaciones que haya en el Mixin.
+   - Para añadir un mixin, se usa el metodo `.addMixin(Clase, Mixin)`
+     -> cuando se crea un objeto del tipo Clase -> se personalizan sus campos con las anotaciones que haya en el Mixin.
 
    ```
      @Bean
@@ -1085,22 +1096,22 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
    - Para la clase (se pasan en un objeto array):
      - de orden
      - de campos ignorados
-      ```
-      @JsonPropertyOrder({ "campo1", "campo3", "campo2" })
-      @JsonIgnoreProperties(value = { "campo4", "campo5" })
-      public static interface Cliente {
-        //...campos y getters/setters
-      }
-      ```
-   - Para los campos y getters de la clase - Para personalizar el nombre del campo -> Si no se conoce el tipo de dato del getter 
-      -> Se puede usar `Object` - para ignorar el campo (Tiene preferencia en las herencias) (Para formatos personalizados (sobre todo en fechas))
-      ```
-      @JsonProperty("nombreCampoPersonalizado") 
-      abstract String getNombre(); 
-      @JsonIgnore Object objeto; 
-      @JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss") public Date eventDate;
-      ```
-    
+     ```
+     @JsonPropertyOrder({ "campo1", "campo3", "campo2" })
+     @JsonIgnoreProperties(value = { "campo4", "campo5" })
+     public static interface Cliente {
+       //...campos y getters/setters
+     }
+     ```
+   - Para los campos y getters de la clase - Para personalizar el nombre del campo -> Si no se conoce el tipo de dato del getter
+     -> Se puede usar `Object` - para ignorar el campo (Tiene preferencia en las herencias) (Para formatos personalizados (sobre todo en fechas))
+     ```
+     @JsonProperty("nombreCampoPersonalizado")
+     abstract String getNombre();
+     @JsonIgnore Object objeto;
+     @JsonFormat( shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss") public Date eventDate;
+     ```
+
 > Hay configuraciones de serializacion que se pueden anotar en un properties, para que se realicen sobre todos los objetos
 
 > La serializacion es bidireccional, se aplica en los GET (salida) y en los POST (entrada) desde el front, es decir al mandar objetos tienen que tener la misma estructura con los mismos nombres en los campos.
@@ -1120,10 +1131,10 @@ Hará que los enlaces sean autodescubribles, es decir, donde antes me ponia un o
 
 Necesito acceder a los campo para hacer anotaciones (**solo se puede hacer con anotaciones**)
 
-  > Si no tengo acceso
-  >
-  > 1. hago una claseImpl hija que extienda a la que estoy haciendo la persistencia-REST. En la carpeta repositorios (al lado de su DAO).
-  > 2. Sobreescribo el metodo -> `@Overrride` ... getColeccion()
+> Si no tengo acceso
+>
+> 1. hago una claseImpl hija que extienda a la que estoy haciendo la persistencia-REST. En la carpeta repositorios (al lado de su DAO).
+> 2. Sobreescribo el metodo -> `@Overrride` ... getColeccion()
 
 Pasos:
 
@@ -1131,18 +1142,17 @@ Pasos:
 
    - El metodo devolvera el `super.get()`
 
-      ```
-      //@Overrride (si lo estuviese haciendo con la clase heredera)
-      @OneToMany(targetEntity=Elemento.class)
-      public Collection<Elementos> getColeccion(){
-          return super.getColeccion();
-      }
-      ```
+     ```
+     //@Overrride (si lo estuviese haciendo con la clase heredera)
+     @OneToMany(targetEntity=Elemento.class)
+     public Collection<Elementos> getColeccion(){
+         return super.getColeccion();
+     }
+     ```
 
 1. Pongo la anotacion `@ManyToOne` en el campo **FK** del Elemento que hace referencia al elementoConColeccion
    - No tiene que estar ignorado con el `ObjectMapper + mixin`
 1. Creo el ORM (por anotaciones o xml) si no estubiera hecho ya. (si he hecho la clase heredera -> lo tendre que hacer)
-
 
 [Volver a inicio](#springbasics)
 
@@ -1174,15 +1184,16 @@ Las Consultas generales son:
 - findBy
 - getBy
 - deleteBy
-  `+` 
-  - NombreDeLaColumnaDeLaTabla 
-    - `AND`, `OR` 
+  `+`
+
+  - NombreDeLaColumnaDeLaTabla
+    - `AND`, `OR`
       - OtraColumna
-        `+` modificadores: 
-        - IgnoreCase 
-        - Containing 
+        `+` modificadores:
+        - IgnoreCase
+        - Containing
         - Between
-  
+
   Quedando asi:
 
   ```
@@ -1233,13 +1244,13 @@ En caso de querer hacer consultas mas elaboradas que requieran el **Join** de va
 Pasos:
 
 1.  Hacer en `repositorios` una interfaz nombreClaseDAO**Custom**
-    
+
     ↳ En dicha interfaz incluyo la declaracion de los metodos personalizados.
-    
+
     ⇒ No tiene que tener ninguna anotacion (la IntzDAO original seguirá siendo la encargada del acceso al repositorio y ofrecer los metodos).
 
 1.  Creo en el paquete `repositorios` una clase **`nombreClaseDAOImpl`**
-    
+
     ↳ ¡Obligatorio! Tiene que tener al final **`Impl`** -> Permite que Spring la auto detecte para emplear el metodo personalizado implementado.
 
     > tiene que ser exactamente el mismo nombre que la intfzDAO + Impl
@@ -1249,7 +1260,7 @@ Pasos:
 
 1.  Tendre que acceder a las tablas sencillas para luego poder hacer el Join personalizado. Se puede hacer de dos modos, por la interfazDAO o con Query "A mano".
 1.  Para cada tabla "simple" necesitará:
-    
+
     ↳ Tendra campos tipo:
 
     - **IntfzDAO** de la entidad sobre la que se quiera hacer la consulta -> Se aprovechara para poder acceder a los metodos query de JPA y poder personalizarlos despues con el resultado
@@ -1327,18 +1338,18 @@ Pasos:
     ```
 
 1.  En la clase controlador creo un metodo (con el mismo nombre que mi **metodo personalizado**) que llame al metodo personalizado de la IntfzDao
-    
+
     ⇒ Tendra las anotaciones en el metodo:
 
     - **`@GetMapping("/mimetodo")`** - define la ruta al metodo despues del `/search` + `/mimetodo`
       - puede ser Get, Post...
       - Es equivalenete a @RequestMapping(method=GET,path=..).
     - **`@ResponseBody`** -> Spring hace que lo que se devuelva se trate como una respuesta web
-      
+
       ↳ Devuelve un objeto del tipo `CollectionModel<PersistentEntityResource>`
-      
+
       ↳ recibe como parametro un objeto del tipo **assembler**
-      
+
       ↳ Si recibe un parametro por la URL se anota en los parametros con **`@RequestParam`** equivale a **@Param**
       `PersistentEntityResourceAssembler assembler` - sera el encargado de conformar el objeto de salida para que la capte una llamada Http
 
@@ -1444,7 +1455,127 @@ Copy&Paste:
 	}
 ```
 
-## 11.Listeners
+[Volver a inicio](#springbasics)
+## 11.Query Dinamicos
+
+Para realizar consultas usare los `@Param` pasando valores para hacer busquedas usando los metodos Query nativos de JPA. En determinados casos esto no valdra, puesto que puedo necesitar pasar un numero variable de parametros y que muchas veces estos sean null -> **Parametros Opcionales** -> **Consultas Dinamicas** ( Busqueda por filtros pe.) [Fuente](https://tech.asimio.net/2020/11/21/Implementing-dynamic-SQL-queries-using-Spring-Data-JPA-Specification-and-Criteria-API.html)
+
+El proceso es similar a los metodos personalizados (Custosm)
+
+Prerrequisitos:
+
+Se van a utilizar unas librerias que simplifican las tareas.
+Añadir al `build.gradle` 
+- En **`plugins{}`**
+  - `id "io.freefair.lombok" version "6.2.0"`
+- En **`dependencies{}`**:
+  - `implementation 'org.mapstruct:mapstruct:1.3.1.Final'` - permite usar los metodos de mapeo de queries a objetos 
+  - `compileOnly 'org.projectlombok:lombok:1.18.16'` -> Libreria muy util, con **@anotaciones** genera `@Getter @Setter @Builder` (constructor dinamico con todos los campos posibles)
+
+
+Pasos:
+Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entity` o por `orm.xml`)
+1. **Crear el @StaticMetamodel**
+   - De las clases que quiera hacer busquedas dinamicas creo una nueva clase `Entidad_` a la que le pongo la Anotacion `@StaticMetamodel(Entidad.class)` (El nombre se puede usar con la barra baja `_` por convenio)
+   - En esa metaEntidad declaro los atributos que seran opcionales en mis busquedas con los modificadores ` public static volatile` del tipo:
+     - `SingularAtributte<Entity, TipoCampo>` para campos unicos
+     - `SetAttribute<Entity, ClaseColeccion>` para campos de listas o colecciones
+    ```
+    @StaticMetamodel(Film.class)
+    public class Film_ {
+
+      public static volatile SingularAttribute<Film, BigDecimal> rentalRate;
+      public static volatile SingularAttribute<Film, String> releaseYear;
+      public static volatile SetAttribute<Film, FilmCategory> filmCategories;
+    }
+    ```
+  1. Añadir a extends la **interface**  `JpaSpecificationExecutor<Entity>` en la **interfazDAO** de la entidad origen
+  1. En la **interfazDAO** creo un metodo query que llamare desde el controlador. tiene que recibir como parametros `@Nullable Specification<Entity>`. Puede tener la anotacion [`@EntityGraph`](https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html)
+      ```
+      List<Entity> finAll(@Nullable Specification<Entity> especificaciones
+      ``` 
+  1. Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
+  1. Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada. 
+      - Usare las `StaticMetamodel` para acceder a los campos de comparacion 
+    
+  ```
+  //En esta clase se aniaden los diferentes posibles criterios de busqueda
+
+  public class ArtefactoSpecifications {
+
+    private ArtefactoSpecifications() {
+    }
+
+    // Aniado los criterios posibles de busqueda a las especificaciones
+    public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
+      return formaEqualTo(searchCriteria.getForma())
+          .and(colorEqualTo(searchCriteria.getColor()))
+          .and(fabricacionEqualTo(searchCriteria.getFabricacion()))
+          .and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
+          .and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
+
+      // Puedo aniador mas criterios con **and** u **or**
+      
+      ;
+    }
+
+    // declaro cada uno de los posibles criterios de busqueda que agrego al
+    // createSpecifications
+    public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
+      return (root, query, builder) -> {
+        return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
+      };
+    }
+
+    public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
+      return (root, query, builder) -> {
+        return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
+            .orElse(null);
+      };
+    }
+    
+  }
+  ```
+
+   6. En la clase controlador de la clase **EntityController**  creo el metodo que que me proporcione las busquedas con parametros dinamicos. Debe tener:
+      - Parametros Opcionales con **required=false** 
+      - El `Assembler`
+      - Un objeto SearchCriteria que construya los parametros de busqueda
+      - Que llame a la interfazDAO al metodo custom pasandole los SearchoCriteria y almacene en un listado el resultado -> assembler.toCollectionModel
+      ```
+      @GetMapping(path = "filtrar")
+      @ResponseBody
+          public CollectionModel<PersistentEntityResource> buscarArtefacto(
+              //meto los parametros opcionales -> luego los debo meter al builder y tienen que estar en Specifications
+              @RequestParam(required = false) 
+              Optional<String> forma, 
+              @RequestParam(required = false) 
+              Optional<String> color,			
+              
+              //El assembler para que construya la respuesta
+              PersistentEntityResourceAssembler assembler
+
+          ) {
+
+            // hago un objeto que construye los criterios de busqueda opcionales.
+            ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
+                // meto aqui los parametros de la clase SearchCriteria
+                .forma(forma)
+                .color(color)				  	
+                  
+                // Construyo
+                .build();
+
+            // Recupero los artefactos con los criterios seleccionados
+            List<ArtefactoImpl> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
+            listadoArtefactos = new ArrayList<Mina>
+
+            return assembler.toCollectionModel(listadoArtefactos);
+          }
+      ```
+
+[Volver a inicio](#springbasics)
+## 12.Listeners
 
 Las operaciones con la BD tienen un "Ciclo de Vida" con la operacioens que serealizan en el CRUD de datos:
 
@@ -1514,8 +1645,8 @@ Pasos
      > Tambien puede ser un **@Bean** el que se pase al método
 
 [Volver a inicio](#springbasics)
-	
-## 12. Servicio Entidad
+
+## 13. Servicio Entidad
 
 Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
 
@@ -1555,35 +1686,35 @@ Generar un servicio Entidad:
 > Esto esta sin probar.
 
 [Volver a inicio](#springbasics)
-	
-## 13. Integrando Librerias
+
+## 14. Integrando Librerias
 
 Voy a utilizar código de otro proyecto en el mio. Podré desarrollar por un lado el proyecto-**API** para realizar la persistencia y la capa REST y en otro proyecto-**LIB** (mi libreria) desarrollaré la lógica de mi negocio (java "puro")
 
-El código de la libreria se puede obtener de un repositorio en la nube (gradle lo autocompila) o aprovechar el código de un proyecto en local. 
+El código de la libreria se puede obtener de un repositorio en la nube (gradle lo autocompila) o aprovechar el código de un proyecto en local.
 
-Ambos proyectos deberían ser Proyectos Gradle: 
+Ambos proyectos deberían ser Proyectos Gradle:
+
 - El de la API con Spring con todas las dependencias para REST y pesrsistencia
 - El de la LIB sera un proyecto Gradle Spring, sin dependencias (aunque se le quitarán las anotaciones Spring).
 
-#### 13.1 Integrar Proyecto Local
+#### 14.1 Integrar Proyecto Local
 
+Prerrequisitos:
 
-
-Prerrequisitos: 
-- Está generado el proyecto API y la libreria con Spring. 
+- Está generado el proyecto API y la libreria con Spring.
 - Están en local (clonados o generados).
 - Ambos Proyectos deberian tener su propio **GIT**
 
 1. El `proyecto-LIBreria` esta en la misma carpeta donde está mi `proyecto-API` (en carpetas hermanas).
 2. Al proyecto **LIB**reria le quito todas las anotaciones e importaciones de Spring
    - En el main
-     -  @SpringApplication
-     -  SpringContext = `SpringApplication.run`
-   - dependencias y plugins Spring del  build.gradle
+     - @SpringApplication
+     - SpringContext = `SpringApplication.run`
+   - dependencias y plugins Spring del build.gradle
    - La carpeta de Tests
 3. Importar ambos proyectos Gradle en eclipse.
-     - Usar valores por defecto
+   - Usar valores por defecto
 4. En el `build.gradle` del proyecto **LIB**
    - **NO** puede haber plugins de `Springframework`
    - Eclipse Necesita el plugin
@@ -1591,28 +1722,29 @@ Prerrequisitos:
      - `id 'java-library'`
      - `id 'eclipse'`
 5. En el **`settings.gradle`** del proyecto **API**
-   - Debe coincidir el nombre del directorio con el del preyecto 
+   - Debe coincidir el nombre del directorio con el del preyecto
      `rootProject.name = 'nombreProyectoAPI'` (si esta hecho con Spring lo genera automáticamente)
-   - Introduzco una linea nueva con: 
-      `includeFlat 'proyecto-LIBreria'`
-      > Debe ser el mismo nombre que tiene el proyectoLIB en su settings.gradle
+   - Introduzco una linea nueva con:
+     `includeFlat 'proyecto-LIBreria'`
+     > Debe ser el mismo nombre que tiene el proyectoLIB en su settings.gradle
 6. En el **`build.gradle`** del proyecto **API**
    - Introduzco en el apartado **`dependencias`**
-      ```
-      dependencies {
-        //
-        implementation project(':proyecto-LIBreria')
-      }
-      ```
+     ```
+     dependencies {
+       //
+       implementation project(':proyecto-LIBreria')
+     }
+     ```
 7. Ejecutar **Refresh gradle project**
    - en propiedades de mi proyecto en java build path → saldrá la librería como una dependencia
-8.  Ejecutar en eclipse gradle
-        **gradle task ide ⇒ generate all eclipse files**
+8. Ejecutar en eclipse gradle
+   **gradle task ide ⇒ generate all eclipse files**
 
-  > En propiedades de mi proyecto en java build path (o en la carpeta Project and External Dependencies) → saldrá la librería como una dependencia
+> En propiedades de mi proyecto en java build path (o en la carpeta Project and External Dependencies) → saldrá la librería como una dependencia
 
-  > Comprobar llamando desde la API a una clase de la libreria
-#### 13.2 Integrar Proyecto de GitHub
+> Comprobar llamando desde la API a una clase de la libreria
+
+#### 14.2 Integrar Proyecto de GitHub
 
 Se podrá integrar una libreria de un repositorio de codigo abierto como **MAVEN Central** (Compilado), o de un repositorio publico de **GitHub** (Sin compilar) para lo que se necesita compilar con **jit-pack**.
 
@@ -1620,44 +1752,38 @@ Eclipse Necesita el plugin
 `id 'application'`
 
 1. Añado el repositorio y JitPack
-    ```
-    repositories {
-          mavenCentral()
-          maven { url 'https://jitpack.io' }
-    }
-    ```
 
-2. Ir a dependencias y añadir linea 
-  `implementation:'Grupo : artefacto : Versión'`
-      - grupo: es la ruta al usuario de GitHub
-      - artefacto: es el proyecto del usuario
-      - versión: es el tag-release
-        - en version se puede poner
-          - 1 version concreta
-          - `sanapshot` (ultima versión)
-          - 1 commit concreto
-        > puedo poner varias versiones que se crearan en sus carpetas correspondientes
+   ```
+   repositories {
+         mavenCentral()
+         maven { url 'https://jitpack.io' }
+   }
+   ```
 
-1. ejecutar gradle → refresh project
+2. Ir a dependencias y añadir linea
+   `implementation:'Grupo : artefacto : Versión'` - grupo: es la ruta al usuario de GitHub - artefacto: es el proyecto del usuario - versión: es el tag-release - en version se puede poner - 1 version concreta - `sanapshot` (ultima versión) - 1 commit concreto > puedo poner varias versiones que se crearan en sus carpetas correspondientes
 
-    - Saldrán en `project and external dependencies` las que haya añadido, pudiendo emplearlas en mi codigo
+3. ejecutar gradle → refresh project
 
-#### 13.3 Integrar Proyecto de Repositorio en la nube
+   - Saldrán en `project and external dependencies` las que haya añadido, pudiendo emplearlas en mi codigo
+
+#### 14.3 Integrar Proyecto de Repositorio en la nube
 
 Podre integrar una API o una dependencia.
 
 Api vs Dependencia
-   - una api alguien puede utilizar los métodos de la api desde mi librería
-   - una dependencia No se puede → solo los puede usar mi librería en local
 
-1.  Ir a dependencias y añadir linea 
+- una api alguien puede utilizar los métodos de la api desde mi librería
+- una dependencia No se puede → solo los puede usar mi librería en local
+
+1.  Ir a dependencias y añadir linea
     `implementation/api:'Grupo : artefacto : Versión'`
 
-#### 13.4 Precedencia y exportacion de dependencias 
+#### 14.4 Precedencia y exportacion de dependencias
 
 Existe precedencia cuando hay conflicto entre clases iguales
-* 1° la mas arriba del build path → order export
-         
-* **export** ⇒ cualquiera que use mi liberia tendrá acceso a las librerias externas que esa integre.
+
+- 1° la mas arriba del build path → order export
+- **export** ⇒ cualquiera que use mi liberia tendrá acceso a las librerias externas que esa integre.
 
 [Volver a inicio](#springbasics)
