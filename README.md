@@ -1489,9 +1489,14 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
       public static volatile SetAttribute<Film, FilmCategory> filmCategories;
     }
     ```
-  1. Creo la Interfaz `EntidadCustom`(_la guia la llama Service_)
-     - Le añado el metodo `List<Entidad> getListado(EntidadSearchCriteria searchCriteria)`
-  1. Implemento la interfazCustom en una clase `EntidadDAOImpl`.
+  1. Creo la Interfaz `EntidadDAOCustom`(_la guia la llama Service_)
+     - Le añado el metodo 
+      `List<Entidad> getListado(EntidadSearchCriteria searchCriteria)`
+  1. Implemento la interfaz `EntidadDAOCustom` en una clase `EntidadDAOImpl`.
+     - Agrego las anotaciones:
+       - `@RequiredArgsConstructor`
+       - `@Service`
+       - `@Transactional`
      -  Implemento el metodo **getListado**
       ```
       @Autowired
