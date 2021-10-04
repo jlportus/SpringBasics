@@ -2,9 +2,6 @@ package es.mde.tizona.rest;
 
 import java.util.Optional;
 
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import org.springframework.data.jpa.domain.Specification;
 
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
@@ -17,16 +14,13 @@ public class ArtefactoSpecifications {
 	}
 
 	// Aniado los criterios posibles de busqueda a las especificaciones
-	public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
+	public static Specification<?> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
 		System.out.println("Estoy creando el artefacto specifications");
 		return formaEqualTo(searchCriteria.getForma())
 				.and(colorEqualTo(searchCriteria.getColor()))
 				.and(fabricacionEqualTo(searchCriteria.getFabricacion()))
 				.and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
 				.and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
-
-		// de minas
-		// .or(materialEnvueltaEqualTo(searchCriteria.getMaterialEnvuelta()))
 		;
 	}
 
@@ -34,14 +28,16 @@ public class ArtefactoSpecifications {
 	// createSpecifications
 	public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
 		return (root, query, builder) -> {
-			return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form)))
+			return forma
+					.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form)))
 					.orElse(null);
 		};
 	}
 
 	public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
 		return (root, query, builder) -> {
-			return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
+			return color
+					.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
 					.orElse(null);
 		};
 	}

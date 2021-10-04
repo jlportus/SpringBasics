@@ -27,18 +27,18 @@ import es.mde.tizona.rest.mina.MinaDAOImpl;
 @RequestMapping(path = "/artefactos/search")
 public class ArtefactoController {
 
+	//Poner todas las DAOImpl de cada clase para acceder al metodo de busqueda con SearCriteria
+	@Autowired
 	ArtefactoDAOImpl artefactoDAO;
+	@Autowired
 	MinaDAOImpl minaDAO;
-	ArtefactoDAO artefactoDAO2;
-	MunicionDAO minaDAO2;
 
 	@Autowired
 	public ArtefactoController(
-			ArtefactoDAO artefactoDAO,
-			MunicionDAO minaDAO
-			) {
-		this.artefactoDAO2 = artefactoDAO;
-		this.minaDAO2 = minaDAO;
+			ArtefactoDAOImpl artefactoDAO, 
+			MinaDAOImpl minaDAO) {
+		this.artefactoDAO = artefactoDAO;
+		this.minaDAO = minaDAO;
 	}
 
 	// collection Model
@@ -47,7 +47,8 @@ public class ArtefactoController {
 	@GetMapping(path = "filtrar")
 	@ResponseBody
 	public CollectionModel<PersistentEntityResource> buscarArtefacto(
-			//meto los parametros opcionales -> luego los debo meter al builder y tienen que estar en Specifications
+			// meto los parametros opcionales -> luego los debo meter al builder y 
+			// tienen que estar en Specifications
 			@RequestParam(required = false) 
 			Optional<String> forma, 
 			@RequestParam(required = false) 
@@ -58,50 +59,40 @@ public class ArtefactoController {
 			Optional<String> marcasFrio,
 			@RequestParam(required = false) 
 			Optional<String> marcasPintura,
-			
-			//de minas
+
+			// de minas
 			@RequestParam(required = false) 
 			Optional<String> materialEnvuelta,
-			
-			//El assembler para que construya la respuesta
+
+			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
-
 	) {
-
 		// hago un objeto que construye los criterios de busqueda opcionales.
-		ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
+		ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder() //Aunque salga error funciona bien
 				// meto aqui los parametros de la clase SearchCriteria
 				.forma(forma)
 				.color(color)
 				.fabricacion(fabricacion)
 				.marcasFrio(marcasFrio)
 				.marcasPintura(marcasPintura)
-				
-				//de mina
+
+				// de mina
 				.materialEnvuelta(materialEnvuelta)
 
 				// Construyo
 				.build();
 
-		// Recupero los artefactos con los criterios seleccionados
-		Collection<?> listadoArtefactos;// = artefactoDAO.getArtefactos(searchCriteria);
-		System.out.println("minas kk");
-		listadoArtefactos = artefactoDAO2.findAll();
-		System.out.println("qq");
-		listadoArtefactos = minaDAO2.findAll();
-		System.out.println("minas" + listadoArtefactos);
+		List<?> listadoArtefactos;
 		
+		//controlo los parametros propios de cada subclase
 		if (!materialEnvuelta.isPresent()) {
+			// System.out.println("es un artefacto!!");
 			listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-			System.out.println("es un artefacto!!");
-			
 		} else {
-			System.out.println("estoy en las minas");
-//			listadoArtefactos = minaDAO.getMinas(searchCriteria);
-			System.out.println("es una mina!!");
-		};
-		
+			// System.out.println("es una mina");
+			listadoArtefactos = minaDAO.getMinas(searchCriteria);
+		}
+		;
 		return assembler.toCollectionModel(listadoArtefactos);
-
 	}
 }

@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.mde.tizona.entidades.artefactos.Artefacto;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.repositorios.artefactos.ArtefactoDAO;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,7 @@ public class ArtefactoDAOImpl implements ArtefactoDAOCustom {
 	
 	@Override
 	public List<ArtefactoImpl> getArtefactos(ArtefactoSearchCriteria searchCriteria) {
-		Specification<ArtefactoImpl> artefactoSpecifications = ArtefactoSpecifications.createArtefactoSpecifications(searchCriteria);
+		Specification<ArtefactoImpl> artefactoSpecifications = (Specification<ArtefactoImpl>) ArtefactoSpecifications.createArtefactoSpecifications(searchCriteria);
 		return this.artefactoDAO.findAll(artefactoSpecifications);
 	}
 
