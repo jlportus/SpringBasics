@@ -20,6 +20,8 @@ public class ArtefactoDAOImpl implements ArtefactoDAOCustom {
 	@Autowired
 	ArtefactoDAO artefactoDAO;
 
+	
+	
 	@Override
 	public List<ArtefactoImpl> getArtefactos(ArtefactoSearchCriteria searchCriteria) {
 		Specification<ArtefactoImpl> artefactoSpecifications = ArtefactoSpecifications.createArtefactoSpecifications(searchCriteria);

@@ -19,10 +19,15 @@ public class ArtefactoSearchCriteria {
 	private Optional<String> marcasFrio;
 	private Optional<String> marcasPintura;
 	
-	//de minas
 	private Optional<String> materialEnvuelta;
 
-	
+	public Optional<String> getMaterialEnvuelta() {
+		return materialEnvuelta;
+	}
+
+	public void setMaterialEnvuelta(Optional<String> materialEnvuelta) {
+		this.materialEnvuelta = materialEnvuelta;
+	}
 
 	public Optional<String> getForma() {
 		return forma;
@@ -71,14 +76,11 @@ public class ArtefactoSearchCriteria {
 	public void setMarcasPintura(Optional<String> marcasPintura) {
 		this.marcasPintura = marcasPintura;
 	}
+
+	@Override
+	public String toString() {
+		return "ArtefactoSearchCriteria [forma=" + forma + ", materialEnvuelta=" + materialEnvuelta + "]";
+	}
+
 	
-	//de minas
-	public Optional<String> getMaterialEnvuelta() {
-		return materialEnvuelta;
-	}
-
-	public void setMaterialEnvuelta(Optional<String> materialEnvuelta) {
-		this.materialEnvuelta = materialEnvuelta;
-	}
-
 }

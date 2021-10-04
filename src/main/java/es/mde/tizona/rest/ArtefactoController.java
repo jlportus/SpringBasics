@@ -1,5 +1,6 @@
 package es.mde.tizona.rest;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,17 +17,28 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import es.mde.tizona.entidades.artefactos.Artefacto;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
+import es.mde.tizona.entidades.artefactos.minas.Mina;
 import es.mde.tizona.repositorios.artefactos.ArtefactoDAO;
+import es.mde.tizona.repositorios.artefactos.minas.MinaDAO;
+import es.mde.tizona.repositorios.artefactos.municiones.MunicionDAO;
+import es.mde.tizona.rest.mina.MinaDAOImpl;
 
 @RepositoryRestController
 @RequestMapping(path = "/artefactos/search")
 public class ArtefactoController {
 
 	ArtefactoDAOImpl artefactoDAO;
+	MinaDAOImpl minaDAO;
+	ArtefactoDAO artefactoDAO2;
+	MunicionDAO minaDAO2;
 
 	@Autowired
-	public ArtefactoController(ArtefactoDAOImpl artefactoDAO) {
-		this.artefactoDAO = artefactoDAO;
+	public ArtefactoController(
+			ArtefactoDAO artefactoDAO,
+			MunicionDAO minaDAO
+			) {
+		this.artefactoDAO2 = artefactoDAO;
+		this.minaDAO2 = minaDAO;
 	}
 
 	// collection Model
@@ -72,8 +84,23 @@ public class ArtefactoController {
 				.build();
 
 		// Recupero los artefactos con los criterios seleccionados
-		List<ArtefactoImpl> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-
+		Collection<?> listadoArtefactos;// = artefactoDAO.getArtefactos(searchCriteria);
+		System.out.println("minas kk");
+		listadoArtefactos = artefactoDAO2.findAll();
+		System.out.println("qq");
+		listadoArtefactos = minaDAO2.findAll();
+		System.out.println("minas" + listadoArtefactos);
+		
+		if (!materialEnvuelta.isPresent()) {
+			listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
+			System.out.println("es un artefacto!!");
+			
+		} else {
+			System.out.println("estoy en las minas");
+//			listadoArtefactos = minaDAO.getMinas(searchCriteria);
+			System.out.println("es una mina!!");
+		};
+		
 		return assembler.toCollectionModel(listadoArtefactos);
 
 	}
