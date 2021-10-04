@@ -1498,7 +1498,8 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
      - Contendrá todos los criterios posibles de busqueda de la clase `Optional<>`
      - anotaciones de `lombok`
        - `@Getter @setter @Builder`
-    ```
+  
+  ```
     @Getter
     @Setter
     @Builder
@@ -1507,7 +1508,8 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
       private Optional<String> forma;
       private Optional<String> color;
       private Set<ClaseColeccion> listadoCosas;
-    ```
+   ```
+
   2. Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
   3. Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada. 
       - Usare las `StaticMetamodel` para acceder a los campos de comparacion 
