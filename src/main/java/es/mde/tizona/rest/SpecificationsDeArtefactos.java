@@ -8,14 +8,16 @@ import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl_;
 
 //En esta clase se aniaden los diferentes posibles criterios de busqueda
-public class ArtefactoSpecifications {
+public class SpecificationsDeArtefactos {
 
-	private ArtefactoSpecifications() {
+	private SpecificationsDeArtefactos() {
 	}
 
 	// Aniado los criterios posibles de busqueda a las especificaciones
-	public static Specification<?> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
-		System.out.println("Estoy creando el artefacto specifications");
+	
+	//criterios Comunes de todos los artefactos
+	//uso los getters, no son necesarios en la clase searcriteria, los autogenera Lombok con @Getter/@Setter
+	public static Specification<?> createArtefactoSpecifications(SearchCriteriaDeArtefactos searchCriteria) {
 		return formaEqualTo(searchCriteria.getForma())
 				.and(colorEqualTo(searchCriteria.getColor()))
 				.and(fabricacionEqualTo(searchCriteria.getFabricacion()))
@@ -24,8 +26,9 @@ public class ArtefactoSpecifications {
 		;
 	}
 
-	// declaro cada uno de los posibles criterios de busqueda que agrego al
-	// createSpecifications
+	// declaro cada uno de los posibles criterios de busqueda que agrego al createSpecifications
+	
+	//criterios Comunes de todos los artefactos
 	public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
 		return (root, query, builder) -> {
 			return forma

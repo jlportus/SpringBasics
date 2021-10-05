@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.mde.tizona.entidades.artefactos.minas.Mina;
 import es.mde.tizona.repositorios.artefactos.minas.MinaDAO;
-import es.mde.tizona.rest.ArtefactoSearchCriteria;
+import es.mde.tizona.rest.SearchCriteriaDeArtefactos;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ public class MinaDAOImpl implements MinaDAOCustom {
 	MinaDAO minaDAO;
 
 	@Override
-	public List<Mina> getMinas(ArtefactoSearchCriteria searchCriteria) {
+	public List<Mina> getMinas(SearchCriteriaDeArtefactos searchCriteria) {
 		Specification<Mina> minaSpecifications = MinaSpecifications.createMinaSpecifications(searchCriteria);
 		return this.minaDAO.findAll(minaSpecifications);
 	}

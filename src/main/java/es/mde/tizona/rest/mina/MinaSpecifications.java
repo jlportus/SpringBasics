@@ -6,8 +6,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import es.mde.tizona.entidades.artefactos.minas.Mina;
 import es.mde.tizona.entidades.artefactos.minas.Mina_;
-import es.mde.tizona.rest.ArtefactoSearchCriteria;
-import es.mde.tizona.rest.ArtefactoSpecifications;
+import es.mde.tizona.rest.SearchCriteriaDeArtefactos;
+import es.mde.tizona.rest.SpecificationsDeArtefactos;
 
 //En esta clase se aniaden los diferentes posibles criterios de busqueda
 public class MinaSpecifications {
@@ -16,11 +16,11 @@ public class MinaSpecifications {
 	}
 
 	// Aniado los criterios posibles de busqueda a las especificaciones
-	public static Specification<Mina> createMinaSpecifications(ArtefactoSearchCriteria searchCriteria) {
-		System.err.println("estoy creando los criterios de mina");
+	public static Specification<Mina> createMinaSpecifications(SearchCriteriaDeArtefactos searchCriteria) {
 		return materialEnvueltaEqualTo(searchCriteria.getMaterialEnvuelta())
 				
-				.and(minasEnArtefactos(searchCriteria)) //comprobar los criterios de artefactoPadre
+				//comprobar los criterios de artefactoPadre
+				.and(minasEnArtefactos(searchCriteria)) 
 				;
 	}
 
@@ -35,7 +35,7 @@ public class MinaSpecifications {
 	}
 	
 	//para que compruebe tambien los filtros de artefactoPadre
-	public static Specification<Mina> minasEnArtefactos(ArtefactoSearchCriteria searchCriteria){
-		return (Specification<Mina>) ArtefactoSpecifications.createArtefactoSpecifications(searchCriteria);
+	public static Specification<Mina> minasEnArtefactos(SearchCriteriaDeArtefactos searchCriteria){
+		return (Specification<Mina>) SpecificationsDeArtefactos.createArtefactoSpecifications(searchCriteria);
 	}
 }

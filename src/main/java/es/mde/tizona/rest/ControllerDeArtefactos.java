@@ -21,11 +21,12 @@ import es.mde.tizona.entidades.artefactos.minas.Mina;
 import es.mde.tizona.repositorios.artefactos.ArtefactoDAO;
 import es.mde.tizona.repositorios.artefactos.minas.MinaDAO;
 import es.mde.tizona.repositorios.artefactos.municiones.MunicionDAO;
+import es.mde.tizona.rest.artefacto.ArtefactoDAOImpl;
 import es.mde.tizona.rest.mina.MinaDAOImpl;
 
 @RepositoryRestController
 @RequestMapping(path = "/artefactos/search")
-public class ArtefactoController {
+public class ControllerDeArtefactos {
 
 	//Poner todas las DAOImpl de cada clase para acceder al metodo de busqueda con SearCriteria
 	@Autowired
@@ -34,7 +35,7 @@ public class ArtefactoController {
 	MinaDAOImpl minaDAO;
 
 	@Autowired
-	public ArtefactoController(
+	public ControllerDeArtefactos(
 			ArtefactoDAOImpl artefactoDAO, 
 			MinaDAOImpl minaDAO) {
 		this.artefactoDAO = artefactoDAO;
@@ -68,7 +69,7 @@ public class ArtefactoController {
 			PersistentEntityResourceAssembler assembler
 	) {
 		// hago un objeto que construye los criterios de busqueda opcionales.
-		ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder() //Aunque salga error funciona bien
+		SearchCriteriaDeArtefactos searchCriteria = SearchCriteriaDeArtefactos.builder() //Aunque salga error funciona bien
 				// meto aqui los parametros de la clase SearchCriteria
 				.forma(forma)
 				.color(color)

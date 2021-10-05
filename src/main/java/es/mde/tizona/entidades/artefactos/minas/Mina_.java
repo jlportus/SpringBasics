@@ -8,6 +8,6 @@ import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 @StaticMetamodel(Mina.class)
 public class Mina_ {
 
-	public static volatile SingularAttribute<ArtefactoImpl, String> forma;
 	public static volatile SingularAttribute<Mina, String> materialEnvuelta;
+
 }
