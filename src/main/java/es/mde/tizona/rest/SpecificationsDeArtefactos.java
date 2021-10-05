@@ -6,6 +6,8 @@ import org.springframework.data.jpa.domain.Specification;
 
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl_;
+import es.mde.tizona.entidades.artefactos.minas.Mina;
+import es.mde.tizona.rest.mina.MinaSpecifications;
 
 //En esta clase se aniaden los diferentes posibles criterios de busqueda
 public class SpecificationsDeArtefactos {
@@ -23,6 +25,7 @@ public class SpecificationsDeArtefactos {
 				.and(fabricacionEqualTo(searchCriteria.getFabricacion()))
 				.and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
 				.and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
+				.and((Specification<ArtefactoImpl>) minasEnArtefactos(searchCriteria))
 		;
 	}
 
@@ -67,5 +70,9 @@ public class SpecificationsDeArtefactos {
 					.map(pintado -> builder.equal(root.get(ArtefactoImpl_.marcasPintura), String.valueOf(pintado)))
 					.orElse(null);
 		};
+	}
+	
+	public static Specification<?> minasEnArtefactos(SearchCriteriaDeArtefactos searchCriteria){
+		return  MinaSpecifications.createMinaSpecifications(searchCriteria);
 	}
 }

@@ -63,12 +63,36 @@ public class ControllerDeArtefactos {
 
 			// de minas
 			@RequestParam(required = false) 
+			Optional<Integer> diametroMax,
+			@RequestParam(required = false) 
+			Optional<Integer> diametroMin,
+			@RequestParam(required = false) 
+			Optional<Integer> fondoMax,
+			@RequestParam(required = false) 
+			Optional<Integer> fondoMin,
+			@RequestParam(required = false) 
+			Optional<Integer> longitudMax,
+			@RequestParam(required = false) 
+			Optional<Integer> longitudMin,
+			@RequestParam(required = false) 
+			Optional<Integer> alturaMax,
+			@RequestParam(required = false) 
+			Optional<Integer> alturaMin,
+			@RequestParam(required = false) 
 			Optional<String> materialEnvuelta,
+			@RequestParam(required = false) 
+			Optional<String> situacionEspoleta,
+			@RequestParam(required = false) 
+			Optional<Boolean> asaTransporte,
+			@RequestParam(required = false) 
+			Optional<String> sistemaIniciacion,
+			@RequestParam(required = false) 
+			Optional<String> tipoMina,
 
 			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
 	) {
-		// hago un objeto que construye los criterios de busqueda opcionales.
+		// hago un objeto que construye los criterios de busqueda opcionales
 		SearchCriteriaDeArtefactos searchCriteria = SearchCriteriaDeArtefactos.builder() //Aunque salga error funciona bien
 				// meto aqui los parametros de la clase SearchCriteria
 				.forma(forma)
@@ -78,22 +102,34 @@ public class ControllerDeArtefactos {
 				.marcasPintura(marcasPintura)
 
 				// de mina
+				.diametroMax(diametroMax)
+				.diametroMin(diametroMin)
+				.fondoMax(fondoMax)
+				.fondoMin(fondoMin)
+				.longitudMax(longitudMax)
+				.longitudMin(longitudMin)
+				.alturaMax(alturaMax)
+				.alturaMin(alturaMin)
 				.materialEnvuelta(materialEnvuelta)
+				.situacionEspoleta(situacionEspoleta)
+				.asaTransporte(asaTransporte)
+				.sistemaIniciacion(sistemaIniciacion)
+				.tipoMina(tipoMina)
 
 				// Construyo
 				.build();
 
-		List<?> listadoArtefactos;
+		List<?> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
 		
 		//controlo los parametros propios de cada subclase
-		if (!materialEnvuelta.isPresent()) {
-			// System.out.println("es un artefacto!!");
-			listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-		} else {
-			// System.out.println("es una mina");
-			listadoArtefactos = minaDAO.getMinas(searchCriteria);
-		}
-		;
+//		if (!materialEnvuelta.isPresent()) {
+//			// System.out.println("es un artefacto!!");
+//			listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
+//		} else {
+//			// System.out.println("es una mina");
+//			listadoArtefactos = minaDAO.getMinas(searchCriteria);
+//		}
+//		;
 		return assembler.toCollectionModel(listadoArtefactos);
 	}
 }
