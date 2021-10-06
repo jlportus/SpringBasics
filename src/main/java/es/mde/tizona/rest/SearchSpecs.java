@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.rest.artefacto.ArtefactosSpecifications;
 import es.mde.tizona.rest.mina.MinaSpecifications;
+import es.mde.tizona.rest.municiones.MunicionesSpecifications;
 
 public class SearchSpecs<T> {
 
@@ -18,6 +19,7 @@ public class SearchSpecs<T> {
 	public static Specification<?> createSpecifications(SearchCriteriaDeArtefactos searchCriteria) {
 		return ((Specification<ArtefactoImpl>) minas(searchCriteria))
 				.and((Specification<ArtefactoImpl>) artefactos(searchCriteria))
+				.and((Specification<ArtefactoImpl>) municiones(searchCriteria))
 				;
 	}
 
@@ -28,6 +30,10 @@ public class SearchSpecs<T> {
 	
 	public static Specification<?> artefactos(SearchCriteriaDeArtefactos searchCriteria) {
 		return ArtefactosSpecifications.createArtefactoSpecifications(searchCriteria);
+	}
+	
+	public static Specification<?> municiones(SearchCriteriaDeArtefactos searchCriteria) {
+		return MunicionesSpecifications.createMunicionesSpecifications(searchCriteria);
 	}
 	
 	// metodos tipos de comparacion, seran llamados por las Specifications de hijas 

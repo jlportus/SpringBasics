@@ -44,6 +44,17 @@ public class SearchCriteriaDeArtefactos {
 	private Optional<Boolean> asaTransporte;
 	private Optional<String> sistemaIniciacion;
 	private Optional<String> tipoMina;
+	
+	// de Municiones
+	// para calibre
+	private Optional<Integer> calibreMax;	
+	private Optional<Integer> calibreMin;
+	//longitud ya esta en mina
+	private Optional<String> proposito;
+	private Optional<Boolean> aletas; 
+	
+	
+	
 	public Optional<String> getForma() {
 		return forma;
 	}
@@ -159,5 +170,29 @@ public class SearchCriteriaDeArtefactos {
 		this.tipoMina = tipoMina;
 	}
 
+	public Optional<Integer> getCalibreMax() {
+		return calibreMax;
+	}
+	public void setCalibreMax(Optional<Integer> calibreMax) {
+		this.calibreMax = calibreMax;
+	}
+	public Optional<Integer> getCalibreMin() {
+		return calibreMin;
+	}
+	public void setCalibreMin(Optional<Integer> calibreMin) {
+		this.calibreMin = calibreMin;
+	}
+	public Optional<String> getProposito() {
+		return proposito;
+	}
+	public void setProposito(Optional<String> proposito) {
+		this.proposito = proposito;
+	}
+	public Optional<Boolean> getAletas() {
+		return aletas;
+	}
+	public void setAletas(Optional<Boolean> aletas) {
+		this.aletas = aletas;
+	}
 	
 }

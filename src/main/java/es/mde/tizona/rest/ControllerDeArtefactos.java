@@ -66,10 +66,10 @@ public class ControllerDeArtefactos {
 			Optional<Integer> fondoMax,
 			@RequestParam(required = false) 
 			Optional<Integer> fondoMin,
-			@RequestParam(required = false) 
-			Optional<Integer> longitudMax,
-			@RequestParam(required = false) 
-			Optional<Integer> longitudMin,
+//			@RequestParam(required = false) 
+//			Optional<Integer> longitudMax,
+//			@RequestParam(required = false) 
+//			Optional<Integer> longitudMin,
 			@RequestParam(required = false) 
 			Optional<Integer> alturaMax,
 			@RequestParam(required = false) 
@@ -84,6 +84,20 @@ public class ControllerDeArtefactos {
 			Optional<String> sistemaIniciacion,
 			@RequestParam(required = false) 
 			Optional<String> tipoMina,
+			
+			// de municion
+			@RequestParam(required = false) 
+			Optional<Integer> calibreMax,
+			@RequestParam(required = false) 
+			Optional<Integer> calibreMin,
+			@RequestParam(required = false) 
+			Optional<Integer> longitudMax,
+			@RequestParam(required = false) 
+			Optional<Integer> longitudMin,
+			@RequestParam(required = false) 
+			Optional<String> proposito,
+			@RequestParam(required = false) 
+			Optional<Boolean> aletas,
 
 			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
@@ -102,8 +116,8 @@ public class ControllerDeArtefactos {
 				.diametroMin(diametroMin)
 				.fondoMax(fondoMax)
 				.fondoMin(fondoMin)
-				.longitudMax(longitudMax)
-				.longitudMin(longitudMin)
+//				.longitudMax(longitudMax)
+//				.longitudMin(longitudMin)
 				.alturaMax(alturaMax)
 				.alturaMin(alturaMin)
 				.materialEnvuelta(materialEnvuelta)
@@ -111,6 +125,14 @@ public class ControllerDeArtefactos {
 				.asaTransporte(asaTransporte)
 				.sistemaIniciacion(sistemaIniciacion)
 				.tipoMina(tipoMina)
+				
+				// de municion
+				.calibreMax(calibreMax)
+				.calibreMin(calibreMin)
+				.longitudMax(longitudMax)
+				.longitudMin(longitudMin)
+				.proposito(proposito)
+				.aletas(aletas)
 
 				// Construyo
 				.build();
