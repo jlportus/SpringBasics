@@ -54,9 +54,15 @@ public class SearchCriteriaDeArtefactos {
 	private Optional<Boolean> aletas; 
 	
 	
-	//de proyectil
+	// de proyectil
 	private Optional<String> dibujoBajoBandaConduccion;
 	
+	// de bombas de aviacion
+	private Optional<Boolean> pinturaProteccionTermica; 
+	private Optional<Integer> distanciaAnillasMax;	
+	private Optional<Integer> distanciaAnillasMin;
+	private Optional<String> tipoEstabilizador;
+	private Optional<Boolean> venterolEnEstabilizador; 
 	
 	public Optional<String> getForma() {
 		return forma;
@@ -203,6 +209,37 @@ public class SearchCriteriaDeArtefactos {
 	public void setDibujoBajoBandaConduccion(Optional<String> dibujoBajoBandaConduccion) {
 		this.dibujoBajoBandaConduccion = dibujoBajoBandaConduccion;
 	}
+	public Optional<Boolean> getPinturaProteccionTermica() {
+		return pinturaProteccionTermica;
+	}
+	public void setPinturaProteccionTermica(Optional<Boolean> pinturaProteccionTermica) {
+		this.pinturaProteccionTermica = pinturaProteccionTermica;
+	}
+	public Optional<Integer> getDistanciaAnillasMax() {
+		return distanciaAnillasMax;
+	}
+	public void setDistanciaAnillasMax(Optional<Integer> distanciaAnillasMax) {
+		this.distanciaAnillasMax = distanciaAnillasMax;
+	}
+	public Optional<Integer> getDistanciaAnillasMin() {
+		return distanciaAnillasMin;
+	}
+	public void setDistanciaAnillasMin(Optional<Integer> distanciaAnillasMin) {
+		this.distanciaAnillasMin = distanciaAnillasMin;
+	}
+	public Optional<String> getTipoEstabilizador() {
+		return tipoEstabilizador;
+	}
+	public void setTipoEstabilizador(Optional<String> tipoEstabilizador) {
+		this.tipoEstabilizador = tipoEstabilizador;
+	}
+	public Optional<Boolean> getVenterolEnEstabilizador() {
+		return venterolEnEstabilizador;
+	}
+	public void setVenterolEnEstabilizador(Optional<Boolean> venterolEnEstabilizador) {
+		this.venterolEnEstabilizador = venterolEnEstabilizador;
+	}
+	
 	
 	
 }

@@ -102,7 +102,20 @@ public class ControllerDeArtefactos {
 			// de proyectil
 			@RequestParam(required = false) 
 			Optional<String> dibujoBajoBandaConduccion,
-
+			
+			// Bombas de aviacion
+			@RequestParam(required = false) 
+			Optional<Boolean> pinturaProteccionTermica,
+			@RequestParam(required = false) 
+			Optional<Integer> distanciaAnillasMax,
+			@RequestParam(required = false) 
+			Optional<Integer> distanciaAnillasMin,
+			@RequestParam(required = false) 
+			Optional<String> tipoEstabilizador,
+			@RequestParam(required = false) 
+			Optional<Boolean> venterolEnEstabilizador,
+			
+			
 			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
 	) {
@@ -141,6 +154,14 @@ public class ControllerDeArtefactos {
 				// de proyectil
 				.dibujoBajoBandaConduccion(dibujoBajoBandaConduccion)
 
+				// Bombas de aviacion
+				.pinturaProteccionTermica(pinturaProteccionTermica)
+				.distanciaAnillasMax(distanciaAnillasMax)
+				.distanciaAnillasMin(distanciaAnillasMin)
+				.tipoEstabilizador(tipoEstabilizador)
+				.venterolEnEstabilizador(venterolEnEstabilizador)
+				
+				
 				// Construyo
 				.build();
 

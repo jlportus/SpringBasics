@@ -21,7 +21,7 @@ public class MunicionesSpecifications {
 				.and(specs.intBetween(searchCriteria.getLongitudMin(), searchCriteria.getLongitudMax(),
 						Municion_.longitud))
 				.and(specs.stringEqualTo(searchCriteria.getProposito(), Municion_.proposito))
-				.and(specs.isBoolean(searchCriteria.getAsaTransporte(), Municion_.aletas));
+				.and(specs.isBoolean(searchCriteria.getAletas(), Municion_.aletas));
 	}
 
 }

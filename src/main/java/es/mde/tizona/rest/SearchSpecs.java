@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.rest.artefacto.ArtefactosSpecifications;
 import es.mde.tizona.rest.mina.MinaSpecifications;
+import es.mde.tizona.rest.municiones.BombaAviacionSpecifications;
 import es.mde.tizona.rest.municiones.MunicionesSpecifications;
 import es.mde.tizona.rest.municiones.ProyectilSpecifications;
 
@@ -22,6 +23,7 @@ public class SearchSpecs<T> {
 				.and((Specification<ArtefactoImpl>) artefactos(searchCriteria))
 				.and((Specification<ArtefactoImpl>) municiones(searchCriteria))
 				.and((Specification<ArtefactoImpl>) proyectiles(searchCriteria))
+				.and((Specification<ArtefactoImpl>) bombasAviacion(searchCriteria))
 				;
 	}
 
@@ -40,6 +42,10 @@ public class SearchSpecs<T> {
 	
 	public static Specification<?> proyectiles(SearchCriteriaDeArtefactos searchCriteria) {
 		return ProyectilSpecifications.createProyectilSpecifications(searchCriteria);
+	}
+	
+	public static Specification<?> bombasAviacion(SearchCriteriaDeArtefactos searchCriteria) {
+		return BombaAviacionSpecifications.createBombasAviacionSpecifications(searchCriteria);
 	}
 	
 	// metodos tipos de comparacion, seran llamados por las Specifications de hijas 
@@ -66,12 +72,12 @@ public class SearchSpecs<T> {
 		};
 	}
 
-	public Specification<T> isBoolean(Optional<Boolean> asaTransporte, SingularAttribute<T, Boolean> atributo) {
+	public Specification<T> isBoolean(Optional<Boolean> booleano, SingularAttribute<T, Boolean> atributo) {
 		return (root, query, builder) -> {
-			return asaTransporte
-					.map(asa -> builder.equal(root.get(atributo), String.valueOf(asa)))
-					.orElse(null);
-		};
+			return booleano
+					.map(valor -> builder.equal(root.get(atributo), valor))
+					.orElse(null);	
+			};
 	}
 
 	public SearchSpecs() {
