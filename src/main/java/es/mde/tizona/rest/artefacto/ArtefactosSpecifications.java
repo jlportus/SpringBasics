@@ -1,7 +1,5 @@
 package es.mde.tizona.rest.artefacto;
 
-import java.util.Optional;
-
 import org.springframework.data.jpa.domain.Specification;
 
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
@@ -21,12 +19,11 @@ public class ArtefactosSpecifications {
 	// Aniado los criterios posibles de busqueda a las especificaciones
 	public static Specification<ArtefactoImpl> createArtefactoSpecifications(
 			SearchCriteriaDeArtefactos searchCriteria) {
-		return specs.stringEqualTo(searchCriteria.getForma(), ArtefactoImpl_.forma)
+		return 		 specs.stringEqualTo(searchCriteria.getForma(), ArtefactoImpl_.forma)
 				.and(specs.stringEqualTo(searchCriteria.getColor(), ArtefactoImpl_.color))
 				.and(specs.stringEqualTo(searchCriteria.getFabricacion(), ArtefactoImpl_.fabricacion))
 				.and(specs.stringEqualTo(searchCriteria.getMarcasFrio(), ArtefactoImpl_.marcasFrio))
-				.and(specs.stringEqualTo(searchCriteria.getMarcasPintura(), ArtefactoImpl_.marcasPintura))
-				;
+				.and(specs.stringEqualTo(searchCriteria.getMarcasPintura(), ArtefactoImpl_.marcasPintura));
 	}
 
 }

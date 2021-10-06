@@ -2,8 +2,6 @@ package es.mde.tizona.rest.municiones;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import es.mde.tizona.entidades.artefactos.municiones.Municion;
-import es.mde.tizona.entidades.artefactos.municiones.Municion_;
 import es.mde.tizona.entidades.artefactos.municiones.Proyectil;
 import es.mde.tizona.entidades.artefactos.municiones.Proyectil_;
 import es.mde.tizona.rest.SearchCriteriaDeArtefactos;

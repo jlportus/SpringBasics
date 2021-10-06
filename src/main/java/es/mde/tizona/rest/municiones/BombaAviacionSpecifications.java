@@ -17,7 +17,7 @@ public class BombaAviacionSpecifications {
 
 	// Aniado los criterios posibles de busqueda a las especificaciones
 	public static Specification<BombaAviacion> createBombasAviacionSpecifications(SearchCriteriaDeArtefactos searchCriteria) {
-		return specs.isBoolean(searchCriteria.getPinturaProteccionTermica(), BombaAviacion_.pinturaProteccionTermica)
+		return 		 specs.isBoolean(searchCriteria.getPinturaProteccionTermica(), BombaAviacion_.pinturaProteccionTermica)
 				.and(specs.intBetween(searchCriteria.getDistanciaAnillasMin(), searchCriteria.getDistanciaAnillasMax(), BombaAviacion_.distanciaAnillas))
 				.and(specs.stringEqualTo(searchCriteria.getTipoEstabilizador(), BombaAviacion_.tipoEstabilizador))
 				.and(specs.isBoolean(searchCriteria.getVenterolEnEstabilizador(), BombaAviacion_.venterolEnEstabilizador));

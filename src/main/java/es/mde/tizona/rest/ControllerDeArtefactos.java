@@ -115,6 +115,27 @@ public class ControllerDeArtefactos {
 			@RequestParam(required = false) 
 			Optional<Boolean> venterolEnEstabilizador,
 			
+			//cohete
+			@RequestParam(required = false) 
+			Optional<String> colorBandaMotor,
+			
+			//misil
+			@RequestParam(required = false) 
+			Optional<String> sistemaGuia,
+			
+			//granada
+			@RequestParam(required = false) 
+			Optional<String> medioLanzamiento,
+			
+			// espoleta
+			@RequestParam(required = false) 
+			Optional<String> tipoIniciacion,
+			@RequestParam(required = false) 
+			Optional<Integer> profundidadCavidadMax,
+			@RequestParam(required = false) 
+			Optional<Integer> profundidadCavidadMin,
+			@RequestParam(required = false) 
+			Optional<String> tipoEspoleta,
 			
 			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
@@ -161,6 +182,20 @@ public class ControllerDeArtefactos {
 				.tipoEstabilizador(tipoEstabilizador)
 				.venterolEnEstabilizador(venterolEnEstabilizador)
 				
+				// cohete
+				.colorBandaMotor(colorBandaMotor)
+				
+				// misil
+				.sistemaGuia(sistemaGuia)
+				
+				// granada
+				.medioLanzamiento(medioLanzamiento)
+				
+				// espoleta
+				.tipoIniciacion(tipoIniciacion)
+				.profundidadCavidadMax(profundidadCavidadMax)
+				.profundidadCavidadMin(profundidadCavidadMin)
+				.tipoEspoleta(tipoEspoleta)
 				
 				// Construyo
 				.build();

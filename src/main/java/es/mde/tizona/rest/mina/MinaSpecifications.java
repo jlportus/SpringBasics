@@ -18,7 +18,7 @@ public class MinaSpecifications {
 
 	// Aniado los criterios posibles de busqueda a las especificaciones
 	public static Specification<Mina> createMinaSpecifications(SearchCriteriaDeArtefactos searchCriteria) {
-		return specs.intBetween(searchCriteria.getDiametroMin(), searchCriteria.getAlturaMax(), Mina_.diametro)
+		return 		 specs.intBetween(searchCriteria.getDiametroMin(), searchCriteria.getDiametroMax(), Mina_.diametro)
 				.and(specs.intBetween(searchCriteria.getFondoMin(), searchCriteria.getFondoMax(), Mina_.fondo))
 				.and(specs.intBetween(searchCriteria.getLongitudMin(), searchCriteria.getLongitudMax(), Mina_.longitud))
 				.and(specs.intBetween(searchCriteria.getAlturaMin(), searchCriteria.getAlturaMax(), Mina_.altura))
