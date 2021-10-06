@@ -10,9 +10,9 @@ import org.springframework.lang.Nullable;
 
 import es.mde.tizona.entidades.artefactos.minas.Mina;
 
-@RepositoryRestResource(path="minas"
-						,itemResourceRel="mina"
-						,collectionResourceRel="minas")
+@RepositoryRestResource(path="minas",
+						itemResourceRel="mina",
+						collectionResourceRel="minas")
 
 public interface MinaDAO extends JpaRepository<Mina, Long>, JpaSpecificationExecutor<Mina>{
 

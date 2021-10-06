@@ -13,7 +13,9 @@ import org.springframework.lang.Nullable;
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.rest.artefacto.ArtefactoDAOCustom;
 
-@RepositoryRestResource(path = "artefactos", itemResourceRel = "artefacto", collectionResourceRel = "artefactos")
+@RepositoryRestResource(path = "artefactos", 
+						itemResourceRel = "artefacto", 
+						collectionResourceRel = "artefactos")
 public interface ArtefactoDAO extends JpaRepository<ArtefactoImpl, Long>, JpaSpecificationExecutor<ArtefactoImpl>, ArtefactoDAOCustom {
 
 //	@EntityGraph( //ver carga de subtablas, multiples consultas anidadas

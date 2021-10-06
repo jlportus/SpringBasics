@@ -141,6 +141,7 @@ public class ControllerDeArtefactos {
 			PersistentEntityResourceAssembler assembler
 	) {
 		// hago un objeto que construye los criterios de busqueda opcionales
+		@SuppressWarnings("unchecked")
 		SearchCriteriaDeArtefactos searchCriteria = SearchCriteriaDeArtefactos.builder() //Aunque salga error funciona bien
 				// meto aqui los parametros de la clase SearchCriteria
 				.forma(forma)
