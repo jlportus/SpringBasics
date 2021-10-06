@@ -98,6 +98,10 @@ public class ControllerDeArtefactos {
 			Optional<String> proposito,
 			@RequestParam(required = false) 
 			Optional<Boolean> aletas,
+			
+			// de proyectil
+			@RequestParam(required = false) 
+			Optional<String> dibujoBajoBandaConduccion,
 
 			// El assembler para que construya la respuesta
 			PersistentEntityResourceAssembler assembler
@@ -133,6 +137,9 @@ public class ControllerDeArtefactos {
 				.longitudMin(longitudMin)
 				.proposito(proposito)
 				.aletas(aletas)
+				
+				// de proyectil
+				.dibujoBajoBandaConduccion(dibujoBajoBandaConduccion)
 
 				// Construyo
 				.build();

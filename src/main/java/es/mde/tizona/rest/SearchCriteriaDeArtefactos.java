@@ -54,6 +54,9 @@ public class SearchCriteriaDeArtefactos {
 	private Optional<Boolean> aletas; 
 	
 	
+	//de proyectil
+	private Optional<String> dibujoBajoBandaConduccion;
+	
 	
 	public Optional<String> getForma() {
 		return forma;
@@ -194,5 +197,12 @@ public class SearchCriteriaDeArtefactos {
 	public void setAletas(Optional<Boolean> aletas) {
 		this.aletas = aletas;
 	}
+	public Optional<String> getDibujoBajoBandaConduccion() {
+		return dibujoBajoBandaConduccion;
+	}
+	public void setDibujoBajoBandaConduccion(Optional<String> dibujoBajoBandaConduccion) {
+		this.dibujoBajoBandaConduccion = dibujoBajoBandaConduccion;
+	}
+	
 	
 }

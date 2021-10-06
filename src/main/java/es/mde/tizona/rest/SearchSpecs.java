@@ -10,6 +10,7 @@ import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 import es.mde.tizona.rest.artefacto.ArtefactosSpecifications;
 import es.mde.tizona.rest.mina.MinaSpecifications;
 import es.mde.tizona.rest.municiones.MunicionesSpecifications;
+import es.mde.tizona.rest.municiones.ProyectilSpecifications;
 
 public class SearchSpecs<T> {
 
@@ -20,6 +21,7 @@ public class SearchSpecs<T> {
 		return ((Specification<ArtefactoImpl>) minas(searchCriteria))
 				.and((Specification<ArtefactoImpl>) artefactos(searchCriteria))
 				.and((Specification<ArtefactoImpl>) municiones(searchCriteria))
+				.and((Specification<ArtefactoImpl>) proyectiles(searchCriteria))
 				;
 	}
 
@@ -34,6 +36,10 @@ public class SearchSpecs<T> {
 	
 	public static Specification<?> municiones(SearchCriteriaDeArtefactos searchCriteria) {
 		return MunicionesSpecifications.createMunicionesSpecifications(searchCriteria);
+	}
+	
+	public static Specification<?> proyectiles(SearchCriteriaDeArtefactos searchCriteria) {
+		return ProyectilSpecifications.createProyectilSpecifications(searchCriteria);
 	}
 	
 	// metodos tipos de comparacion, seran llamados por las Specifications de hijas 
