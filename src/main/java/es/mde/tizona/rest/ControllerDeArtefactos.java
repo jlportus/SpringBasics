@@ -22,7 +22,6 @@ import es.mde.tizona.repositorios.artefactos.ArtefactoDAO;
 import es.mde.tizona.repositorios.artefactos.minas.MinaDAO;
 import es.mde.tizona.repositorios.artefactos.municiones.MunicionDAO;
 import es.mde.tizona.rest.artefacto.ArtefactoDAOImpl;
-import es.mde.tizona.rest.mina.MinaDAOImpl;
 
 @RepositoryRestController
 @RequestMapping(path = "/artefactos/search")
@@ -31,15 +30,12 @@ public class ControllerDeArtefactos {
 	//Poner todas las DAOImpl de cada clase para acceder al metodo de busqueda con SearCriteria
 	@Autowired
 	ArtefactoDAOImpl artefactoDAO;
-	@Autowired
-	MinaDAOImpl minaDAO;
 
 	@Autowired
 	public ControllerDeArtefactos(
-			ArtefactoDAOImpl artefactoDAO, 
-			MinaDAOImpl minaDAO) {
+			ArtefactoDAOImpl artefactoDAO
+			) {
 		this.artefactoDAO = artefactoDAO;
-		this.minaDAO = minaDAO;
 	}
 
 	// collection Model
@@ -120,16 +116,7 @@ public class ControllerDeArtefactos {
 				.build();
 
 		List<?> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-		
-		//controlo los parametros propios de cada subclase
-//		if (!materialEnvuelta.isPresent()) {
-//			// System.out.println("es un artefacto!!");
-//			listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-//		} else {
-//			// System.out.println("es una mina");
-//			listadoArtefactos = minaDAO.getMinas(searchCriteria);
-//		}
-//		;
+				
 		return assembler.toCollectionModel(listadoArtefactos);
 	}
 }
