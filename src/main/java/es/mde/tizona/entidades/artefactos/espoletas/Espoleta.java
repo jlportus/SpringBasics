@@ -9,7 +9,7 @@ import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
 @Table(name = "ESPOLETAS")
 public class Espoleta extends ArtefactoImpl{
 
-	private String diametro;
+	private int diametro;
 	private int altura;
 	private String tipoIniciacion;
 	private String tipoExplosivo;
@@ -23,10 +23,10 @@ public class Espoleta extends ArtefactoImpl{
 	public Espoleta() {
 		super();
 	}
-	public String getDiametro() {
+	public int getDiametro() {
 		return diametro;
 	}
-	public void setDiametro(String diametro) {
+	public void setDiametro(int diametro) {
 		this.diametro = diametro;
 	}
 	public int getAltura() {
