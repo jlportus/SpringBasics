@@ -111,7 +111,7 @@
           class="form-control"
         />
       </div>
-      <app-fotografias [id]="id" (enviarEvent)="salvarArtefacto()"></app-fotografias>
+      <app-fotografias [id]="id" id="fotografias"></app-fotografias>
       <br>
 
       <!-- 
@@ -125,9 +125,9 @@
     </select> -->
 
     
-      <!-- <div class="d-flex justify-content-center" routerLink="../">
+      <div class="d-flex justify-content-center" routerLink="../">
         <input value="GUARDAR" type="submit" (click)="salvarArtefacto()" class="btn btn-success"/>
-      </div> -->
+      </div>
     </form>
     <!-- <pre>
     <p>{{ artefacto | json }}</p>

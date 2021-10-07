@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { Fotografia } from '../models/fotografia';
 import { FotografiaImpl } from '../models/fotografiaImpl';
 import { FotografiasService } from '../service/fotografias.service';
@@ -9,10 +9,10 @@ import { FotografiasService } from '../service/fotografias.service';
   styles: []
 })
 
-export class FotografiasComponent implements OnInit {
+export class FotografiasComponent implements OnInit{
   //Variable para mostrar o no el componente Fotografias
   imagenesFBRef: any;
-  @Input() id: number;
+  @Input('ngModel') id: any = undefined;
 
   //Fotografias reciidas de la base de datos de Firebase
   fotografiaPrincipal: Fotografia[] = [];
@@ -28,10 +28,9 @@ export class FotografiasComponent implements OnInit {
   previewSecundarias: Fotografia[] = [];
   previewCroquis: Fotografia[] = [];
 
-  @Output() enviarEvent = new EventEmitter<boolean>();
-
-  constructor(private fotografiasService: FotografiasService) { }
-
+  constructor(private fotografiasService: FotografiasService) {
+   
+   }
   ngOnInit() {
     // Iniciar Firebase
     this.fotografiasService.iniciarFirebase();
@@ -39,14 +38,10 @@ export class FotografiasComponent implements OnInit {
 
   //Seleccion de las imagenes a subir.
   seleccionarImagenes(e, tipoFotografia): any {
-    console.log(e.target.files[0])
-
-    console.log(e)
     for (let index = 0; index < e.target.files.length; index++) {
       let fotografia = new FotografiaImpl();
       fotografia.nombre = e.target.files[index].name;
       fotografia.url = URL.createObjectURL(e.target.files[index]);
-      console.log(fotografia)
       fotografia.tipo = tipoFotografia;
       if (tipoFotografia == 'secundaria') {
         this.fotografiasSecundariasASubir.push(e.target.files[index]);
@@ -57,7 +52,6 @@ export class FotografiasComponent implements OnInit {
         this.fotografiaPrincipalASubir = e.target.files[index];
       }
     }
-    console.log(this.fotografiasSecundariasASubir)
     this.previewImagenes(e, tipoFotografia);
   }
 
@@ -66,7 +60,6 @@ export class FotografiasComponent implements OnInit {
       let fotografia = new FotografiaImpl();
       fotografia.nombre = e.target.files[index].name;
       fotografia.url = URL.createObjectURL(e.target.files[index]);
-      console.log(fotografia)
       fotografia.tipo = tipoFotografia;
       if (tipoFotografia == 'secundaria') {
         //this.subirImagenes(this.fotografiasSecundariasASubir, id, tipoFotografia
@@ -82,20 +75,17 @@ export class FotografiasComponent implements OnInit {
   }
 
   //Subida a Firebase de las imagenes
-  subirImagenes(): void {
-    //this.fotografiasService.deleteNode(this.id);
-    ///////////////////////
-    this.enviarEvent.emit(true);
+  subirImagenes(id: number): void {
 
-    this.fotografiasService.uploadImage(this.fotografiaPrincipalASubir, this.id, "principal");
+      this.fotografiasService.uploadImage(this.fotografiaPrincipalASubir, id, "principal");
 
-    this.fotografiasSecundariasASubir.forEach(element => {
-      this.fotografiasService.uploadImage(element, this.id, "secundaria");
-    });
-    this.fotografiasCroquisASubir.forEach(element => {
-      this.fotografiasService.uploadImage(element, this.id, "croquis");
-    });
-
+      this.fotografiasSecundariasASubir.forEach(element => {
+        this.fotografiasService.uploadImage(element, id, "secundaria");
+      });
+      this.fotografiasCroquisASubir.forEach(element => {
+        this.fotografiasService.uploadImage(element, id, "croquis");
+      });
+ 
   }
 
   //Obtener las imagenes de la base de datos
@@ -121,11 +111,9 @@ export class FotografiasComponent implements OnInit {
   }
 
   //Des-seleccionar una imagen desde el boton X del componente Fotografia (recibe una fotografia a traves del Output)
-
   deseleccionarImagen(fotografia: Fotografia): void {
 
     if (fotografia.tipo == "principal") {
-      console.log(fotografia)
       this.fotografiaPrincipal = [];
     }
     if (fotografia.tipo == "secundaria") {
