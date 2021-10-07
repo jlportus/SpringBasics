@@ -87,7 +87,6 @@ export class FotografiasService {
       if (tipoFotografia == "principal") {
         imagenesFBRef = firebase.database().ref().child(`imagenesFB/${id}/principal`);
         imagenesFBRef.remove();
-        console.log("entrando en ppal")
         let arrayNombre = file.name.split(".");
         imagenesFBRef = firebase.database().ref().child(`imagenesFB/${id}/principal/${arrayNombre[0]}`);
       }

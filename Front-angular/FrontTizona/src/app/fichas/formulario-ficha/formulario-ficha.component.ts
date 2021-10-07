@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { FotografiasComponent } from "src/app/fotografias/fotografias/fotografias.component";
 import { Artefacto } from "../models/Artefacto";
 import { ArtefactoImpl } from "../models/ArtefactoImpl";
 import { FichaService } from "../services/ficha.service";
@@ -9,7 +10,9 @@ import { FichaService } from "../services/ficha.service";
   styles: [],
 })
 export class FormularioFichaComponent implements OnInit {
-  id: number = 3;
+  id: number;
+  //ViewChild para poder acceder a los metodos del hijo
+  @ViewChild(FotografiasComponent, {read: false, static:true}) hijo: FotografiasComponent;
 
   private artefacto: Artefacto = new ArtefactoImpl(
     "",
@@ -26,11 +29,27 @@ export class FormularioFichaComponent implements OnInit {
   constructor(private fichaService: FichaService) {}
 
   ngOnInit() {}
+  
+ 
 
   salvarArtefacto() {
-    console.log(`Salvando artefacto: ${JSON.stringify(this.artefacto)}`);
+    this.id = undefined;
     this.fichaService
       .postArtefacto(this.artefacto)
-      .subscribe((response) => console.log(response));
+      .subscribe((response) => {
+        let url = response._links.self.href
+        for (let index = url.length-1; index > 0; index--) {
+          if(url[index]!=="/"){
+            if(this.id == undefined){
+              this.id = url[index]
+            }else{
+              this.id = url[index] + this.id;
+            }
+          }else{
+            break;
+          } 
+        }
+        this.hijo.subirImagenes(this.id);
+      });
   }
 }
