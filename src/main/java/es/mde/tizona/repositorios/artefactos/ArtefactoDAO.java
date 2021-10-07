@@ -11,9 +11,12 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.lang.Nullable;
 
 import es.mde.tizona.entidades.artefactos.ArtefactoImpl;
+import es.mde.tizona.rest.artefacto.ArtefactoDAOCustom;
 
-@RepositoryRestResource(path = "artefactos", itemResourceRel = "artefacto", collectionResourceRel = "artefactos")
-public interface ArtefactoDAO extends JpaRepository<ArtefactoImpl, Long>, JpaSpecificationExecutor<ArtefactoImpl> {
+@RepositoryRestResource(path = "artefactos", 
+						itemResourceRel = "artefacto", 
+						collectionResourceRel = "artefactos")
+public interface ArtefactoDAO extends JpaRepository<ArtefactoImpl, Long>, JpaSpecificationExecutor<ArtefactoImpl>, ArtefactoDAOCustom {
 
 //	@EntityGraph( //ver carga de subtablas, multiples consultas anidadas
 //				type = EntityGraphType.FETCH, 

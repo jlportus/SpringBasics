@@ -1,7 +1,5 @@
 package es.mde.tizona.entidades.artefactos;
 
-import java.util.Collection;
-
 public interface Artefacto {
 
 	String getNombre();
