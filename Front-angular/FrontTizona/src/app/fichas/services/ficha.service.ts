@@ -5,6 +5,7 @@ import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { Artefacto } from "../models/Artefacto";
 import { ArtefactoImpl } from "../models/ArtefactoImpl";
+import { SearchCriteria } from "../models/search/search-criteria";
 
 @Injectable({
   providedIn: "root",
@@ -70,4 +71,23 @@ export class FichaService {
     // console.log(`trozos: ${ trozos }`);
     return trozos[trozos.length - 1];
   }
+
+  getFichasFiltradas(searchCriteria: SearchCriteria): Observable<any> {
+    let objetoApiFichas = this.http.get<any>(
+      this.urlEndPoint +
+        "/search/filtrar?" +
+        construirParametros(searchCriteria)
+    );
+    return objetoApiFichas;
+  }
+}
+
+function construirParametros(searchCriteria: SearchCriteria): string {
+  let parametros = "";
+  Object.keys(searchCriteria).map((key) => {
+    parametros += key + "=" + searchCriteria[key] + "&";
+    // console.log(parametros);
+  });
+
+  return parametros.slice(0, parametros.length - 1);
 }
