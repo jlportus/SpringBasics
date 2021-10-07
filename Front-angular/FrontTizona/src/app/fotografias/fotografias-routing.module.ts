@@ -6,8 +6,9 @@ import { FotografiasComponent } from './fotografias/fotografias.component';
 const routes: Routes = [
   {
     path: ``,
-    component: FotografiasComponent
+    component: FotografiasComponent,
   }
+
 ];
 
 @NgModule({

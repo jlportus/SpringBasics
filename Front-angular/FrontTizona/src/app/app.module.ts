@@ -3,11 +3,11 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FotografiasModule } from './fotografias/fotografias.module';
 import { HttpClientModule } from "@angular/common/http";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { EsqueletoModule } from "./esqueleto/esqueleto.module";
 import { HomeModule } from "./comunes/home/home.module";
+import { FotografiasModule } from "./fotografias/fotografias.module";
 
 @NgModule({
   declarations: [AppComponent],

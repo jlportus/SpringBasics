@@ -12,7 +12,7 @@ export const environment = {
     storageBucket: firebase.storageBucket,
     messagingSenderId: firebase.messagingSenderId,
     appId: firebase.appId,
-    measurementId: firebase.measurementId
+    databaseURL: firebase.databaseURL
   },
   title: `Tizona del C.I.D.`,
   urlAPI: `http://localhost:8080/api`,

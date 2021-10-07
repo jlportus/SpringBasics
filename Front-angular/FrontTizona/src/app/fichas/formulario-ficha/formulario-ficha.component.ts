@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { Artefacto } from "../models/Artefacto";
 import { ArtefactoImpl } from "../models/ArtefactoImpl";
 import { FichaService } from "../services/ficha.service";
@@ -9,6 +9,8 @@ import { FichaService } from "../services/ficha.service";
   styles: [],
 })
 export class FormularioFichaComponent implements OnInit {
+  id: number = 3;
+
   private artefacto: Artefacto = new ArtefactoImpl(
     "",
     "",

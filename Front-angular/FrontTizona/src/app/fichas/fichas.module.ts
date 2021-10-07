@@ -6,6 +6,7 @@ import { FormularioFichaComponent } from "./formulario-ficha/formulario-ficha.co
 import { FormsModule } from "@angular/forms";
 import { ListadofichasComponent } from "./listadofichas/listadofichas.component";
 import { FichaComponent } from "./listadofichas/ficha/ficha.component";
+import { FotografiasModule } from "../fotografias/fotografias.module";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FichaComponent } from "./listadofichas/ficha/ficha.component";
   imports: [
     CommonModule,
     FichasRoutingModule,
-    FormsModule
+    FormsModule,
+    FotografiasModule
   ],
 })
 export class FichasModule {}
