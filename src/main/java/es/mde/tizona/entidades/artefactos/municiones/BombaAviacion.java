@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @DiscriminatorValue("Bomba")
 @Table(name = "BOMBAS")
 public class BombaAviacion extends Municion {
-	private String[] bandaPintura;
+	
 	private boolean pinturaProteccionTermica;
 	private int distanciaAnillas;
 	private String tipoEstabilizador;
@@ -16,14 +16,6 @@ public class BombaAviacion extends Municion {
 
 	public BombaAviacion() {
 		super();
-	}
-
-	public String[] getBandaPintura() {
-		return bandaPintura;
-	}
-
-	public void setBandaPintura(String[] bandaPintura) {
-		this.bandaPintura = bandaPintura;
 	}
 
 	public boolean isPinturaProteccionTermica() {
