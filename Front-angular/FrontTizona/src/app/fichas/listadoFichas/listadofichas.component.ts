@@ -30,7 +30,10 @@ export class ListadofichasComponent implements OnInit {
     this.observable$ = this.fichaService
       .getFichasFiltradas(searchCriteria)
       .subscribe(
-        (response) => (this.fichas = this.fichaService.extraerFicha(response))
+        (response) => {
+          (this.fichas = this.fichaService.extraerFicha(response))
+         
+        }
       );
     this.fichas = Array.from(this.observable$);
   }

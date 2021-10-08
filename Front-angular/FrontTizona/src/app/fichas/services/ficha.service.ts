@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, Type } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
+import { Key } from "selenium-webdriver";
 import { environment } from "src/environments/environment";
-import { Artefacto } from "../models/Artefacto";
-import { ArtefactoImpl } from "../models/ArtefactoImpl";
+import { Artefacto } from "../models/artefactos/Artefacto";
+import { ArtefactoImpl } from "../models/artefactos/ArtefactoImpl";
 import { SearchCriteria } from "../models/search/search-criteria";
 
 @Injectable({
@@ -41,32 +42,74 @@ export class FichaService {
 
   extraerFicha(respuestaApi: any): Artefacto[] {
     const fichas: Artefacto[] = [];
+    let num = 1;
+
+    console.log(JSON.stringify(respuestaApi._embedded));
+
+    // Array.from(respuestaApi._embedded).forEach((element) => {
+    //   Array(element).forEach((p) => {
+    //     Array(p).forEach((artefacto) => {
+    //       console.log(artefacto);
+    //       // let id = this.getIdFicha(artefacto);
+    //       fichas.push(FichaService.mapearFicha(artefacto, "id"));
+    //     });
+    //   });
+    // });
+
     respuestaApi._embedded.artefactos.forEach((p) => {
-      // console.log(`persona: ${ p }`);
-      let urlP = p._links.self.href;
-      // console.log(`url: ${ urlP }`);
-      let id = this.getIdFicha(urlP);
-      // console.log(`idp: ${ id }`);
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.minas.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.municiones.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.proyectiles.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.bombasAviacion.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.cohetes.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.misiles.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.granadas.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(FichaService.mapearFicha(p, id));
+    });
+    respuestaApi._embedded.cohetes.forEach((p) => {
+      let id = this.getIdFicha(p);
       fichas.push(FichaService.mapearFicha(p, id));
     });
     return fichas;
   }
-  static mapearFicha(fichaApi: any, id: String): ArtefactoImpl {
-    return new ArtefactoImpl(
-      id,
-      fichaApi.nombre,
-      fichaApi.funcionamiento,
-      fichaApi.forma,
-      fichaApi.color,
-      fichaApi.fabricacion,
-      fichaApi.encontradoEn,
-      fichaApi.listadoImagenes,
-      fichaApi.marcasFrio,
-      fichaApi.marcasPintura
-    );
+  static mapearFicha(fichaApi: any, id: String): Artefacto {
+    let objeto = Object.create(ArtefactoImpl);
+    // objeto = Object.create(ArtefactoImpl) .fichaApi
+    Object.assign<Artefacto, Artefacto>(objeto, fichaApi);
+    Object.defineProperty(objeto, "id", {
+      value: null,
+      writable: true,
+      enumerable: true,
+      configurable: true,
+    });
+    objeto.id = id;
+    return objeto;
   }
 
-  getIdFicha(url: String): String {
+  getIdFicha(p: any): String {
+    let url = p._links.self.href;
     let trozos = url.split("/");
     // console.log(`trozos: ${ trozos }`);
     return trozos[trozos.length - 1];
@@ -76,18 +119,22 @@ export class FichaService {
     let objetoApiFichas = this.http.get<any>(
       this.urlEndPoint +
         "/search/filtrar?" +
-        construirParametros(searchCriteria)
+        this.construirParametros(searchCriteria)
     );
     return objetoApiFichas;
   }
-}
 
-function construirParametros(searchCriteria: SearchCriteria): string {
-  let parametros = "";
-  Object.keys(searchCriteria).map((key) => {
-    parametros += key + "=" + searchCriteria[key] + "&";
-    // console.log(parametros);
-  });
-
-  return parametros.slice(0, parametros.length - 1);
+  construirParametros(searchCriteria: SearchCriteria): string {
+    let parametros = "";
+    Object.keys(searchCriteria).map((key) => {
+      parametros += key + "=" + searchCriteria[key] + "&";
+      // console.log(parametros);
+    });
+    return parametros.slice(0, parametros.length - 1);
+  }
 }
+// function mapearFicha(fichaApi: any, id: String): any {
+//   let objeto = {};
+//   objeto.clave = "";
+
+//   }
