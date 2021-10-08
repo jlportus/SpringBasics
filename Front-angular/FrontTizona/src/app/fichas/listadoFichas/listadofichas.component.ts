@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Artefacto } from "../models/Artefacto";
+import { Artefacto } from "../models/artefactos/Artefacto";
 import { SearchCriteria } from "../models/search/search-criteria";
 import { CriteriosBusquedaService } from "../services/criterios-busqueda.service";
 import { FichaService } from "../services/ficha.service";
