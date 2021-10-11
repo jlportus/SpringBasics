@@ -1,7 +1,8 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { Component,  OnInit, ViewChild } from "@angular/core";
 import { FotografiasComponent } from "src/app/fotografias/fotografias/fotografias.component";
-import { Artefacto } from "../models/Artefacto";
-import { ArtefactoImpl } from "../models/ArtefactoImpl";
+import { Artefacto } from "../models/artefactos/Artefacto";
+import { ArtefactoImpl } from "../models/artefactos/ArtefactoImpl";
+
 import { FichaService } from "../services/ficha.service";
 
 @Component({

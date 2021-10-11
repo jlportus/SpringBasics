@@ -8,6 +8,7 @@ import { ListadofichasComponent } from "./listadofichas/listadofichas.component"
 import { FichaComponent } from "./listadofichas/ficha/ficha.component";
 import { FotografiasModule } from "../fotografias/fotografias.module";
 import { FichaCompletaComponent } from './ficha-completa/ficha-completa.component';
+import { BuscadorComponent } from './buscador/buscador.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FichaCompletaComponent } from './ficha-completa/ficha-completa.componen
     ListadofichasComponent,
     FichaComponent,
     FichaCompletaComponent,
+    BuscadorComponent,
   ],
   imports: [
     CommonModule,

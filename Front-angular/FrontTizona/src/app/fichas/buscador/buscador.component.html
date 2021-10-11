@@ -1,0 +1,105 @@
+<p>buscador works!</p>
+
+<div class="container">
+  <h3>Introduzca nuevo searchCriteria</h3>
+  <div class="row fluid">
+    <form class="my-4">
+      <!-- input forma -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Forma</span>
+        </div>
+        <input
+          name="forma"
+          type="text"
+          [(ngModel)]="searchCriteria.forma"
+          class="form-control"
+        />
+      </div>
+      <!-- input color -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Color</span>
+        </div>
+        <input
+          name="color"
+          type="text"
+          [(ngModel)]="searchCriteria.color"
+          class="form-control"
+        />
+      </div>
+      <!-- input fabricacion -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Fabricación</span>
+        </div>
+        <input
+          name="fabricacion"
+          type="text"
+          [(ngModel)]="searchCriteria.fabricacion"
+          class="form-control"
+        />
+      </div>
+      <!-- input encontrado en -->
+      <!-- <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Encontrado en</span>
+        </div>
+        <input
+          name="encontradoEn"
+          type="text"
+          [(ngModel)]="searchCriteria.encontradoEn"
+          class="form-control"
+          disabled
+        />
+      </div> -->
+      <!-- input marcas frio -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Marcas en frio</span>
+        </div>
+        <input
+          name="marcasFrio"
+          type="text"
+          [(ngModel)]="searchCriteria.marcasFrio"
+          class="form-control"
+        />
+      </div>
+      <!-- input marcas Pintura -->
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Marcas Pintura</span>
+        </div>
+        <input
+          name="marcasPintura"
+          type="text"
+          [(ngModel)]="searchCriteria.marcasPintura"
+          class="form-control"
+        />
+      </div>
+
+      <!-- 
+    desplegable
+    <select name="situacionLaboral" [(ngModel)]="persona.situacionLboral" class="custom-select">
+      <option selected>Trabajas o estudias?</option>
+      <option value="desconocido">desconocido</option>
+      <option value="Galgo">Galgo</option>
+      <option value="Parado">Parado</option>
+      <option value="Levantador de Paises">Levantador de Paises</option>
+    </select> -->
+
+      <div class="d-flex justify-content-center">
+        <input
+          value="BUSCAR"
+          type="submit"
+          (click)="buscar()"
+          class="btn btn-success"
+        />
+      </div>
+    </form>
+    <app-listadofichas></app-listadofichas>
+    <!-- <pre>
+    <p>{{ searchCriteria | json }}</p>
+  </pre> -->
+  </div>
+</div>

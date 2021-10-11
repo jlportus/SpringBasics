@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Artefacto } from '../../models/Artefacto';
+import { Artefacto } from '../../models/artefactos/Artefacto';
 
 @Component({
   selector: 'app-ficha',
