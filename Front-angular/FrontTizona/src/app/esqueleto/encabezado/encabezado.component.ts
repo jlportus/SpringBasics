@@ -4,7 +4,7 @@ import { environment } from "src/environments/environment";
 @Component({
   selector: "app-encabezado",
   templateUrl: "./encabezado.component.html",
-  styles: [],
+  styleUrls: ["./encabezado.component.css"],
 })
 export class EncabezadoComponent implements OnInit {
   public titulo = environment.title;

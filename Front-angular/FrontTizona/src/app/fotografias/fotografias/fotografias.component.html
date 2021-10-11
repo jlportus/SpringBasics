@@ -1,6 +1,6 @@
 <body>
  
-    <div id="cargarImagen" style="height: 500px;">
+    <div id="cargarImagen">
         <div>
             <h4>Imagen principal</h4>
             <form action="" id="uploader" class="my-2">
@@ -8,7 +8,7 @@
             </form>
         </div>
         <div class="container-fluid" id="fotoPrincipal">
-            <div *ngFor="let fotografia of fotografiaPrincipal" class="col-2 mx-1 my-1" style="display: inline;">
+            <div *ngFor="let fotografia of fotografiaPrincipal" class="col-2 mx-1 my-1 bucleFotografias">
                 <app-fotografia [fotografia]=fotografia [id]=id (deleteImageEvent)="deseleccionarImagen($event)"></app-fotografia>
             </div>
         </div>
@@ -21,7 +21,7 @@
             </form>
         </div>
         <div class="container-fluid" id="fotosSecundarias">
-            <div *ngFor="let fotografia of previewSecundarias" class="col-2 mx-1 my-1" style="display: inline;">
+            <div *ngFor="let fotografia of previewSecundarias" class="col-2 mx-1 my-1">
                 <app-fotografia [fotografia]=fotografia [id]=id (deleteImageEvent)="deseleccionarImagen($event)"></app-fotografia>
             </div>
         </div>
@@ -34,7 +34,7 @@
             </form>
         </div>
         <div class="container-fluid" id="fotosCroquis">
-            <div *ngFor="let fotografia of previewCroquis" class="col-2 mx-1 my-1" style="display: inline;">
+            <div *ngFor="let fotografia of previewCroquis" class="col-2 mx-1 my-1">
                 <app-fotografia [fotografia]=fotografia [id]=id (deleteImageEvent)="deseleccionarImagen($event)"></app-fotografia>
             </div>
         </div>

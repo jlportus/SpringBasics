@@ -6,10 +6,10 @@ import { FotografiasService } from '../service/fotografias.service';
 @Component({
   selector: 'app-fotografias',
   templateUrl: './fotografias.component.html',
-  styles: []
+  styleUrls: ['./fotografias.component.css']
 })
 
-export class FotografiasComponent implements OnInit{
+export class FotografiasComponent implements OnInit {
   //Variable para mostrar o no el componente Fotografias
   imagenesFBRef: any;
   @Input('ngModel') id: any = undefined;
@@ -29,8 +29,8 @@ export class FotografiasComponent implements OnInit{
   previewCroquis: Fotografia[] = [];
 
   constructor(private fotografiasService: FotografiasService) {
-   
-   }
+
+  }
   ngOnInit() {
     // Iniciar Firebase
     this.fotografiasService.iniciarFirebase();
@@ -54,7 +54,7 @@ export class FotografiasComponent implements OnInit{
     }
     this.previewImagenes(e, tipoFotografia);
   }
-
+  //Previsualizar las imagenes seleccionadas
   previewImagenes(e, tipoFotografia): void {
     for (let index = 0; index < e.target.files.length; index++) {
       let fotografia = new FotografiaImpl();
@@ -74,18 +74,18 @@ export class FotografiasComponent implements OnInit{
     }
   }
 
-  //Subida a Firebase de las imagenes
+  //Subida a Firebase de las imagenes seleccionadas
   subirImagenes(id: number): void {
 
-      this.fotografiasService.uploadImage(this.fotografiaPrincipalASubir, id, "principal");
+    this.fotografiasService.uploadImage(this.fotografiaPrincipalASubir, id, "principal");
 
-      this.fotografiasSecundariasASubir.forEach(element => {
-        this.fotografiasService.uploadImage(element, id, "secundaria");
-      });
-      this.fotografiasCroquisASubir.forEach(element => {
-        this.fotografiasService.uploadImage(element, id, "croquis");
-      });
- 
+    this.fotografiasSecundariasASubir.forEach(element => {
+      this.fotografiasService.uploadImage(element, id, "secundaria");
+    });
+    this.fotografiasCroquisASubir.forEach(element => {
+      this.fotografiasService.uploadImage(element, id, "croquis");
+    });
+
   }
 
   //Obtener las imagenes de la base de datos

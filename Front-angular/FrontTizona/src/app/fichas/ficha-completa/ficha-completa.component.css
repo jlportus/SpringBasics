@@ -1,0 +1,37 @@
+body{
+background-color: transparent;
+display:inline-block;
+}
+
+img{
+    border:gray;
+    border-radius: 1px;
+    border-style: solid;
+}
+
+#cuadroCroquis, #cuadroFotografiasSecundarias, #cuadroFotografiaPrincipal{
+    font-weight:bolder;
+}
+
+.modal-content{
+    width:max-content;  
+    background-image: url(../../../assets/fondoCammo.png);
+}
+.modal-dialog{
+    justify-content: 
+    center; display: flex;
+}
+#imagen-modal{
+    justify-content: center; 
+    display: flex;
+}
+
+.bucleFotografias{
+    display:inline-flex;
+}
+.imagenSecundaria, .imagenCroquis{
+    width: 180px;
+}
+.imagenPrincipal{
+    width: 100%;
+}

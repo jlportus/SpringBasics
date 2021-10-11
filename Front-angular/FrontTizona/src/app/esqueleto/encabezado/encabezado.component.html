@@ -1,53 +1,51 @@
 <header>
-  <div class="row alert-dark p-3 text-center">
-    <h4 class="col-9">
-      <a routerLink="">
-        {{ titulo }}
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Imagen Título Tizona -->
+    <div class="d-block d-lg-none">
+      <a class="navbar-brand" href="#">
+        <img src="../../../assets/titulo.png" alt="" class="tituloPantallaPequena">
       </a>
-    </h4>
-
-    <div class="col-3">
-      <img
-        src="./assets/ESCUDO-CID1.jpg"
-        class=""
-        alt=""
-        style="width: 60px"
-      />
     </div>
-  </div>
-
-  <div class="row">
-    <div class="col-8 p-2">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="">Inicio</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="">Buscador</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="ficha/formulario">Proponer Ficha</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" routerLink="personas">Inventario</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#">Catalogo Documentos</a>
-        </li>
-
-        <!-- <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
-          >Acerca de</a
-        >
-        <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="acerca/info">Info</a>
-          <a class="dropdown-item" routerLink="acerca/contacto">Contacto</a>
-        </div>
-      </li> -->
-      </ul>
+    <div class="d-none d-lg-block">
+      <a class="navbar-brand" href="#">
+        <img src="../../../assets/titulo.png" alt="" class="tituloPantallaGrande">
+      </a>
     </div>
-  </div>
+    <!-- Escudo del CID en pantall pequeña -- siguiendo al Titulo en pantalla pequeña, en pantalla grande despues de NAVBAR -->
+    <div class=" d-block d-lg-none">
+      <img src="./assets/ESCUDO-CID1.jpg" class="escudoPantallaPequena" alt=""/>
+    </div>
+
+    <!-- NAVBAR -->
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 " style="margin: 0 auto;">
+          <li class="nav-item mx-1">
+            <a class="nav-link active" aria-current="page" href="#" routerLink="">Inicio</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link" href="#" routerLink="">Buscador</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link" href="#" routerLink="ficha/formulario">Proponer ficha</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link" href="#" routerLink="personas">Inventario</a>
+          </li>
+          <li class="nav-item mx-1">
+            <a class="nav-link" href="#" routerLink="personas">Catálogo documentos</a>
+          </li>
+        </ul> 
+      </div>
+      <!-- Escudo del CID en pantalla grande -- despues del NAVBAR -->
+      <div class=" d-none d-lg-block">
+        <img src="./assets/ESCUDO-CID1.jpg" class="escudoPantallaGrande" alt="Escudo del CID"/>
+      </div>
+    </div>
+  </nav>
 </header>

@@ -7,12 +7,14 @@ import { FormsModule } from "@angular/forms";
 import { ListadofichasComponent } from "./listadofichas/listadofichas.component";
 import { FichaComponent } from "./listadofichas/ficha/ficha.component";
 import { FotografiasModule } from "../fotografias/fotografias.module";
+import { FichaCompletaComponent } from './ficha-completa/ficha-completa.component';
 
 @NgModule({
   declarations: [
     FormularioFichaComponent,
     ListadofichasComponent,
     FichaComponent,
+    FichaCompletaComponent,
   ],
   imports: [
     CommonModule,
