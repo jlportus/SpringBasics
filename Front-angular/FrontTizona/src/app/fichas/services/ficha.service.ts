@@ -2,7 +2,6 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, Type } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { Key } from "selenium-webdriver";
 import { environment } from "src/environments/environment";
 import { Artefacto } from "../models/artefactos/Artefacto";
 import { ArtefactoImpl } from "../models/artefactos/ArtefactoImpl";
@@ -42,61 +41,33 @@ export class FichaService {
 
   extraerFicha(respuestaApi: any): Artefacto[] {
     const fichas: Artefacto[] = [];
-    let num = 1;
 
-    console.log(JSON.stringify(respuestaApi._embedded));
+    this.recorrerElementos(respuestaApi._embedded.artefactos, fichas);
+    this.recorrerElementos(respuestaApi._embedded.minas, fichas);
+    this.recorrerElementos(respuestaApi._embedded.municiones, fichas);
+    this.recorrerElementos(respuestaApi._embedded.proyectiles, fichas);
+    this.recorrerElementos(respuestaApi._embedded.bombasAviacion, fichas);
+    this.recorrerElementos(respuestaApi._embedded.cohetes, fichas);
+    this.recorrerElementos(respuestaApi._embedded.misiles, fichas);
+    this.recorrerElementos(respuestaApi._embedded.granadas, fichas);
+    this.recorrerElementos(respuestaApi._embedded.espoletas, fichas);
+    this.recorrerElementos(respuestaApi._embedded.otros, fichas);
 
-    // Array.from(respuestaApi._embedded).forEach((element) => {
-    //   Array(element).forEach((p) => {
-    //     Array(p).forEach((artefacto) => {
-    //       console.log(artefacto);
-    //       // let id = this.getIdFicha(artefacto);
-    //       fichas.push(FichaService.mapearFicha(artefacto, "id"));
-    //     });
-    //   });
-    // });
-
-    respuestaApi._embedded.artefactos.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.minas.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.municiones.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.proyectiles.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.bombasAviacion.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.cohetes.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.misiles.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.granadas.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
-    respuestaApi._embedded.cohetes.forEach((p) => {
-      let id = this.getIdFicha(p);
-      fichas.push(FichaService.mapearFicha(p, id));
-    });
     return fichas;
   }
-  static mapearFicha(fichaApi: any, id: String): Artefacto {
+
+  recorrerElementos(arrayRespuesta, fichas) {
+    if (arrayRespuesta) {
+      arrayRespuesta.forEach((p) => {
+      let id = this.getIdFicha(p);
+      fichas.push(this.mapearFicha(p, id));
+    });
+    }
+    
+  }
+
+  mapearFicha(fichaApi: any, id: String): Artefacto {
     let objeto = Object.create(ArtefactoImpl);
-    // objeto = Object.create(ArtefactoImpl) .fichaApi
     Object.assign<Artefacto, Artefacto>(objeto, fichaApi);
     Object.defineProperty(objeto, "id", {
       value: null,
@@ -133,8 +104,3 @@ export class FichaService {
     return parametros.slice(0, parametros.length - 1);
   }
 }
-// function mapearFicha(fichaApi: any, id: String): any {
-//   let objeto = {};
-//   objeto.clave = "";
-
-//   }
