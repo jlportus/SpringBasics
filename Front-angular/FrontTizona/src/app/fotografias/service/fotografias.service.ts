@@ -13,8 +13,8 @@ import { environment } from "src/environments/environment";
   providedIn: "root",
 })
 export class FotografiasService {
-  fotografia: Fotografia = new FotografiaImpl();
-  fotografiasSecundarias: Fotografia[] = [];
+  fotografia: Fotografia;
+  fotografiasSecundarias: Fotografia[];
   fotografiasCroquis: Fotografia[] = [];
   constructor() {}
 
@@ -25,6 +25,9 @@ export class FotografiasService {
   }
 
   getFotografiaPrincipal(id: number): Observable<Fotografia> {
+    // reseteo la fotografia
+    this.fotografia = new FotografiaImpl();
+   
     //Recuperar de Firebase la imagen principal y mostrarla
     var imagenPrincipalRef = firebase
       .database()
@@ -33,7 +36,7 @@ export class FotografiasService {
     imagenPrincipalRef.on("value", (snapshot) => {
       //Capturar lo que hay en la BBDD (son pares clave valor)
       let data = snapshot.val();
-      console.log("Obteniendo fotografia de BD", data);
+      // console.log("Obteniendo fotografia de BD", data);
       for (var key in data) {
         this.fotografia.url = data[key].url;
         this.fotografia.nombre = data[key].nombre;
@@ -51,7 +54,7 @@ export class FotografiasService {
       .child(`imagenesFB/${id}/secundaria`);
     imagenesSecundariasRef.on("value", (snapshot) => {
       let data = snapshot.val();
-      console.log("Obteniendo SECUNDARIAS de BD", data);
+      // console.log("Obteniendo SECUNDARIAS de BD", data);
       for (var key in data) {
         let fotografia = new FotografiaImpl();
         fotografia.url = data[key].url;
@@ -60,7 +63,7 @@ export class FotografiasService {
         this.fotografiasSecundarias.push(fotografia);
       }
     });
-    console.log("secundarias del service", this.fotografiasSecundarias);
+    // console.log("secundarias del service", this.fotografiasSecundarias);
     return of(this.fotografiasSecundarias);
   }
 
@@ -75,7 +78,7 @@ export class FotografiasService {
 
     imagenesCroquisRef.on("value", (snapshot) => {
       let data = snapshot.val();
-      console.log("Obteniendo CROQUIS de BD", data);
+      // console.log("Obteniendo CROQUIS de BD", data);
 
       for (var key in data) {
         let fotografia = new FotografiaImpl();
