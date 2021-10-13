@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Fotografia } from 'src/app/fotografias/models/fotografia';
 import { FotografiasService } from 'src/app/fotografias/service/fotografias.service';
-import { MinaImpl } from '../models/artefactos/minas/minaImpl';
 import { FichaService } from '../services/ficha.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { FichaService } from '../services/ficha.service';
   styleUrls: ['./ficha-completa.component.css']
 })
 export class FichaCompletaComponent implements OnInit {
-  @Input() id: number = 115;
+  id: number = this.activatedRoute.snapshot.params['id'];
   artefacto: any;
   imagenPrincipal: Fotografia;
   imagenesSecundarias: Fotografia[] = [];
@@ -20,36 +20,28 @@ export class FichaCompletaComponent implements OnInit {
   imagenModal: string;
 
 
-  constructor(private fotografiasService: FotografiasService, private fichaService: FichaService) {
-    this.artefacto = new MinaImpl();
-    this.artefacto.nombre = "PMN-2";
+  constructor(private fotografiasService: FotografiasService, private fichaService: FichaService, private activatedRoute: ActivatedRoute) {
+
   }
   ngOnInit() {
+
     this.fotografiasService.iniciarFirebase();
 
     this.getArtefacto();
-
-    //Recorrer los atributos del objeto como si fuesen pares clave-valor de un map.
-    Object.keys(this.artefacto).map((key) => {
-
-      // Recorrer el objeto artefacto cogiendo cada atributo y metiendolo en el array atributos. 
-      //También cambio de los nombres de variable compuestos.
-      if (key.toUpperCase() == "MARCASPINTURA") {
-        this.atributo = ["MARCAS DE PINTURA", this.artefacto[key]];
-      } else {
-        this.atributo = [key.toUpperCase(), this.artefacto[key]];
-      }
-      this.atributos.push(this.atributo);
-    })
   }
+
   //Obtener la URL de una imagen al hacer click
   getImagenURL(event): void {
     console.log(event.target.src);
     this.imagenModal = event.target.src;
   }
+  
   getArtefacto(): void {
     // Obtener los datos del artefacto haciendo una llamada a la API.
-    
+    this.fichaService.getFicha(this.id).subscribe((response)=>{
+      this.artefacto = response;
+      this.pintarDatosArtefacto(this.artefacto);
+    })
 
     // Obtener las imagenes del artefacto de Firebase.
     this.fotografiasService.getFotografiaPrincipal(this.id).subscribe((response) => {
@@ -61,5 +53,28 @@ export class FichaCompletaComponent implements OnInit {
     this.fotografiasService.getFotografiasCroquis(this.id).subscribe((response) => {
       this.imagenesCroquis = response;
     })
+  }
+
+  pintarDatosArtefacto(artefacto: any): void {
+    console.log(artefacto)
+ //Recorrer los atributos del objeto como si fuesen pares clave-valor de un map.
+ Object.keys(this.artefacto).map((key) => {
+
+  // Recorrer el objeto artefacto cogiendo cada atributo y metiendolo en el array atributos. 
+  //También cambio de los nombres de variable compuestos.
+  if (key.toUpperCase() == "MARCASPINTURA") {
+    this.atributo = ["MARCAS DE PINTURA", this.artefacto[key]];
+  } 
+  else if (key.toUpperCase() == "MARCASFRIO") {
+    this.atributo = ["MARCAS EN FRIO", this.artefacto[key]];
+  }
+  else if (key.toUpperCase() == "_LINKS"){
+    this.atributo = [null, null];
+  }
+  else {
+    this.atributo = [key.toUpperCase(), this.artefacto[key]];
+  }
+  this.atributos.push(this.atributo);
+})
   }
 }

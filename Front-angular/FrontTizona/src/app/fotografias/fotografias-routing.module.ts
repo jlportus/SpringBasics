@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { FichaCompletaComponent } from '../fichas/ficha-completa/ficha-completa.component';
 import { FotografiasComponent } from './fotografias/fotografias.component';
 
 

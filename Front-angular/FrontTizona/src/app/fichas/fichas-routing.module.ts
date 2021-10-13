@@ -25,6 +25,10 @@ const routes: Routes = [
         path: `ficha-completa`,
         component: FichaCompletaComponent,
       },
+      {
+        path: `ficha-completa/:id`,
+        component: FichaCompletaComponent
+      }
     ],
   },
 ];
