@@ -103,4 +103,7 @@ export class FichaService {
     });
     return parametros.slice(0, parametros.length - 1);
   }
+  getFicha(id:number): Observable<any>{
+    return this.http.get(this.urlEndPoint + "/" + id)
+  }
 }

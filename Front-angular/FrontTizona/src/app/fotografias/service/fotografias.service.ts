@@ -22,6 +22,7 @@ export class FotografiasService {
   iniciarFirebase() {
     firebase.initializeApp(environment.firebaseConfig);
   }
+
   getFotografiaPrincipal(id: number): Observable<Fotografia> {
     //Recuperar de Firebase la imagen principal y mostrarla
     var imagenPrincipalRef = firebase.database().ref().child(`imagenesFB/${id}/principal`);
@@ -78,11 +79,11 @@ export class FotografiasService {
     return of(this.fotografiasCroquis);
   }
 
-  uploadImage(file: any, id: number, tipoFotografia: string): void {
+  async uploadImage(file: any, id: number, tipoFotografia: string): Promise<void> {
     var imagenesFBRef;
     //Subir imagen a Firebase storage
     var storageRef = firebase.storage().ref().child(`imagenes/${id}/${tipoFotografia}/${file.name}`);
-    storageRef.put(file).then((data) => {
+    await storageRef.put(file).then((data) => {
       //Crear registo en Firebase Realtime Database con la URL de la imagen
       if (tipoFotografia == "principal") {
         imagenesFBRef = firebase.database().ref().child(`imagenesFB/${id}/principal`);
