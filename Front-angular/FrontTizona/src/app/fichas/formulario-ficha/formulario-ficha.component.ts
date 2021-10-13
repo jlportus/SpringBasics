@@ -15,18 +15,7 @@ export class FormularioFichaComponent implements OnInit {
   //ViewChild para poder acceder a los metodos del hijo
   @ViewChild(FotografiasComponent, {read: false, static:true}) hijo: FotografiasComponent;
 
-  private artefacto: Artefacto = new ArtefactoImpl(
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    [],
-    [],
-    "",
-    ""
-  );
+  private artefacto: Artefacto = new ArtefactoImpl();
   constructor(private fichaService: FichaService) {}
 
   ngOnInit() {}

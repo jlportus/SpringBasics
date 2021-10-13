@@ -7,6 +7,7 @@ img{
     border:gray;
     border-radius: 1px;
     border-style: solid;
+    box-shadow: 10px 10px 25px #999;
 }
 
 #cuadroCroquis, #cuadroFotografiasSecundarias, #cuadroFotografiaPrincipal{
@@ -14,16 +15,17 @@ img{
 }
 
 .modal-content{
-    width:max-content;  
     background-image: url(../../../assets/fondoCammo.png);
 }
+
 .modal-dialog{
-    justify-content: 
-    center; display: flex;
-}
-#imagen-modal{
     justify-content: center; 
     display: flex;
+}
+.imagenModal{
+    justify-content: center; 
+    display: flex;
+    width: 100%;
 }
 
 .bucleFotografias{

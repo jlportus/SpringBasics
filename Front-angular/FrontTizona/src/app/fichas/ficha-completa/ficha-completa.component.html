@@ -1,22 +1,24 @@
-<body>
+<body>   
     <div class="container-fluid py-1" id="cuadroFotografias">
+
+        <!-- Fotografias en formato grande -->
         <div class="d-none d-lg-block" id="fotografiasGrande">
             <div class="row py-2">
                 <div class=" col-5 px-4 py-2" (click)="getImagenURL($event)" data-bs-toggle="modal"
                     data-bs-target="#modalImagen">
-                    <img src="{{urlImagenPrincipal}}" class="imagenPrincipal">
+                    <img src="{{imagenPrincipal.url}}" class="imagenPrincipal">
                 </div>
                 <div class="col-6">
-                    <div *ngFor="let imagenSecundaria of urlImagenesSecundarias" class="row bucleFotografias">
+                    <div *ngFor="let imagenSecundaria of imagenesSecundarias" class="row bucleFotografias">
                         <div class="col-4 py-2" (click)="getImagenURL($event)" data-bs-toggle="modal"
                             data-bs-target="#modalImagen">
-                            <img src={{imagenSecundaria}} class="mx-2 imagenSecundaria">
+                            <img src={{imagenSecundaria.url}} class="mx-2 imagenSecundaria">
                         </div>
                     </div>
-                    <div  *ngFor="let imagenCroquis of urlImagenesCroquis" class="row bucleFotografias">
+                    <div  *ngFor="let imagenCroquis of imagenesCroquis" class="row bucleFotografias">
                         <div class="col-4 py-2" (click)="getImagenURL($event)" data-bs-toggle="modal"
                             data-bs-target="#modalImagen">
-                            <img src={{imagenCroquis}} class="mx-2 imagenCroquis">
+                            <img src={{imagenCroquis.url}} class="mx-2 imagenCroquis">
                         </div>
                     </div>
                 </div>
@@ -29,21 +31,21 @@
             <div class="carousel-inner">
                 <!-- Fotografia principal -->
                 <div class="carousel-item active">
-                    <img src={{urlImagenPrincipal}} class="d-block w-100" alt="..." (click)="getImagenURL($event)"
+                    <img src={{imagenPrincipal.url}} class="d-block w-100" alt="..." (click)="getImagenURL($event)"
                         data-bs-toggle="modal" data-bs-target="#modalImagen">
                 </div>
                 <!-- Fotografias secundarias -->
-                <div class="carousel-item" *ngFor="let imagenSecundaria of urlImagenesSecundarias">
-                    <img src={{imagenSecundaria}} class="d-block w-100" alt="..." (click)="getImagenURL($event)"
+                <div class="carousel-item" *ngFor="let imagenSecundaria of imagenesSecundarias">
+                    <img src={{imagenSecundaria.url}} class="d-block w-100" alt="..." (click)="getImagenURL($event)"
                         data-bs-toggle="modal" data-bs-target="#modalImagen">
                 </div>
                 <!-- Croquis -->
-                <div class="carousel-item" *ngFor="let imagenCroquis of urlImagenesCroquis">
-                    <img src={{imagenCroquis}} class="d-block w-100" alt="croquis" (click)="getImagenURL($event)"
+                <div class="carousel-item" *ngFor="let imagenCroquis of imagenesCroquis">
+                    <img src={{imagenCroquis.url}} class="d-block w-100" alt="croquis" (click)="getImagenURL($event)"
                         data-bs-toggle="modal" data-bs-target="#modalImagen">
                 </div>
             </div>
-
+            <!-- Botones para pasar las imagenes del carrousel -->
             <button class="carousel-control-prev" type="button" data-bs-target="#fotografiasPequeño"
                 data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -58,6 +60,7 @@
         </div>
     </div>
     <hr>
+    <!-- Bucle que recorre el array de 2 dimensiones (nombre atributo y valor) atributos-->
     <div *ngFor="let atributo of atributos" class="m-4" id="datosArtefacto">
         <div *ngIf="atributo[1] !== null">
             <h3>{{atributo[0]}}</h3>
@@ -71,7 +74,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <img class="imagen-modal" src={{imagenModal}} alt="">
+                    <img class="imagenModal" src={{imagenModal}} alt="">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
