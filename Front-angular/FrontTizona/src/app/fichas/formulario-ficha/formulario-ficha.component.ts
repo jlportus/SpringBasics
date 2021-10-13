@@ -20,8 +20,6 @@ export class FormularioFichaComponent implements OnInit {
 
   ngOnInit() {}
   
- 
-
   salvarArtefacto() {
     this.id = undefined;
     this.fichaService

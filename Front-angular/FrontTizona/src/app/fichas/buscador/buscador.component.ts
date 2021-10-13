@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { SearchCriteriaImpl } from "../models/search/search-criteriaImpl";
 import { CriteriosBusquedaService } from "../services/criterios-busqueda.service";
 
@@ -19,9 +16,19 @@ export class BuscadorComponent implements OnInit {
   ngOnInit() {}
 
   buscar() {
-    this.searchCriteriaCache = this.searchCriteria;
-    // console.log(JSON.stringify(this.searchCriteriaCache));
-    this.criteriosService.onChangeCriteria(this.searchCriteriaCache);
     this.searchCriteriaCache = new SearchCriteriaImpl();
+    Object.keys(this.searchCriteria).map((key) => {
+      if (this.searchCriteria[key] != "") {
+        Object.defineProperty(this.searchCriteriaCache, key, {
+          value: this.searchCriteria[key],
+          writable: true,
+          enumerable: true,
+          configurable: true,
+        });
+      }
+    });
+    // console.log(JSON.stringify(this.searchCriteriaCache));
+
+    this.criteriosService.onChangeCriteria(this.searchCriteriaCache);
   }
 }
