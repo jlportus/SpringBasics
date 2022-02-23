@@ -17,51 +17,52 @@
     - [4.3 Beans por @Anotaciones](#43-beans-por-anotaciones)
     - [4.4 Prelacion de Beans](#44-prelacion-de-beans)
     - [4.5 Desambiguando Beans](#45-desambiguando-beans)
+    - [4.6. Autowired](#46-autowired)
+      - [4.6.1 Conflictos entre bean inyectables(varios candidatos)](#461-conflictos-entre-bean-inyectablesvarios-candidatos)
+        - [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
+        - [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
   - [5. Arrancando con SPRINGBoot](#5-arrancando-con-springboot)
     - [5.1 Añadiendo recursos externos a Spring Boot](#51-añadiendo-recursos-externos-a-spring-boot)
     - [5.2 Insertando valores externos en campos de Beans](#52-insertando-valores-externos-en-campos-de-beans)
-  - [6. Logging](#6-logging)
+- [6. Logging](#6-logging)
     - [6.1 Configurando el Logging](#61-configurando-el-logging)
         - [Nivel de salida de mensajes](#nivel-de-salida-de-mensajes)
         - [Patron de salida de mensajes](#patron-de-salida-de-mensajes)
         - [Formato de Color de salida de mensajes](#formato-de-color-de-salida-de-mensajes)
         - [Salida de mensajes a fichero](#salida-de-mensajes-a-fichero)
-  - [7. Autowired](#7-autowired)
-    - [7.1 Conflictos entre bean inyectables(varios candidatos)](#71-conflictos-entre-bean-inyectablesvarios-candidatos)
-      - [Conflictos entre constructores del Bean Creado:](#conflictos-entre-constructores-del-bean-creado)
-      - [Conflictos entre Bean candidatos a inyectar:](#conflictos-entre-bean-candidatos-a-inyectar)
 - [8. PERSISTENCIA DE DATOS](#8-persistencia-de-datos)
-    - [8.1 El Entity manager](#81-el-entity-manager)
-      - [Por Xml](#por-xml)
-      - [Por anotaciones](#por-anotaciones)
-    - [8.2 Los repositorios - interfazDAO](#82-los-repositorios---interfazdao)
-    - [8.3 Las Entidades - Entity](#83-las-entidades---entity)
-      - [8.3.1 Por anotaciones @Entity](#831-por-anotaciones-entity)
-      - [8.3.2 Por ORM.XML](#832-por-ormxml)
-    - [8.4. Emplear las entidades en el Main](#84-emplear-las-entidades-en-el-main)
-    - [8.5 Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
-    - [8.6 Single Table](#86-single-table)
-    - [8.7 Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relación-onetomany)
-  - [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
-    - [9.0 Prerequisitos para Spring](#90-prerequisitos-para-spring)
-    - [9.1 Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
-    - [9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins](#92-personalizar-los-objetos-mostrados---serializador-jackson-y-mixins)
-    - [9.3 Pasar a nivel 3 HATEOAS](#93-pasar-a-nivel-3-hateoas)
-    - [9.4 Personalizar Endpoints](#94-personalizar-endpoints)
-      - [9.4.1 Personalizar Querys](#941-personalizar-querys)
-      - [9.4.2 Recibir parametros por la URL](#942-recibir-parametros-por-la-url)
-      - [9.4.3 Añadir los Query personalizados:](#943-añadir-los-query-personalizados)
-  - [10. Métodos Personalizados](#10-métodos-personalizados)
-    - [10.1 Hacer Métodos Personalizados autodescubribles](#101-hacer-métodos-personalizados-autodescubribles)
-    - [10.2 Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
-  - [11.Query Dinamicos](#11query-dinamicos)
-  - [12.Listeners](#12listeners)
-  - [13. Servicio Entidad](#13-servicio-entidad)
-  - [14. Integrando Librerias](#14-integrando-librerias)
-      - [14.1 Integrar Proyecto Local](#141-integrar-proyecto-local)
-      - [14.2 Integrar Proyecto de GitHub](#142-integrar-proyecto-de-github)
-      - [14.3 Integrar Proyecto de Repositorio en la nube](#143-integrar-proyecto-de-repositorio-en-la-nube)
-      - [14.4 Precedencia y exportacion de dependencias](#144-precedencia-y-exportacion-de-dependencias)
+  - [8.1 El Entity manager](#81-el-entity-manager)
+    - [Por Xml](#por-xml)
+    - [Por anotaciones](#por-anotaciones)
+  - [8.2 Los repositorios - interfazDAO](#82-los-repositorios---interfazdao)
+  - [8.3 Las Entidades - Entity](#83-las-entidades---entity)
+    - [8.3.1 Por anotaciones @Entity](#831-por-anotaciones-entity)
+    - [8.3.2 Por ORM.XML](#832-por-ormxml)
+  - [8.4. Emplear las entidades en el Main](#84-emplear-las-entidades-en-el-main)
+  - [8.5 Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
+  - [8.6 Single Table](#86-single-table)
+  - [8.7 Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relación-onetomany)
+  - [8.8 Persisitencia de clases con selfJoin](#88-persisitencia-de-clases-con-selfjoin)
+- [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
+  - [9.0 Prerequisitos para Spring](#90-prerequisitos-para-spring)
+  - [9.1 Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
+  - [9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins](#92-personalizar-los-objetos-mostrados---serializador-jackson-y-mixins)
+  - [9.3 Pasar a nivel 3 HATEOAS](#93-pasar-a-nivel-3-hateoas)
+  - [9.4 Personalizar Endpoints](#94-personalizar-endpoints)
+    - [9.4.1 Personalizar Querys](#941-personalizar-querys)
+    - [9.4.2 Recibir parametros por la URL](#942-recibir-parametros-por-la-url)
+    - [9.4.3 Añadir los Query personalizados:](#943-añadir-los-query-personalizados)
+- [10. Métodos Personalizados](#10-métodos-personalizados)
+  - [10.1 Hacer Métodos Personalizados autodescubribles](#101-hacer-métodos-personalizados-autodescubribles)
+  - [10.2 Evitar los filtros del CORS del navegador](#102-evitar-los-filtros-del-cors-del-navegador)
+- [11.Query Dinamicos](#11query-dinamicos)
+- [12.Listeners](#12listeners)
+- [13. Servicio Entidad](#13-servicio-entidad)
+- [14. Integrando Librerias](#14-integrando-librerias)
+    - [14.1 Integrar Proyecto Local](#141-integrar-proyecto-local)
+    - [14.2 Integrar Proyecto de GitHub](#142-integrar-proyecto-de-github)
+    - [14.3 Integrar Proyecto de Repositorio en la nube](#143-integrar-proyecto-de-repositorio-en-la-nube)
+    - [14.4 Precedencia y exportacion de dependencias](#144-precedencia-y-exportacion-de-dependencias)
 
 ## Inicializar un proyecto Spring con initialitzer
 
@@ -314,7 +315,7 @@ Es el modo intermedio.
    - ó
    - @Import({ ClaseConfiguracionJava.class })
 
-   ### 4.3 Beans por @Anotaciones
+### 4.3 Beans por @Anotaciones
 
 Es el modo mas acoplado.
 
@@ -345,7 +346,7 @@ Si tengo dos Beans iguales cargados de diferentes modos, uno me sobreescribira a
   - 2º Beans por clase de configuracion Java
   - 3º Beans por anotaciones
 
-  ### 4.5 Desambiguando Beans
+### 4.5 Desambiguando Beans
 
 Necsesitare usar alias para referirme a un Bean concreto
 
@@ -357,6 +358,67 @@ Para recuperar uso el **`.getBean`** sobrecargado.
 ```
 variableDeMiObjeto = context.getBean("alias", ObjetoTipo.class)
 ```
+
+[Volver a inicio](#springbasics)
+
+### 4.6. Autowired
+
+Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired` en el Bean que vaya a ser inyectado
+
+> La anotacion solo se debe utilizar en metodos que reciban parametros
+> Normalmente si solo hay un Bean que sea del tipo necesitado en mi contenedor, no sera necesario.
+
+En un `@Component` puedo Utilizar Autowired en tres sitios:
+
+- En el **Constructor** -> Cuando el parametro del constructor sea un **campo obligatorio**-> automaticamente pasara al constructor al cargar el Bean inyectado (si no puede crear un null)
+- En un **setter** -> Cuando el campo sea opcional
+- En el **campo** directamente -> Desaconsejado.
+
+  ```
+  @Component
+  class...{
+    //...
+  @Autowired
+  public TestAutowired(Test testPorConstructor) {
+      testInyectado = testPorConstructor;
+  }
+  ```
+
+  > Buscara un bean de tipo Test y lo inyectara para su empleo.
+
+#### 4.6.1 Conflictos entre bean inyectables(varios candidatos)
+
+Se puede dar el caso que tenga varios Bean del mismo tipo y Spring no sepa cual usar.
+
+##### Conflictos entre constructores del Bean Creado:
+
+Si tengo varios constructores de mi bean con sobrecarga, Spring no va a saver cual usar.
+
+- `@Autowired` == `@Autowired(required=true)` cogera ese constructor por defecto
+  - Solo puede haber un required true en mi Bean.
+- `@Autowired(required=false)` de entre todos los constructores que tengan esta anotacion cogera el que tenga mayor coincidencia en el numero de parametros pasados.
+
+##### Conflictos entre Bean candidatos a inyectar:
+
+- Si quiero inyectar un Bean en concreto de los candidatos usaré la anotación **Qualifier** en el lugar donde se vaya a inyectar del Bean.
+
+```
+public void  setTestAutowired(@Qualifier("aliasDelBean") Test test) {//...}
+```
+
+> Inyectara el Bean con el alias indicado
+
+**ó**
+
+Si quiero que en todo el codigo se escoja un Bean por defecto cuando se tenga que inyectar, puedo usar **Primary** En la declaracion del Bean.
+
+```
+@Bean
+@Primary
+public Test miTest() {...}
+```
+
+> Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
 
 [Volver a inicio](#springbasics)
 
@@ -408,43 +470,43 @@ Como Spring Boot solo escanea lo que este en su mismo paquete, le debo decir don
   - Añado al `main` la anotacion
     `@Import({ruta.ClaseConfiguracionJava.class})` con la ruta a la clase
 
-  ### 5.2 Insertando valores externos en campos de Beans
+### 5.2 Insertando valores externos en campos de Beans
 
-  Voy a insertar con la anotacion `@Value` un String proveniente de un fichero `.properties` externo al codigo.
+Voy a insertar con la anotacion `@Value` un String proveniente de un fichero `.properties` externo al codigo.
 
-  1. Inserto el archivo properties nuevo al main:
-     `@PropertySource({"valoresConstantes.properties"}) `
-  2. Creo en la carpeta `resources` el archivo
-     `valoresConstantes.properties`
-  3. Introduzco en el los pares clave valor que quiero insertar despues en mi codigo
-     `campoExterno=valor de campo Externo`
-  4. En el Bean que quiero usar el campo externo, pongo la anotacion **con el placeHolder**
-     `@Value("${campoExterno}")` antes del campo o del parametro del metodo Bean que voy a usar
+1. Inserto el archivo properties nuevo al main:
+   `@PropertySource({"valoresConstantes.properties"}) `
+2. Creo en la carpeta `resources` el archivo
+   `valoresConstantes.properties`
+3. Introduzco en el los pares clave valor que quiero insertar despues en mi codigo
+   `campoExterno=valor de campo Externo`
+4. En el Bean que quiero usar el campo externo, pongo la anotacion **con el placeHolder**
+   `@Value("${campoExterno}")` antes del campo o del parametro del metodo Bean que voy a usar
 
-     - Me sustiuira el valor de la variable por el almacenado en el archivo properties
-     - En el metodo bean tiene que ir como un parametro
+   - Me sustiuira el valor de la variable por el almacenado en el archivo properties
+   - En el metodo bean tiene que ir como un parametro
 
-     ```
-     public String probandoVariablesExternas(@Value("${campoExterno2}")String valor ) {
-         return valor;
-     }
-     ```
+   ```
+   public String probandoVariablesExternas(@Value("${campoExterno2}")String valor ) {
+       return valor;
+   }
+   ```
 
-     ```
-     Nota:
-     1. El application.properties se escanea por defecto.
-        ¡El resto no! y hay que decirle a spring que los escanee.
-     2. es recomendable separar los properties en funcion
-        de la finalidad de lo que almacenen
-     3. ¡NO poner contraseñas y subirlos a GitHUB!
-         -> .gitignore
-     4. las propiedades de logging se establcen por el
-         applicationContext
-     ```
+   ```
+   Nota:
+   1. El application.properties se escanea por defecto.
+      ¡El resto no! y hay que decirle a spring que los escanee.
+   2. es recomendable separar los properties en funcion
+      de la finalidad de lo que almacenen
+   3. ¡NO poner contraseñas y subirlos a GitHUB!
+       -> .gitignore
+   4. las propiedades de logging se establcen por el
+       applicationContext
+   ```
 
 [Volver a inicio](#springbasics)
 
-## 6. Logging
+# 6. Logging
 
 Pretendo llevar un registro de sucesos que ocurren con la aplicacion.
 Sustituire las salidas que normalmente lanzaba por consola para comprobar a otro lugar, ademas de mensajes de error, etc.
@@ -472,7 +534,7 @@ En la clase que quiera emplear el **log**
      > - 4 DEBUG - Informacion importante para depuracion
      > - 5 TRACE - Capta todo
 
-   ### 6.1 Configurando el Logging
+### 6.1 Configurando el Logging
 
 Puedo configurar el logging a traves de un properties
 
@@ -519,74 +581,13 @@ logging.file.name=archivo.log
 
 [Volver a inicio](#springbasics)
 
-## 7. Autowired
-
-Cuando en un Bean necesito que se inyecte automaticamente otro Bean podré utilizar `@Autowired` en el Bean que vaya a ser inyectado
-
-> La anotacion solo se debe utilizar en metodos que reciban parametros
-> Normalmente si solo hay un Bean que sea del tipo necesitado en mi contenedor, no sera necesario.
-
-En un `@Component` puedo Utilizar Autowired en tres sitios:
-
-- En el **Constructor** -> Cuando el parametro del constructor sea un **campo obligatorio**-> automaticamente pasara al constructor al cargar el Bean inyectado (si no puede crear un null)
-- En un **setter** -> Cuando el campo sea opcional
-- En el **campo** directamente -> Desaconsejado.
-
-  ```
-  @Component
-  class...{
-    //...
-  @Autowired
-  public TestAutowired(Test testPorConstructor) {
-      testInyectado = testPorConstructor;
-  }
-  ```
-
-  > Buscara un bean de tipo Test y lo inyectara para su empleo.
-
-### 7.1 Conflictos entre bean inyectables(varios candidatos)
-
-Se puede dar el caso que tenga varios Bean del mismo tipo y Spring no sepa cual usar.
-
-#### Conflictos entre constructores del Bean Creado:
-
-Si tengo varios constructores de mi bean con sobrecarga, Spring no va a saver cual usar.
-
-- `@Autowired` == `@Autowired(required=true)` cogera ese constructor por defecto
-  - Solo puede haber un required true en mi Bean.
-- `@Autowired(required=false)` de entre todos los constructores que tengan esta anotacion cogera el que tenga mayor coincidencia en el numero de parametros pasados.
-
-#### Conflictos entre Bean candidatos a inyectar:
-
-- Si quiero inyectar un Bean en concreto de los candidatos usaré la anotación **Qualifier** en el lugar donde se vaya a inyectar del Bean.
-
-```
-public void  setTestAutowired(@Qualifier("aliasDelBean") Test test) {//...}
-```
-
-> Inyectara el Bean con el alias indicado
-
-**ó**
-
-Si quiero que en todo el codigo se escoja un Bean por defecto cuando se tenga que inyectar, puedo usar **Primary** En la declaracion del Bean.
-
-```
-@Bean
-@Primary
-public Test miTest() {...}
-```
-
-> Solo puedo tener un Bean con primary en todos mis candidatos, si no tendre conflictos.
-
-[Volver a inicio](#springbasics)
-
 # 8. PERSISTENCIA DE DATOS
 
 Se va a usar Java Persitance API **JPA** Con la implemnetacion **Hibernate**.
 
 Voy a almacenar **clases.java** en un **SGBD Relacional** realizando un mapeo. **ORM** (Object-Relacional Mapping).
 
-### 8.1 El Entity manager
+## 8.1 El Entity manager
 
 Necesito un fichero de configuracion que me va a decir:
 
@@ -597,7 +598,7 @@ Necesito un fichero de configuracion que me va a decir:
 
 La configuracion se puede hacer por xml o por anotaciones.
 
-#### Por Xml
+### Por Xml
 
 Pasos:
 
@@ -613,7 +614,7 @@ Pasos:
    - Dialecto de la Implementacion de Hibernate
 1. Tengo que importar al Main el archivo de configuracion de jpa `@ImportResource({"classpath:config/jpa-config.xml"})`
 
-#### Por anotaciones
+### Por anotaciones
 
 No recomendado, mejor hacer por Xml, es mas desacoplado y obligatorio para cuando no tengo acceso al codigo. No obstante [ver documentacion de Spring Baeldung](https://www.baeldung.com/the-persistence-layer-with-spring-and-jpa#boot)
 
@@ -636,7 +637,7 @@ Para añadir las entidades a escanear usar
 
 [Volver a inicio](#springbasics)
 
-### 8.2 Los repositorios - interfazDAO
+## 8.2 Los repositorios - interfazDAO
 
 El repositorio va ser el encargado de hacer el CRUD con la BD.
 Usare la interfaz [JpaRepository](https://docs.spring.io/spring-data/jpa/docs/current/api/org/springframework/data/jpa/repository/JpaRepository.html) que me proporciona todos los metodos de acceso a BD:
@@ -661,7 +662,7 @@ En la carpeta Repositorios:
    - `@RepositoryRestResource` **<-Recomendado**, si además se va a exponer al front **REST**
 1. Debe estar escaneada por el entity-Manager <- jpa-config.xml
 
-### 8.3 Las Entidades - Entity
+## 8.3 Las Entidades - Entity
 
 Sera la clase java que quiero persistir. Tiene que tener:
 
@@ -670,7 +671,7 @@ Sera la clase java que quiero persistir. Tiene que tener:
 
 Se pueden implementar por anotaciones o por xml
 
-#### 8.3.1 Por anotaciones @Entity
+### 8.3.1 Por anotaciones @Entity
 
 1. En la cabecera tendra la anotacion `@Entity` de `javax.persistence`
    - Para personalizar el nombre de la tabla, puede tener la anotacion **@Table**
@@ -707,7 +708,7 @@ Para **omitir campos** al almacenar en la BD se usa **TRANSIENT**
             nullable=false)
   ```
 
-#### 8.3.2 Por ORM.XML
+### 8.3.2 Por ORM.XML
 
 **OBLIGATORIO** usar cuando no se tiene acceso al codigo (compilado o librerias externas)
 
@@ -778,7 +779,7 @@ Para **omitir campos** al almacenar en la BD se usa **TRANSIENT**
 
 [Volver a inicio](#springbasics)
 
-### 8.4. Emplear las entidades en el Main
+## 8.4. Emplear las entidades en el Main
 
 Esto solo se hará en entorno de pruebas. En producción se captaria la entidad del Front u otro.
 
@@ -792,7 +793,7 @@ Esto solo se hará en entorno de pruebas. En producción se captaria la entidad 
    - Por ejemplo eliminar por ID:
      `variableEntidadDAO.deleteById(3);`
 
-### 8.5 Persisitencia de clases con herencia
+## 8.5 Persisitencia de clases con herencia
 
 Se dara el caso que existan clases que hereden de otras y determinados campos no esten declarados en la clase hija (lo estarán en la clase padre), pero si sean del objeto.
 
@@ -828,7 +829,7 @@ Las clases padres se han de declarar como si fueran entidades normales, pero se 
 
 [Volver a inicio](#springbasics)
 
-### 8.6 Single Table
+## 8.6 Single Table
 
 Puede haber casos de especializacion de entidades que tengan una superclase en comun (Con campos comunes, ID-PK) y cada subclase tenga campos especificos diferentes.
 Por rendimiento en las consultas puede ser adecuado almacenar ambas especializaciones en una misma Tabla **Single Table** asumiedo que:
@@ -908,7 +909,7 @@ Si lo quisiera hacer por **@anotaciones**, en la subentidades hay que añadir
 
 [Volver a inicio](#springbasics)
 
-### 8.7 Persisitencia de clases con relación OneToMany
+## 8.7 Persisitencia de clases con relación OneToMany
 
 Cuando tenga una entidad que contenga un campo que sea una lista(colección) de otros elementos usaré el **One to Many**.
 
@@ -997,7 +998,15 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 
 [Volver a inicio](#springbasics)
 
-## 9. REST - Añadir la capa de presentación
+## 8.8 Persisitencia de clases con selfJoin
+
+Cuando tenga clases que contienen colecciones de clases de su mismo tipo (recursivas) usare el **@oneToMany**.
+
+Para que la BD mantenga la trazabilidad de los elementos de una tabla a la otra, 
+
+[Volver a inicio](#springbasics)
+
+# 9. REST - Añadir la capa de presentación
 
 **RE**presentational **S**tate **T**ransfer define una interfaz para el acceso a la aplicacion a raves de un protocolo **HTTP**
 
@@ -1011,7 +1020,7 @@ Mediante las operaciones de http se puede acceder a las operaciones de la BD de 
 
 Si la API es de nivel 3 (**HATEOAS**), implica que las llamadas a la BD sean autodescubribles mediante enlaces URL
 
-### 9.0 Prerequisitos para Spring
+## 9.0 Prerequisitos para Spring
 
 El proyecto Spring debe tener las dependencias de REST para el correcto funcionamiento.
 
@@ -1020,7 +1029,7 @@ Al arrancar la API en local, en el puerto que inicia TOMCAT [http://localhost:80
 > Se puede acceder mediante **POSTMAN**
 > Ya no será necesario crear elementos en el main, se harian desde POSTMAN (o el front)
 
-### 9.1 Limitando el acceso a repositorios
+## 9.1 Limitando el acceso a repositorios
 
 Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 
@@ -1061,7 +1070,7 @@ Por defecto se muestra todo. Se debe limitar a solo lo que queramos.
 
 [Volver a inicio](#springbasics)
 
-### 9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins
+## 9.2 Personalizar los objetos mostrados - Serializador Jackson y mixins
 
 Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 
@@ -1118,7 +1127,7 @@ Se necesita personalizar el objeto mostrado en las peticiones. habra campos:
 
 [Volver a inicio](#springbasics)
 
-### 9.3 Pasar a nivel 3 HATEOAS
+## 9.3 Pasar a nivel 3 HATEOAS
 
 Hará que los enlaces sean autodescubribles, es decir, donde antes me ponia un objetoConColeccion en un campo de un elemento (me ponia un JSON), y tenia el problema de la recursividad en los objetos
 -> me saldra un hipervinculo:
@@ -1156,7 +1165,7 @@ Pasos:
 
 [Volver a inicio](#springbasics)
 
-### 9.4 Personalizar Endpoints
+## 9.4 Personalizar Endpoints
 
 A traves del hiperenlace **Profile** de cada entidad puedo acceder a todos los metodos que se pueden realizar sobre esa entidad desde una llamada HTTP.
 
@@ -1169,7 +1178,7 @@ Al sobreescribirlos puedo anotarlos Con **@RestResource** y personalizar:
 - **`@RestResource(exported = false)`** -> para que no se muestren
 - **`@RestResource(path="name")`** -> para añadir una ruta personalizada al metodo
 
-#### 9.4.1 Personalizar Querys
+### 9.4.1 Personalizar Querys
 
 JPA ofrece por defecto una serie de [metodos **"Query"**](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#repository-query-keywords) que permiten realizar operaciones sobre la BD
 
@@ -1208,7 +1217,7 @@ Las Consultas generales son:
 
 > los delete en principio solo funcionan por ID
 
-#### 9.4.2 Recibir parametros por la URL
+### 9.4.2 Recibir parametros por la URL
 
 Se pasarán parametros por la URL, que se han de asignar al metodo personalizado con **@Param**
 
@@ -1221,7 +1230,7 @@ ObjetoRetorno metodoFindBy(@Param("ParametroEnlaURL") String parametroLocal);
 Los parametros por la URL se pasan con el simbolo `?`
 `url/search/metodo?nombreParametroEnlaURL=valor&otroParametro=valor`:
 
-#### 9.4.3 Añadir los Query personalizados:
+### 9.4.3 Añadir los Query personalizados:
 
 1. Ir a la interfazDAO de la entidad y en el cuerpo de la interfaz añadir el metodo Query con los parametros necesarios
 2. Ponerle la anotacion **@RestResource**
@@ -1235,7 +1244,7 @@ Los parametros por la URL se pasan con el simbolo `?`
 
 [Volver a inicio](#springbasics)
 
-## 10. Métodos Personalizados
+# 10. Métodos Personalizados
 
 Jpa esta limitado a la hora de hacer consultas a la BD, solo ofrece los querys con una pequeña personalizacion a traves de la sintaxis de la firma de los metodos.
 
@@ -1370,7 +1379,7 @@ Pasos:
 
 [Volver a inicio](#springbasics)
 
-### 10.1 Hacer Métodos Personalizados autodescubribles
+## 10.1 Hacer Métodos Personalizados autodescubribles
 
 Para que el link sea autodescubierto hay que añador un Bean (en la clase de configuracion por java por ejemplo)
 
@@ -1434,7 +1443,7 @@ RepresentationModelProcessor<RepositorySearchesResource> searchLinks(RepositoryR
 
 [Volver a inicio](#guia-para-el-desarrollo-de-un-proyecto-java---gradle---spring)
 
-### 10.2 Evitar los filtros del CORS del navegador
+## 10.2 Evitar los filtros del CORS del navegador
 
 Para que la API pueda ser atacada por un navegador se debe añadir el **CORS Filter** como otro Bean (al archivo de configuracion por java)
 
@@ -1456,7 +1465,8 @@ Copy&Paste:
 ```
 
 [Volver a inicio](#springbasics)
-## 11.Query Dinamicos
+
+# 11.Query Dinamicos
 
 Para realizar consultas usare los `@Param` pasando valores para hacer busquedas usando los metodos Query nativos de JPA. En determinados casos esto no valdra, puesto que puedo necesitar pasar un numero variable de parametros y que muchas veces estos sean null -> **Parametros Opcionales** -> **Consultas Dinamicas** ( Busqueda por filtros pe.) [Fuente](https://tech.asimio.net/2020/11/21/Implementing-dynamic-SQL-queries-using-Spring-Data-JPA-Specification-and-Criteria-API.html)
 
@@ -1465,21 +1475,24 @@ El proceso es similar a los metodos personalizados (Custosm)
 Prerrequisitos:
 
 Se van a utilizar unas librerias que simplifican las tareas.
-Añadir al `build.gradle` 
+Añadir al `build.gradle`
+
 - En **`plugins{}`**
   - `id "io.freefair.lombok" version "6.2.0"`
 - En **`dependencies{}`**:
-  - `implementation 'org.mapstruct:mapstruct:1.3.1.Final'` - permite usar los metodos de mapeo de queries a objetos 
+  - `implementation 'org.mapstruct:mapstruct:1.3.1.Final'` - permite usar los metodos de mapeo de queries a objetos
   - `compileOnly 'org.projectlombok:lombok:1.18.16'` -> Libreria muy util, con **@anotaciones** genera `@Getter @Setter @Builder` (constructor dinamico con todos los campos posibles)
-
 
 Pasos:
 Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entity` o por `orm.xml`)
-1. **Crear el @StaticMetamodel**
-   - De las clases que quiera hacer busquedas dinamicas creo una nueva clase `Entidad_` a la que le pongo la Anotacion `@StaticMetamodel(Entidad.class)` (El nombre se puede usar con la barra baja `_` por convenio) -> **Tiene que estar en el mismo Paqeuete**
-   - En esa metaEntidad declaro los atributos que seran opcionales en mis busquedas con los modificadores ` public static volatile` del tipo:
-     - `SingularAtributte<Entity, TipoCampo>` para campos unicos
-     - `SetAttribute<Entity, ClaseColeccion>` para campos de listas o colecciones
+
+1.  **Crear el @StaticMetamodel**
+
+    - De las clases que quiera hacer busquedas dinamicas creo una nueva clase `Entidad_` a la que le pongo la Anotacion `@StaticMetamodel(Entidad.class)` (El nombre se puede usar con la barra baja `_` por convenio) -> **Tiene que estar en el mismo Paqeuete**
+    - En esa metaEntidad declaro los atributos que seran opcionales en mis busquedas con los modificadores ` public static volatile` del tipo:
+      - `SingularAtributte<Entity, TipoCampo>` para campos unicos
+      - `SetAttribute<Entity, ClaseColeccion>` para campos de listas o colecciones
+
     ```
     @StaticMetamodel(Film.class)
     public class Film_ {
@@ -1489,130 +1502,138 @@ Partiendo de las Entidades persistidas con JPA y Spring (por anotaciones `@Entit
       public static volatile SetAttribute<Film, FilmCategory> filmCategories;
     }
     ```
-  1. Creo la Interfaz `EntidadDAOCustom`(_la guia la llama Service_)
-     - Le añado el metodo 
+
+1.  Creo la Interfaz `EntidadDAOCustom`(_la guia la llama Service_)
+    - Le añado el metodo
       `List<Entidad> getListado(EntidadSearchCriteria searchCriteria)`
-  1. Implemento la interfaz `EntidadDAOCustom` en una clase `EntidadDAOImpl`.
-     - Agrego las anotaciones:
-       - `@RequiredArgsConstructor`
-       - `@Service`
-       - `@Transactional`
-     -  Implemento el metodo **getListado**
-      ```
-      @Autowired
-      EntidadDAO entidadDAO;
+1.  Implemento la interfaz `EntidadDAOCustom` en una clase `EntidadDAOImpl`.
 
-      @Override
-      public List<EntidadImpl> getListado(EntidadtoSearchCriteria searchCriteria) {
-      Specification<EntidadImpl> entidadSpecifications = EntidadSpecifications.createEbtidadSpecifications(searchCriteria);
+    - Agrego las anotaciones:
+      - `@RequiredArgsConstructor`
+      - `@Service`
+      - `@Transactional`
+    - Implemento el metodo **getListado**
 
-      return this.EntidadDAO.findAll(entidadSpecifications);
-      }
-      ```
+    ```
+    @Autowired
+    EntidadDAO entidadDAO;
 
-  1. Añadir a extends la **interface**  `JpaSpecificationExecutor<Entity>` en la **interfazDAO** de la entidad origen
-  1. En la **interfazDAO** implemento la InterfazDAOCustom. -> Sobreescribe el metodo de la interfaz `findAll` tiene que recibir como parametros `@Nullable Specification<Entity>`. Puede tener la anotacion [`@EntityGraph`](https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html)
-      ```
-      List<Entity> finAll(@Nullable Specification<Entity> especificaciones
-      ``` 
-  1. Creo una clase **`EntidadSearchCriteria`** 
-     - Contendrá todos los criterios posibles de busqueda de la clase `Optional<>`
-     - anotaciones de `lombok`
-       - `@Getter @setter @Builder`
-  
-      ```
-        @Getter
-        @Setter
-        @Builder
-        public class ArtefactoSearchCriteria {
+    @Override
+    public List<EntidadImpl> getListado(EntidadtoSearchCriteria searchCriteria) {
+    Specification<EntidadImpl> entidadSpecifications = EntidadSpecifications.createEbtidadSpecifications(searchCriteria);
 
-          private Optional<String> forma;
-          private Optional<String> color;
-          private Set<ClaseColeccion> listadoCosas;
-      ```
+    return this.EntidadDAO.findAll(entidadSpecifications);
+    }
+    ```
 
-  1. Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
-  1. Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada. 
-      - Usare las `StaticMetamodel` para acceder a los campos de comparacion 
-   
-            ```
-              //En esta clase se aniaden los diferentes posibles criterios de busqueda
+1.  Añadir a extends la **interface** `JpaSpecificationExecutor<Entity>` en la **interfazDAO** de la entidad origen
+1.  En la **interfazDAO** implemento la InterfazDAOCustom. -> Sobreescribe el metodo de la interfaz `findAll` tiene que recibir como parametros `@Nullable Specification<Entity>`. Puede tener la anotacion [`@EntityGraph`](https://tech.asimio.net/2020/11/06/Preventing-N-plus-1-select-problem-using-Spring-Data-JPA-EntityGraph.html)
+    ```
+    List<Entity> finAll(@Nullable Specification<Entity> especificaciones
+    ```
+1.  Creo una clase **`EntidadSearchCriteria`**
 
-              public class ArtefactoSpecifications {
+    - Contendrá todos los criterios posibles de busqueda de la clase `Optional<>`
+    - anotaciones de `lombok`
+      - `@Getter @setter @Builder`
 
-                private ArtefactoSpecifications() {
-                }
+    ```
+      @Getter
+      @Setter
+      @Builder
+      public class ArtefactoSearchCriteria {
 
-                // Aniado los criterios posibles de busqueda a las especificaciones
-                public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
-                  return formaEqualTo(searchCriteria.getForma())
-                      .and(colorEqualTo(searchCriteria.getColor()))
-                      .and(fabricacionEqualTo(searchCriteria.getFabricacion()))
-                      .and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
-                      .and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
+        private Optional<String> forma;
+        private Optional<String> color;
+        private Set<ClaseColeccion> listadoCosas;
+    ```
 
-                  // Puedo aniador mas criterios con **and** u **or**
-                  
-                  ;
-                }
+1.  Usare la interfaz `Specification<T> extends Serializable`, ya integrada con Spring-JPA en las dependencias
+1.  Creo una clase `EntidadSpecification` donde creo los metodos con los parametros que quiero que use la busqueda y los englobo en un metodo que me devuelva la busqueda personalizada.
 
-                // declaro cada uno de los posibles criterios de busqueda que agrego al
-                // createSpecifications
-                public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
-                  return (root, query, builder) -> {
-                    return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
-                  };
-                }
+    - Usare las `StaticMetamodel` para acceder a los campos de comparacion
 
-                public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
-                  return (root, query, builder) -> {
-                    return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
-                        .orElse(null);
-                  };
-                }
-                
+          ```
+            //En esta clase se aniaden los diferentes posibles criterios de busqueda
+
+            public class ArtefactoSpecifications {
+
+              private ArtefactoSpecifications() {
               }
-            ```
 
-   1. En la clase controlador de la clase **EntityController**  creo el metodo que que me proporcione las busquedas con parametros dinamicos. Debe tener:
-      - Parametros Opcionales con **required=false** 
-      - El `Assembler`
-      - Un objeto SearchCriteria que construya los parametros de busqueda
-      - Que llame a la interfazDAO al metodo custom pasandole los SearchoCriteria y almacene en un listado el resultado -> assembler.toCollectionModel
-      ```
-      @GetMapping(path = "filtrar")
-      @ResponseBody
-          public CollectionModel<PersistentEntityResource> buscarArtefacto(
-              //meto los parametros opcionales -> luego los debo meter al builder y tienen que estar en Specifications
-              @RequestParam(required = false) 
-              Optional<String> forma, 
-              @RequestParam(required = false) 
-              Optional<String> color,			
-              
-              //El assembler para que construya la respuesta
-              PersistentEntityResourceAssembler assembler
+              // Aniado los criterios posibles de busqueda a las especificaciones
+              public static Specification<ArtefactoImpl> createArtefactoSpecifications(ArtefactoSearchCriteria searchCriteria) {
+                return formaEqualTo(searchCriteria.getForma())
+                    .and(colorEqualTo(searchCriteria.getColor()))
+                    .and(fabricacionEqualTo(searchCriteria.getFabricacion()))
+                    .and(marcasFrioEqualTo(searchCriteria.getMarcasFrio()))
+                    .and(marcasPinturaEqualTo(searchCriteria.getMarcasPintura()))
 
-          ) {
+                // Puedo aniador mas criterios con **and** u **or**
 
-            // hago un objeto que construye los criterios de busqueda opcionales.
-            ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
-                // meto aqui los parametros de la clase SearchCriteria
-                .forma(forma)
-                .color(color)				  	
-                  
-                // Construyo
-                .build();
+                ;
+              }
 
-            // Recupero los artefactos con los criterios seleccionados
-            List<ArtefactoImpl> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
-            listadoArtefactos = new ArrayList<Mina>
+              // declaro cada uno de los posibles criterios de busqueda que agrego al
+              // createSpecifications
+              public static Specification<ArtefactoImpl> formaEqualTo(Optional<String> forma) {
+                return (root, query, builder) -> {
+                  return forma.map(form -> builder.equal(root.get(ArtefactoImpl_.forma), String.valueOf(form))).orElse(null);
+                };
+              }
 
-            return assembler.toCollectionModel(listadoArtefactos);
-          }
-      ```
+              public static Specification<ArtefactoImpl> colorEqualTo(Optional<String> color) {
+                return (root, query, builder) -> {
+                  return color.map(coloreado -> builder.equal(root.get(ArtefactoImpl_.color), String.valueOf(coloreado)))
+                      .orElse(null);
+                };
+              }
+
+            }
+          ```
+
+1.  En la clase controlador de la clase **EntityController** creo el metodo que que me proporcione las busquedas con parametros dinamicos. Debe tener:
+
+    - Parametros Opcionales con **required=false**
+    - El `Assembler`
+    - Un objeto SearchCriteria que construya los parametros de busqueda
+    - Que llame a la interfazDAO al metodo custom pasandole los SearchoCriteria y almacene en un listado el resultado -> assembler.toCollectionModel
+
+    ```
+    @GetMapping(path = "filtrar")
+    @ResponseBody
+        public CollectionModel<PersistentEntityResource> buscarArtefacto(
+            //meto los parametros opcionales -> luego los debo meter al builder y tienen que estar en Specifications
+            @RequestParam(required = false)
+            Optional<String> forma,
+            @RequestParam(required = false)
+            Optional<String> color,
+
+            //El assembler para que construya la respuesta
+            PersistentEntityResourceAssembler assembler
+
+        ) {
+
+          // hago un objeto que construye los criterios de busqueda opcionales.
+          ArtefactoSearchCriteria searchCriteria = ArtefactoSearchCriteria.builder()
+              // meto aqui los parametros de la clase SearchCriteria
+              .forma(forma)
+              .color(color)
+
+              // Construyo
+              .build();
+
+          // Recupero los artefactos con los criterios seleccionados
+          List<ArtefactoImpl> listadoArtefactos = artefactoDAO.getArtefactos(searchCriteria);
+          listadoArtefactos = new ArrayList<Mina>
+
+          return assembler.toCollectionModel(listadoArtefactos);
+        }
+    ```
 
 [Volver a inicio](#springbasics)
-## 12.Listeners
+
+# 12.Listeners
 
 Las operaciones con la BD tienen un "Ciclo de Vida" con la operacioens que serealizan en el CRUD de datos:
 
@@ -1683,7 +1704,7 @@ Pasos
 
 [Volver a inicio](#springbasics)
 
-## 13. Servicio Entidad
+# 13. Servicio Entidad
 
 Por rendimiento puede hacer falta cargar al iniciar la API determinados elementos de la BD en memoria, que se van a usar con frecuencia y que pueden ser usados por otras entidades. Al cargar en memoria se consigue:
 
@@ -1724,7 +1745,7 @@ Generar un servicio Entidad:
 
 [Volver a inicio](#springbasics)
 
-## 14. Integrando Librerias
+# 14. Integrando Librerias
 
 Voy a utilizar código de otro proyecto en el mio. Podré desarrollar por un lado el proyecto-**API** para realizar la persistencia y la capa REST y en otro proyecto-**LIB** (mi libreria) desarrollaré la lógica de mi negocio (java "puro")
 
@@ -1735,7 +1756,7 @@ Ambos proyectos deberían ser Proyectos Gradle:
 - El de la API con Spring con todas las dependencias para REST y pesrsistencia
 - El de la LIB sera un proyecto Gradle Spring, sin dependencias (aunque se le quitarán las anotaciones Spring).
 
-#### 14.1 Integrar Proyecto Local
+### 14.1 Integrar Proyecto Local
 
 Prerrequisitos:
 
@@ -1781,7 +1802,7 @@ Prerrequisitos:
 
 > Comprobar llamando desde la API a una clase de la libreria
 
-#### 14.2 Integrar Proyecto de GitHub
+### 14.2 Integrar Proyecto de GitHub
 
 Se podrá integrar una libreria de un repositorio de codigo abierto como **MAVEN Central** (Compilado), o de un repositorio publico de **GitHub** (Sin compilar) para lo que se necesita compilar con **jit-pack**.
 
@@ -1804,7 +1825,7 @@ Eclipse Necesita el plugin
 
    - Saldrán en `project and external dependencies` las que haya añadido, pudiendo emplearlas en mi codigo
 
-#### 14.3 Integrar Proyecto de Repositorio en la nube
+### 14.3 Integrar Proyecto de Repositorio en la nube
 
 Podre integrar una API o una dependencia.
 
@@ -1816,7 +1837,7 @@ Api vs Dependencia
 1.  Ir a dependencias y añadir linea
     `implementation/api:'Grupo : artefacto : Versión'`
 
-#### 14.4 Precedencia y exportacion de dependencias
+### 14.4 Precedencia y exportacion de dependencias
 
 Existe precedencia cuando hay conflicto entre clases iguales
 
