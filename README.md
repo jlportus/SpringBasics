@@ -42,7 +42,7 @@
   - [8.5 Persisitencia de clases con herencia](#85-persisitencia-de-clases-con-herencia)
   - [8.6 Single Table](#86-single-table)
   - [8.7 Persisitencia de clases con relación OneToMany](#87-persisitencia-de-clases-con-relación-onetomany)
-  - [8.8 Persisitencia de clases con selfJoin](#88-persisitencia-de-clases-con-selfjoin)
+  - [8.8 Persisitencia de clases con selfJoin (recursivas)](#88-persisitencia-de-clases-con-selfjoin-recursivas)
 - [9. REST - Añadir la capa de presentación](#9-rest---añadir-la-capa-de-presentación)
   - [9.0 Prerequisitos para Spring](#90-prerequisitos-para-spring)
   - [9.1 Limitando el acceso a repositorios](#91-limitando-el-acceso-a-repositorios)
@@ -998,11 +998,22 @@ Como prerrequisito: ambas clases deben ser **@Entity** (tener su ORM y su DAO)y 
 
 [Volver a inicio](#springbasics)
 
-## 8.8 Persisitencia de clases con selfJoin
+## 8.8 Persisitencia de clases con selfJoin (recursivas)
 
 Cuando tenga clases que contienen colecciones de clases de su mismo tipo (recursivas) usare el **@oneToMany**.
 
-Para que la BD mantenga la trazabilidad de los elementos de una tabla a la otra, 
+```
+@Entity
+@Table(name = "EMPLOYEE")
+public class EmpleadoConEmpleado {
+	//...
+	@ManyToOne(cascade = { CascadeType.ALL })//cada empleado tiene un manager(empleado)
+	@JoinColumn(name = "manager_id")
+	private EmpleadoConEmpleado manager;
+
+	@OneToMany(mappedBy = "manager") // un manager tiene varios subordinados(empleados)
+	private Set<EmpleadoConEmpleado> subordinates = new HashSet<EmpleadoConEmpleado>();
+```
 
 [Volver a inicio](#springbasics)
 
