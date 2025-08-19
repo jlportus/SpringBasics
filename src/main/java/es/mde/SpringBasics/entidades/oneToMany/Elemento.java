@@ -1,6 +1,7 @@
 package es.mde.SpringBasics.entidades.oneToMany;
 
-import javax.persistence.ManyToOne;
+//import javax.persistence.ManyToOne;
+import jakarta.persistence.ManyToOne;
 
 public class Elemento {
 

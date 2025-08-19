@@ -1,8 +1,8 @@
 package es.mde.SpringBasics.entidades.POJO;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+//import javax.persistence.Entity; // Obsoleto con Spring Boot 3 y mapeo por XML
+//import javax.persistence.GeneratedValue; // Obsoleto con Spring Boot 3 y mapeo por XML
+//import javax.persistence.Id; // Obsoleto con Spring Boot 3 y mapeo por XML
 
 public class UsuarioXML {
 

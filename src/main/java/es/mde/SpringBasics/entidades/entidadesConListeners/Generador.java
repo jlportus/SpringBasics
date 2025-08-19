@@ -1,6 +1,7 @@
 package es.mde.SpringBasics.entidades.entidadesConListeners;
 
-import javax.persistence.EntityListeners;
+//import javax.persistence.EntityListeners;
+import jakarta.persistence.EntityListeners;
 
 import es.mde.SpringBasics.repositorios.GeneradorListener;
 
