@@ -1,15 +1,19 @@
 # SpringBasics
 
-## GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-GRADLE-SPRING
+## GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-MAVEN-SPRING
+
+Este proyecto está configurado con Maven y Spring Boot 3.4 sobre Java 17.
+Se mantienen los mapeos ORM definidos por XML y se incluyen ejemplos
+equivalentes con anotaciones.
 
 ### 0.INDICE
 
 - [SpringBasics](#springbasics)
-  - [GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-GRADLE-SPRING](#guia-para-el-desarrollo-de-un-proyecto-java-gradle-spring)
+  - [GUIA PARA EL DESARROLLO DE UN PROYECTO JAVA-MAVEN-SPRING](#guia-para-el-desarrollo-de-un-proyecto-java-maven-spring)
     - [0.INDICE](#0indice)
   - [Inicializar un proyecto Spring con initialitzer](#inicializar-un-proyecto-spring-con-initialitzer)
   - [1. Iniciar Proyecto en Eclipse](#1-iniciar-proyecto-en-eclipse)
-  - [2. Añadir mas dependencias a Gradle](#2-añadir-mas-dependencias-a-gradle)
+  - [2. Añadir mas dependencias a Maven](#2-añadir-mas-dependencias-a-maven)
   - [3. Creando la estructura de carpetas de mi proyecto](#3-creando-la-estructura-de-carpetas-de-mi-proyecto)
   - [4. Inyectando Beans](#4-inyectando-beans)
     - [4.1 Beans por XML](#41-beans-por-xml)
@@ -70,23 +74,23 @@ Ideal → iniciar el proyecto directamente con initializer
 
     ↳ Si ya hubiera trabajo hecho → iniciar con lo ya hecho
 
-    ↳ Tendria que inyectar dependencias al proyecto a mano con gradle ⇒ puede generar pegas
+    ↳ Tendria que inyectar dependencias al proyecto a mano con Maven ⇒ puede generar pegas
 
 Crear con Initializer → Ir a la pagina [Spring Initalizer](https://start.spring.io/)
 
-    → proyecto gradle + java
+    → proyecto maven + java
 
-    → version spring boot → recomendada
+    → version spring boot → 3.4.x
 
     ⇒ group es.mde → nombre
 
     ⇒ packing ⇒ .jar
 
-    → java version → 8
+    → java version → 17
 
     ⇒ Añadir dependencias
 
-    ↳ Se podría añadir con el build.gradle → Spring lo suple
+    ↳ Se podría añadir en el pom.xml → Spring lo suple
 
 Añadir
 ⇒ mejor que sobre que no falte
@@ -104,59 +108,40 @@ Añadir
   Opcionales
 - Java mail sender
 
-enlace resumen de lo [generado en el inicializer](https://start.spring.io/#!type=gradle-project&language=java&platformVersion=2.4.5.RELEASE&packaging=jar&jvmVersion=1.8&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail,web-services,data-rest,data-jdbc)
+enlace resumen de lo [generado en el inicializer](https://start.spring.io/#!type=maven-project&language=java&platformVersion=3.4.0&packaging=jar&jvmVersion=17&groupId=es.mde&artifactId=SpringBasics&name=SpringBasics&description=SpringBasics&packageName=es.mde.SpringBasics&dependencies=devtools,web,hateoas,jdbc,data-jpa,h2,postgresql,mail,web-services,data-rest,data-jdbc)
 
 [Volver a inicio](#springbasics)
 
 ## 1. Iniciar Proyecto en Eclipse
 
 - abrir eclipse
-- En el workspace -> importar proyecto GRADLE
+- En el workspace -> importar proyecto Maven
 - Seleccionar la carpeta del proyecto
 - next...finish
 - ! debe tardar porque descarga todas las librerias
-- Saldra una estructura de proyecto JAVA-Gradle
+- Saldra una estructura de proyecto JAVA-Maven
 
-Para ejecutar -> **gradle Tasks -> aplication -> boot run**
+Para ejecutar -> **mvn spring-boot:run**
 
 - hay que acordarse de parar la ejecucion antes de volver a ejecutar
 
-## 2. Añadir mas dependencias a Gradle
+## 2. Añadir mas dependencias a Maven
 
-añadir a build gradle
+Editar el `pom.xml` y añadir las dependencias necesarias. Ejemplo:
 
-```
-plugins {
-	id 'org.springframework.boot' version '2.4.5'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
-	id 'java-library'
-	id 'eclipse'
-	id 'application'
-}
-```
-
-```
-repositories {
-	mavenCentral()
-	jcenter()
-	maven { url 'https://jitpack.io' }
-}
-```
-
-⇒ Comprobar el paquete main a iniciar
-⇒ con la anotacion **@SpringBootApplication** en el **main** seria suficiente
-
-```
-application {
-  mainClassName = ruta.paquete.mainMio
-}
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+</dependencies>
 ```
 
 Ejecutar:
 
-- **`refresh gradle proyect`**
-- **`boot run`** -> debe arrancar Spring sin errores
+- **`mvn clean install`**
+- **`mvn spring-boot:run`** -> debe arrancar Spring sin errores
 
 [Volver a inicio](#springbasics)
 
