@@ -1,6 +1,7 @@
 package es.mde.SpringBasics.repositorios;
 
-import javax.persistence.PrePersist;
+//import javax.persistence.PrePersist;
+import jakarta.persistence.PrePersist;
 
 import org.springframework.stereotype.Component;
 

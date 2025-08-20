@@ -5,7 +5,8 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.5</version>
+                <!-- Updated to Spring Boot 3.4 -->
+                <version>3.4.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>es.mde</groupId>
@@ -15,7 +16,8 @@
 	<name>SpringBasics</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>1.8</java.version>
+                <!-- Spring Boot 3 requires at least Java 17 -->
+                <java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

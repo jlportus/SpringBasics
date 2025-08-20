@@ -2,7 +2,8 @@ package es.mde.SpringBasics.repositorios;
 
 import java.util.Collection;
 
-import javax.persistence.OneToMany;
+//import javax.persistence.OneToMany;
+import jakarta.persistence.OneToMany;
 
 import es.mde.SpringBasics.entidades.oneToMany.Elemento;
 import es.mde.SpringBasics.entidades.oneToMany.PadreConColeccion;

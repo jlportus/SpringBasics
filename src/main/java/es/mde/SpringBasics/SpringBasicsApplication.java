@@ -3,14 +3,14 @@ package es.mde.SpringBasics;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
+//import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.ImportResource;
+//import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+//import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import es.mde.SpringBasics.entidades.POJO.UsuarioAnotaciones;
-import es.mde.SpringBasics.entidades.POJO.UsuarioXML;
+//import es.mde.SpringBasics.entidades.POJO.UsuarioXML; // Uso de XML sustituido por anotaciones
 import es.mde.SpringBasics.entidades.autowired.AutowiredInterfz;
 import es.mde.SpringBasics.entidades.autowired.UsaAutowired;
 import es.mde.SpringBasics.entidades.herencia.HijoHerencia;
@@ -23,11 +23,11 @@ import es.mde.SpringBasics.entidades.oneToMany.PadreConColeccion;
 import es.mde.SpringBasics.repositorios.ElementoDAO;
 import es.mde.SpringBasics.repositorios.PadreConColeccionDAO;
 import es.mde.SpringBasics.repositorios.UsuarioDAO;
-import es.mde.SpringBasics.repositorios.UsuarioXMLDAO;
+//import es.mde.SpringBasics.repositorios.UsuarioXMLDAO; // DAO basado en XML ya no necesario
 import es.mde.SpringBasics.entidades.inyeccionDeBeans.BeanPorXML;
 
 @SpringBootApplication
-@ImportResource({ "classpath:config/jpa-config.xml" })
+//@ImportResource({ "classpath:config/jpa-config.xml" }) // Configuración XML obsoleta en Spring Boot 3.4
 @Import({ ClaseConfiguracionJava.class })
 @PropertySource({ "valoresConstantes.properties" })
 public class SpringBasicsApplication {
